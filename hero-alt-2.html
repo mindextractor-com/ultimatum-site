@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Alt 2 — Вертикальный, заголовок-стена</title>
+<style>
+@font-face { font-family:'Albertus Nova'; src:url('fonts/albertus-nova-black.woff2') format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Albertus Nova'; src:url('fonts/albertus-nova-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Jost'; src:url('fonts/jost-variable.woff2') format('woff2'); font-weight:100 900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Jost'; src:url('fonts/jost-italic-variable.woff2') format('woff2'); font-weight:100 900; font-style:italic; font-display:swap; }
+@font-face { font-family:'Ubuntu Mono'; src:url('fonts/ubuntu-mono-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+
+:root {
+  --d-bg: #0E0F15;
+  --d-text: #E5E6E9;
+  --d-muted: rgba(229,230,233,.5);
+  --acc: #FF2A38;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html,body { height:100%; }
+body {
+  font-family:'Jost', system-ui, sans-serif;
+  background: var(--d-bg);
+  color: var(--d-text);
+  overflow-x: hidden;
+}
+
+/* Alt 2: massive left-aligned title fills viewport height,
+   details sidebar on the right */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  padding-left: clamp(1.25rem,6vw,5rem);
+  position: relative;
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: clamp(2rem,5vw,4rem);
+  padding-top: 4rem;
+  min-width: 0;
+}
+.kicker {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+h1 {
+  font-family: 'Albertus Nova', serif;
+  font-weight: 900;
+  /* title runs full height — very large */
+  font-size: clamp(3.5rem, 11vw, 10rem);
+  line-height: .96;
+  letter-spacing: -.04em;
+  overflow-wrap: break-word;
+  min-width: 0;
+  margin-bottom: 2.5rem;
+}
+h1 .acc { color: var(--acc); }
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.sub {
+  font-size: clamp(.875rem,1.2vw,1.0625rem);
+  font-weight: 300;
+  color: var(--d-muted);
+  max-width: 40ch;
+  line-height: 1.7;
+}
+.cta {
+  font-family: 'Jost', sans-serif;
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  padding: .875rem 1.75rem;
+  background: var(--acc);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+/* Right sidebar */
+.hero-right {
+  width: clamp(56px,8vw,100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: clamp(1.5rem,4vw,3rem);
+  border-left: 1px solid rgba(229,230,233,.06);
+  gap: 2rem;
+}
+.sidebar-tag {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .5625rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(229,230,233,.18);
+}
+.sidebar-dots {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: center;
+}
+.dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(229,230,233,.15);
+}
+.dot.on { background: var(--acc); }
+
+/* Thin horizontal red rule below h1 */
+h1::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 2px;
+  background: var(--acc);
+  margin-top: 1.5rem;
+}
+
+/* alt label */
+.label-alt {
+  position: absolute;
+  top: 1.25rem;
+  left: clamp(1.25rem,6vw,5rem);
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(229,230,233,.18);
+}
+
+@media (max-width: 600px) {
+  .hero { grid-template-columns: 1fr; padding-right: clamp(1.25rem,5vw,3rem); }
+  .hero-right { display: none; }
+}
+</style>
+</head>
+<body>
+<section class="hero" aria-labelledby="h1">
+  <span class="label-alt">Альтернативный герой 2 — Стена-заголовок, сайдбар</span>
+  <div class="hero-left">
+    <span class="kicker">Нон-фикшн о фрилансе</span>
+    <h1 id="h1">
+      Уйти<br>
+      на фриланс<br>
+      и&nbsp;<em class="acc">не</em>&nbsp;вернуться
+    </h1>
+    <div class="hero-bottom">
+      <p class="sub">Фриланс сквозь призму саморазвития. Без обещаний золотых гор — только инструменты.</p>
+      <a href="#waitlist" class="cta">Забрать первым →</a>
+    </div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <span class="sidebar-tag">маркетинг.dark</span>
+    <div class="sidebar-dots">
+      <div class="dot on"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <span class="sidebar-tag">33 главы · 7 частей</span>
+  </div>
+</section>
+</body>
+</html>

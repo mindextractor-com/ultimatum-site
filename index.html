@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/jpeg" href="/images/cover-better-eng.jpg">
+<link rel="apple-touch-icon" href="/images/cover-better-eng.jpg">
+<title>Ultimatum — Go Freelance. Never Return</title>
+<meta name="description" content="Nonfiction on freelancing through the lens of self-development. 7 parts, 33 chapters. Konstantin Ivanov. Pre-order.">
+
+<meta property="og:title" content="Ultimatum — Go Freelance. Never Return">
+<meta property="og:description" content="Nonfiction on freelancing through the lens of self-development. 7 parts, 33 chapters. Pre-order.">
+<meta property="og:image" content="https://ultimatumbook.com/images/cover-better-eng.jpg">
+<meta property="og:url" content="https://ultimatumbook.com/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ultimatumbook.com/images/cover-better-eng.jpg">
+<link rel="canonical" href="https://ultimatumbook.com/">
+<link rel="alternate" hreflang="en" href="https://ultimatumbook.com/">
+<link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/">
+<link rel="alternate" hreflang="x-default" href="https://ultimatumbook.com/">
+
+<!-- Analytics slot -->
+<!-- ANALYTICS -->
+
+<style>
+/* ─────────────────────────────────────────────
+   FONTS
+───────────────────────────────────────────── */
+@font-face{font-family:'Albertus Nova';src:url('fonts/albertus-nova-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Albertus Nova';src:url('fonts/albertus-nova-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Albertus Nova';src:url('fonts/albertus-nova-black.woff2')format('woff2');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Jost';src:url('fonts/jost-variable.woff2')format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Jost';src:url('fonts/jost-italic-variable.woff2')format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('fonts/ubuntu-mono-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('fonts/ubuntu-mono-italic.woff2')format('woff2');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('fonts/ubuntu-mono-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('fonts/ubuntu-mono-bold-italic.woff2')format('woff2');font-weight:700;font-style:italic;font-display:swap}
+
+/* ─────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────── */
+:root{
+  --font-display:'Albertus Nova',Georgia,serif;
+  --font-text:'Jost',system-ui,sans-serif;
+  --font-mono:'Ubuntu Mono','Courier New',monospace;
+
+  --d-bg:#0E0F15;
+  --d-text:#E5E6E9;
+  --d-muted:rgba(229,230,233,.5);
+  --d-subtle:rgba(229,230,233,.22);
+  --d-border:rgba(229,230,233,.08);
+
+  --l-bg:#ECEFF2;
+  --l-text:#14151C;
+  --l-muted:rgba(20,21,28,.55);
+  --l-subtle:rgba(20,21,28,.3);
+  --l-border:rgba(20,21,28,.1);
+
+  --acc:#FF2A38;
+  --acc-glow:rgba(255,42,56,.45);
+  --acc-dim:rgba(255,42,56,.12);
+
+  --px:clamp(1.25rem,5vw,4rem);
+  --sy:clamp(5rem,10vw,8rem);
+  --mw:1120px;
+
+  /* Dark leaf width — content always starts past this */
+  --leaf-w:30vw;
+
+  --sz-label:.625rem;
+  --sz-sm:.875rem;
+  --sz-body:clamp(.9375rem,1.15vw,1.0625rem);
+  --sz-lead:clamp(1.0625rem,1.6vw,1.25rem);
+  --sz-h3:clamp(1.25rem,2.4vw,1.625rem);
+  --sz-h2:clamp(1.875rem,4.5vw,3.25rem);
+  --sz-h1:clamp(3.5rem,10vw,8.5rem);
+}
+
+/* ─────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+/* Page is light — dark leaf provides the dark world on the left */
+html,body{background:var(--l-bg);color:var(--l-text)}
+body{
+  font-family:var(--font-text);
+  font-size:var(--sz-body);
+  line-height:1.65;
+  overflow-x:hidden;
+  min-width:320px;
+  /* Offset parent for the absolutely-positioned full-height dark leaf */
+  position:relative;
+}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+/* ─────────────────────────────────────────────
+   GLOBAL DARK LEAF — one continuous vertical seam
+   A single fixed element covers the left ~30% with
+   an organic bezier-curved right edge across the
+   entire page height. Content always lives in the
+   light zone to the right.
+───────────────────────────────────────────── */
+
+/* Sections are transparent — inherit the light body bg */
+.s{
+  position:relative;
+  background:transparent;
+}
+
+/* Content sits above the fixed dark leaf */
+.s-inner{
+  position:relative;
+  z-index:2;
+  padding-block:var(--sy);
+}
+
+/* Ghost section number floats in the dark leaf territory.
+   z-index > dark leaf so it's visible against the dark bg. */
+.leaf-num{
+  position:absolute;
+  left:0;
+  width:var(--leaf-w);
+  text-align:center;
+  bottom:clamp(1.5rem,5vh,3.5rem);
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(2rem,8vw,7rem);
+  letter-spacing:-.04em;
+  line-height:1;
+  color:rgba(229,230,233,.08);
+  pointer-events:none;
+  user-select:none;
+  z-index:9;
+}
+
+/* Dark leaf — absolutely positioned, spans the FULL document height
+   so one continuous torn edge runs hero → footer and its width drifts
+   down the page. JS sets the exact pixel height, generates the ragged
+   clip-path (torn paper, not a smooth wave) and injects the scattered
+   anxiety words. Element width is the MAX torn-edge width; the clip
+   carves it down to ~15vw at the narrow points. */
+.dark-leaf{
+  position:absolute;
+  left:0;top:0;
+  width:29vw;
+  height:100%;
+  background:var(--d-bg);
+  z-index:8;
+  pointer-events:none;
+  overflow:hidden;
+  /* Soft red glow traces the torn edge */
+  filter:drop-shadow(3px 0 14px rgba(255,42,56,.4));
+}
+/* Scattered freelance fears/questions filling the leaf — faint, angled,
+   multi-tint, overlapping, and cut by the torn edge. Injected by JS. */
+.leaf-word{
+  position:absolute;
+  font-weight:400;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+  transform-origin:left center;
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE — keep a slim vertical leaf (do NOT collapse).
+   Narrower torn edge + lighter word texture; content
+   still lives on the light side to the right.
+───────────────────────────────────────────── */
+@media(max-width:760px){
+  /* Content margin clears the slim mobile leaf */
+  :root{--leaf-w:16vw}
+  /* Max torn-edge width on mobile (JS clips down to ~6vw) */
+  .dark-leaf{width:14vw}
+  /* Ghost number scales down to fit the slim leaf */
+  .leaf-num{font-size:clamp(1.25rem,7vw,3rem)}
+}
+
+/* ─────────────────────────────────────────────
+   CONTAINERS
+───────────────────────────────────────────── */
+.wrap{
+  /* Start content after the dark leaf */
+  margin-left:var(--leaf-w);
+  padding-left:var(--px);
+  padding-right:var(--px);
+}
+
+/* ─────────────────────────────────────────────
+   NAV — light translucent (site reads light; dark
+   lives only in the leaf below)
+───────────────────────────────────────────── */
+.nav{
+  position:fixed;
+  inset:0 0 auto 0;
+  z-index:500;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-inline:var(--px);
+  background:rgba(236,239,242,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--l-border);
+}
+.nav-brand{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(.875rem,1.1vw,1.0625rem);
+  letter-spacing:-.02em;
+  color:var(--l-text);
+  text-decoration:none;
+}
+.nav-meta{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--l-muted);
+}
+
+/* ─────────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────────── */
+.label{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:1.5rem;
+  color:var(--l-muted);
+}
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* ─────────────────────────────────────────────
+   HERO — light, part of the same split (the dark
+   leaf runs through it on the left; cover + title
+   sit on the light side)
+───────────────────────────────────────────── */
+#hero{
+  min-height:100svh;
+  padding-top:52px;
+  background:transparent;
+  color:var(--l-text);
+}
+.hero-layout{
+  position:relative;
+  z-index:2;
+  min-height:calc(100svh - 52px);
+  padding-block:clamp(3rem,8vw,6rem);
+  display:grid;
+  grid-template-columns:1fr clamp(180px,26vw,340px);
+  gap:clamp(2rem,5vw,5rem);
+  align-items:center;
+  /* Start after the dark leaf */
+  margin-left:var(--leaf-w);
+  padding-left:var(--px);
+  padding-right:var(--px);
+}
+#hero .label{color:var(--l-muted)}
+.hero-kicker{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--l-muted);
+  display:block;
+  margin-bottom:2rem;
+}
+/* Typography composition — Albertus key words, Jost connectors */
+.hero-h1{
+  margin-bottom:1.75rem;
+  line-height:.98;
+  overflow-wrap:break-word;
+  min-width:0;
+}
+.hero-h1 .disp{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h1);
+  letter-spacing:-.04em;
+  display:inline;
+}
+.hero-h1 .conn{
+  font-family:var(--font-text);
+  font-weight:300;
+  font-size:clamp(1.5rem,4vw,3.5rem);
+  letter-spacing:-.01em;
+  opacity:.75;
+  display:inline;
+}
+.hero-h1 .red{
+  color:var(--acc);
+  font-family:var(--font-text);
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(1.75rem,4.5vw,4rem);
+  display:inline;
+}
+.hero-sub{
+  font-size:var(--sz-lead);
+  font-weight:400;
+  color:var(--l-muted);
+  margin-bottom:1rem;
+  line-height:1.5;
+}
+.hero-lead{
+  font-size:var(--sz-body);
+  line-height:1.78;
+  color:var(--l-muted);
+  max-width:44ch;
+  margin-bottom:2.75rem;
+}
+.hero-ctas{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  align-items:center;
+  margin-bottom:clamp(2rem,5vw,4rem);
+}
+/* Compact inline subscribe in the hero — reuses .email-inp/.sub-btn */
+.hero-form{
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  max-width:440px;
+  margin-bottom:.875rem;
+}
+.hero-form .email-inp{min-width:0}
+.hero-form .sub-btn{white-space:nowrap;flex-shrink:0}
+.hero-form-foot{margin-bottom:clamp(2rem,5vw,4rem)}
+.btn-primary{
+  font-family:var(--font-text);
+  font-size:var(--sz-sm);
+  font-weight:600;
+  letter-spacing:.05em;
+  padding:.875rem 1.875rem;
+  background:var(--acc);
+  color:#fff;
+  border:none;
+  border-radius:2px;
+  text-decoration:none;
+  display:inline-block;
+  line-height:1;
+  transition:opacity .15s,transform .12s;
+}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{
+  font-family:var(--font-text);
+  font-size:var(--sz-sm);
+  color:var(--l-muted);
+  text-decoration:none;
+  padding-bottom:2px;
+  border-bottom:1px solid var(--l-border);
+  transition:color .15s,border-color .15s;
+}
+.btn-ghost:hover{color:var(--l-text);border-color:var(--l-muted)}
+.hero-hint{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--l-subtle);
+  animation:hint 2.5s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes hint{
+  0%,100%{opacity:.3;transform:translateY(0)}
+  55%{opacity:.7;transform:translateY(6px)}
+}
+
+/* Book cover */
+.hero-cover{align-self:center}
+.book{
+  position:relative;
+  width:100%;
+  aspect-ratio:2/3;
+  background:#11121A;
+  box-shadow:0 18px 60px rgba(20,21,28,.28),inset 5px 0 0 var(--acc);
+  border:1px solid rgba(20,21,28,.06);
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  padding:clamp(1.25rem,2.5vw,1.75rem);
+  overflow:hidden;
+}
+.book-cover-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+.book-cover-img[src=""],.book-cover-img:not([src]){display:none}
+/* Once the real cover loads it carries its own title — hide the
+   text placeholder, keep the СКОРО badge + author overlay */
+.book.has-cover .book-t,
+.book.has-cover .book-st{display:none}
+.book-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  position:relative;z-index:1;
+}
+.book-author-n{
+  font-family:var(--font-mono);
+  font-size:.5rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:rgba(229,230,233,.35);
+  line-height:1.5;
+}
+.book-soon{
+  font-family:var(--font-mono);
+  font-size:.5rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--acc);
+  border:1px solid rgba(255,42,56,.45);
+  padding:.2rem .45rem;
+  line-height:1.5;
+  white-space:nowrap;
+}
+.book-main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  position:relative;z-index:1;
+  padding-top:1rem;
+}
+.book-t{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(.9375rem,1.9vw,1.5rem);
+  line-height:.95;
+  letter-spacing:-.03em;
+  color:var(--d-text);
+  margin-bottom:.625rem;
+  overflow-wrap:break-word;
+}
+.book-st{
+  font-family:var(--font-text);
+  font-weight:300;
+  font-size:clamp(.6rem,.9vw,.75rem);
+  color:rgba(229,230,233,.38);
+  letter-spacing:.07em;
+}
+.book-stripe{
+  position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--acc);z-index:1;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 01 — ПОСЫЛ
+───────────────────────────────────────────── */
+.posyl-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(2.5rem,6vw,5rem);
+  align-items:start;
+}
+.posyl-main h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  margin-bottom:1.75rem;
+  color:var(--l-text);
+}
+.posyl-main p{
+  font-size:var(--sz-body);
+  line-height:1.8;
+  color:var(--l-muted);
+}
+.oath{
+  border-left:3px solid var(--acc);
+  background:rgba(14,15,21,.88);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  padding:clamp(1.5rem,2.5vw,2.25rem) clamp(1.25rem,2vw,2rem);
+}
+.oath-head{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  line-height:1.18;
+  letter-spacing:-.015em;
+  color:var(--d-text);
+  margin-bottom:1.25rem;
+}
+.oath-q{
+  font-family:var(--font-text);
+  font-style:italic;
+  font-size:var(--sz-body);
+  line-height:1.7;
+  color:var(--d-text);
+  margin-bottom:1.25rem;
+}
+.oath-foot{
+  font-size:var(--sz-sm);
+  line-height:1.65;
+  color:var(--d-muted);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 02 — ТРИ МАРШРУТА
+───────────────────────────────────────────── */
+.routes-h{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  color:var(--l-text);
+  margin-bottom:.875rem;
+}
+.routes-intro{
+  font-size:var(--sz-lead);
+  color:var(--l-muted);
+  max-width:44ch;
+  line-height:1.65;
+  margin-bottom:clamp(2.5rem,5vw,4rem);
+}
+.routes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:rgba(20,21,28,.08);
+  border:1px solid rgba(20,21,28,.08);
+}
+.route-card{
+  background:rgba(14,15,21,.88);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  padding:clamp(1.75rem,3vw,2.5rem);
+  transition:background .2s;
+}
+.route-card:hover{background:rgba(14,15,21,.95)}
+.route-n{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.28em;
+  color:var(--acc);
+  display:block;
+  margin-bottom:1rem;
+}
+.route-t{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(1.125rem,2.2vw,1.5rem);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  color:var(--d-text);
+  margin-bottom:1rem;
+}
+.route-p{
+  font-size:.9375rem;
+  line-height:1.72;
+  color:var(--d-muted);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 03 — СТРУКТУРА
+───────────────────────────────────────────── */
+.structure-head{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:1rem;
+  margin-bottom:clamp(2.5rem,5vw,4rem);
+}
+.structure-h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  color:var(--l-text);
+}
+.parts{
+  list-style:none;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:rgba(20,21,28,.07);
+  border:1px solid rgba(20,21,28,.07);
+  margin-bottom:2rem;
+}
+.part{
+  background:rgba(14,15,21,.82);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  padding:1.5rem 1.75rem;
+  display:grid;
+  grid-template-columns:2rem 1fr;
+  gap:0 1rem;
+  align-items:start;
+}
+/* VII is the last item — span both columns so no empty cell */
+.part:last-child{grid-column:1/-1}
+.part-n{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:.6875rem;
+  letter-spacing:.06em;
+  color:var(--acc);
+  line-height:1.4;
+  padding-top:.15rem;
+}
+.part-t{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1rem;
+  letter-spacing:-.01em;
+  line-height:1.25;
+  color:var(--d-text);
+  margin-bottom:.25rem;
+}
+.part-tags{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--d-subtle);
+}
+.structure-note{
+  font-style:italic;
+  font-size:var(--sz-sm);
+  color:var(--l-muted);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 04 — ТРИ ОПОРЫ
+───────────────────────────────────────────── */
+.pillars-h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  color:var(--l-text);
+  margin-bottom:clamp(2.5rem,5vw,4rem);
+}
+.pillars-list{list-style:none}
+.pillar{
+  display:grid;
+  grid-template-columns:2.5rem 1fr;
+  gap:0 1.5rem;
+  padding-block:clamp(2rem,3.5vw,2.75rem);
+  border-bottom:1px solid var(--l-border);
+  align-items:start;
+}
+.pillars-list .pillar:first-child{border-top:1px solid var(--l-border)}
+.pillar-arr{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:.875rem;
+  color:var(--acc);
+  line-height:1.5;
+  padding-top:.2rem;
+}
+.pillar-n{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.25em;
+  color:var(--l-subtle);
+  display:block;
+  margin-bottom:.5rem;
+}
+.pillar-t{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:var(--sz-h3);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  color:var(--l-text);
+  margin-bottom:.75rem;
+}
+.pillar-p{
+  font-size:var(--sz-body);
+  line-height:1.75;
+  color:var(--l-muted);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 05 — APP (DAILY FRAME)
+───────────────────────────────────────────── */
+.app-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(3rem,6vw,5rem);
+  align-items:start;
+}
+.app-h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1.5rem,3.5vw,2.5rem);
+  line-height:1.06;
+  letter-spacing:-.025em;
+  color:var(--l-text);
+  margin-bottom:1.25rem;
+}
+.app-h2 span{
+  font-family:var(--font-text);
+  font-style:italic;
+  font-weight:400;
+  font-size:.75em;
+}
+.app-intro{
+  font-size:var(--sz-body);
+  line-height:1.75;
+  color:var(--l-muted);
+  margin-bottom:2.5rem;
+}
+/* Basic version features */
+.feature-block{margin-bottom:2.5rem}
+.feature-label{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--acc);
+  display:block;
+  margin-bottom:1.25rem;
+}
+.feature-list{list-style:none}
+.feature-item{
+  display:grid;
+  grid-template-columns:1.5rem 1fr;
+  gap:0 .75rem;
+  padding-block:.875rem;
+  border-bottom:1px solid var(--l-border);
+  font-size:var(--sz-sm);
+  line-height:1.65;
+  color:var(--l-muted);
+  align-items:start;
+}
+.feature-item:first-child{border-top:1px solid var(--l-border)}
+.feature-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--acc);
+  margin-top:.45rem;
+}
+/* Full version — accordion */
+.accord-wrap{
+  border:1px solid var(--l-border);
+}
+.accord-trigger{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:.875rem 1rem;
+  background:none;
+  border:none;
+  color:var(--l-muted);
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:color .15s;
+  gap:.5rem;
+  text-align:left;
+}
+.accord-trigger:hover{color:var(--l-text)}
+.accord-icon{
+  font-size:.75rem;
+  transition:transform .25s;
+  flex-shrink:0;
+  color:var(--l-subtle);
+}
+.accord-trigger[aria-expanded="true"] .accord-icon{transform:rotate(90deg)}
+.accord-body{
+  display:none;
+  padding:.25rem 1rem 1rem;
+}
+.accord-body.open{display:block}
+.accord-item{
+  display:grid;
+  grid-template-columns:1.5rem 1fr;
+  gap:0 .75rem;
+  padding-block:.75rem;
+  border-top:1px solid var(--l-border);
+  font-size:var(--sz-sm);
+  line-height:1.65;
+  color:var(--l-muted);
+  align-items:start;
+}
+.accord-item .feature-dot{opacity:.45}
+.app-ctas{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  margin-top:2rem;
+}
+.btn-outline{
+  font-family:var(--font-text);
+  font-size:var(--sz-sm);
+  font-weight:400;
+  color:var(--l-muted);
+  text-decoration:none;
+  padding:.75rem 1.25rem;
+  border:1px solid var(--l-border);
+  border-radius:2px;
+  display:inline-block;
+  transition:color .15s,border-color .15s;
+  line-height:1;
+}
+.btn-outline:hover{color:var(--l-text);border-color:var(--l-muted)}
+/* App screenshots */
+.app-screens{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.5rem;
+  align-self:start;
+  position:sticky;
+  top:clamp(4rem,8vh,7rem);
+}
+.app-screen{
+  aspect-ratio:9/19;
+  background:rgba(20,21,28,.05);
+  border:1px solid var(--l-border);
+  border-radius:6px;
+  overflow:hidden;
+  position:relative;
+}
+.app-screen img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.app-screen img[src=""],.app-screen img:not([src]){display:none}
+.app-screen-ph{
+  position:absolute;inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.625rem;
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--l-subtle);
+  text-align:center;
+  padding:1rem;
+}
+.app-screen-ph::before{
+  content:'';
+  display:block;
+  width:5px;height:5px;
+  border-radius:50%;
+  border:1px solid currentColor;
+  opacity:.4;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 06 — ГОЛОС
+───────────────────────────────────────────── */
+#voice{overflow:hidden}
+#voice .s-inner{padding-block:0}
+
+.marquee-band{
+  background:rgba(14,15,21,.92);
+  border-top:1px solid var(--d-border);
+  border-bottom:1px solid var(--d-border);
+  padding:1.125rem 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.marquee-track{
+  display:inline-flex;
+  animation:scroll 36s linear infinite;
+}
+.marquee-txt{
+  font-family:var(--font-text);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(.8125rem,1.1vw,.9375rem);
+  color:var(--d-muted);
+  letter-spacing:.025em;
+  padding-right:4rem;
+  flex-shrink:0;
+}
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.pullquote-wrap{
+  padding:clamp(4rem,9vw,7rem) var(--px);
+  /* Start after the dark leaf */
+  padding-left:calc(var(--leaf-w) + var(--px));
+}
+.pullquote{
+  font-family:var(--font-text);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(1.25rem,3.2vw,2.375rem);
+  line-height:1.42;
+  letter-spacing:-.012em;
+  color:var(--l-text);
+  max-width:660px;
+  margin-bottom:1.5rem;
+}
+.pullquote::before{content:'\201C'}
+.pullquote::after{content:'\201D'}
+.pullquote-src{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--l-subtle);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 07 — АВТОР
+───────────────────────────────────────────── */
+.author-layout{
+  display:grid;
+  grid-template-columns:clamp(180px,22%,280px) 1fr;
+  gap:clamp(2.5rem,5vw,5rem);
+  align-items:start;
+}
+.author-photo-wrap{
+  position:relative;
+  aspect-ratio:4/5;
+  background:transparent;
+  border:1px solid var(--l-border);
+  overflow:hidden;
+}
+.author-photo{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.author-photo[src=""],.author-photo:not([src]){display:none}
+.author-ph{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.875rem;
+  padding:1.5rem;
+}
+.author-initials{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(2rem,5vw,3rem);
+  color:rgba(20,21,28,.12);
+  line-height:1;
+  letter-spacing:-.04em;
+}
+.author-ph-tag{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(20,21,28,.25);
+}
+.author-photo-wrap::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,var(--acc) 60%,transparent);
+  pointer-events:none;
+}
+.author-name{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1.75rem,3.5vw,2.75rem);
+  line-height:1.04;
+  letter-spacing:-.025em;
+  color:var(--l-text);
+  margin-bottom:1.25rem;
+}
+.author-bio{
+  font-size:var(--sz-body);
+  line-height:1.78;
+  color:var(--l-muted);
+  margin-bottom:1.25rem;
+}
+.author-bio-em{
+  font-style:italic;
+  font-size:var(--sz-body);
+  line-height:1.72;
+  color:var(--l-muted);
+  margin-bottom:2.25rem;
+  opacity:.85;
+}
+.author-stats{
+  display:grid;
+  grid-template-columns:repeat(4,auto);
+  gap:0 2rem;
+  width:fit-content;
+}
+.stat-val{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1.5rem,2.8vw,2.25rem);
+  line-height:1;
+  letter-spacing:-.025em;
+  color:var(--l-text);
+  margin-bottom:.25rem;
+}
+.stat-lbl{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--l-subtle);
+  white-space:nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   SECTION 08 — WAITLIST — light (dark only in leaf)
+───────────────────────────────────────────── */
+#waitlist{
+  background:transparent;
+  color:var(--l-text);
+}
+#waitlist .label{color:var(--l-muted)}
+.waitlist-inner{
+  max-width:600px;
+  margin-inline:auto;
+  text-align:center;
+}
+.waitlist-h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  color:var(--l-text);
+  margin-bottom:1rem;
+}
+.waitlist-sub{
+  font-size:var(--sz-lead);
+  line-height:1.62;
+  color:var(--l-muted);
+  margin-bottom:2.75rem;
+}
+.subscribe-form{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:.875rem;
+}
+.email-inp{
+  flex:1;
+  min-width:220px;
+  padding:.875rem 1.25rem;
+  font-family:var(--font-text);
+  font-size:var(--sz-body);
+  background:rgba(20,21,28,.04);
+  border:1px solid var(--l-border);
+  color:var(--l-text);
+  border-radius:2px;
+  outline:none;
+  transition:border-color .15s;
+  -webkit-appearance:none;
+}
+.email-inp::placeholder{color:var(--l-subtle)}
+.email-inp:focus{border-color:rgba(20,21,28,.3)}
+.email-inp:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.sub-btn{
+  padding:.875rem 1.875rem;
+  font-family:var(--font-text);
+  font-size:var(--sz-sm);
+  font-weight:600;
+  letter-spacing:.05em;
+  background:var(--acc);
+  color:#fff;
+  border:none;
+  border-radius:2px;
+  white-space:nowrap;
+  line-height:1;
+  transition:opacity .15s,transform .12s;
+}
+.sub-btn:hover{opacity:.88;transform:translateY(-1px)}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.form-fine{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--l-subtle);
+  margin-bottom:1rem;
+}
+.form-msg{
+  display:none;
+  padding:.75rem 1.25rem;
+  border-radius:2px;
+  font-size:var(--sz-sm);
+  line-height:1.5;
+  margin-top:.875rem;
+}
+.form-msg.show{display:block}
+.msg-ok{background:rgba(46,125,82,.08);border:1px solid rgba(46,125,82,.3);color:#2e7d52}
+.msg-err{background:var(--acc-dim);border:1px solid rgba(255,42,56,.3);color:#c0271f}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+.site-footer{
+  background:var(--d-bg);
+  border-top:1px solid var(--d-border);
+  padding:1.75rem var(--px);
+}
+.footer-inner{
+  max-width:var(--mw);
+  margin-inline:auto;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.footer-copy{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.12em;
+  color:var(--d-subtle);
+}
+.footer-link{color:var(--d-muted);text-decoration:underline;text-underline-offset:2px;transition:color .15s}
+.footer-link:hover{color:var(--d-text)}
+.lang-sw{display:flex;gap:.375rem}
+.lang-btn{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:.25rem .5rem;
+  border:1px solid transparent;
+  border-radius:2px;
+  text-decoration:none;
+  color:var(--d-subtle);
+  transition:all .15s;
+}
+.lang-btn.active{border-color:var(--d-border);color:var(--d-text)}
+.lang-btn:hover:not(.active){color:var(--d-muted)}
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────── */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s,transform .6s;
+}
+.reveal.in{opacity:1;transform:none}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media(max-width:860px){
+  .hero-layout{
+    grid-template-columns:1fr;
+    min-height:auto;
+    padding-bottom:3rem;
+  }
+  .hero-cover{order:-1;padding-top:2rem}
+  .book{width:clamp(140px,45vw,200px);margin-inline:auto}
+
+  .posyl-grid{grid-template-columns:1fr;gap:2rem}
+  .routes-grid{grid-template-columns:1fr}
+  .app-layout{grid-template-columns:1fr}
+  .app-screens{position:static;grid-template-columns:repeat(3,1fr)}
+  .author-layout{grid-template-columns:1fr}
+  .author-photo-wrap{max-width:200px}
+  .author-stats{grid-template-columns:repeat(2,auto);gap:1.5rem 2rem}
+}
+@media(max-width:520px){
+  .subscribe-form{flex-direction:column}
+  .email-inp{min-width:unset;width:100%}
+  .sub-btn{width:100%}
+  .parts{grid-template-columns:1fr}
+  .part:last-child{grid-column:auto}
+  .app-screens{grid-template-columns:1fr 1fr}
+  .app-screens .app-screen:last-child{display:none}
+}
+
+/* ─────────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+  .marquee-band{white-space:normal;padding:1rem var(--px)}
+  .marquee-track{animation:none;display:block}
+  .marquee-txt+.marquee-txt{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ DARK LEAF — absolute, spans the FULL document height ══
+     One continuous torn edge runs hero → footer; its width
+     drifts down the page. JS (buildLeaf) sets the exact pixel
+     height, generates the ragged clip-path and injects the
+     scattered anxiety words. Ghost numbers (.leaf-num) live
+     inside each section above the leaf. -->
+<div class="dark-leaf" aria-hidden="true"></div>
+
+<!-- ══ NAV ══════════════════════════════════════════ -->
+<nav class="nav" id="nav" aria-label="Navigation">
+  <a href="/" class="nav-brand">ULTIMATUM</a>
+  <span class="nav-meta" aria-label="33 chapters, 7 parts">33 chapters · 7 parts</span>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<section id="hero" class="s" aria-labelledby="hero-h1">
+  <span class="leaf-num" aria-hidden="true">00</span>
+  <div class="hero-layout">
+    <div class="hero-body">
+      <span class="hero-kicker">Nonfiction on freelancing</span>
+      <h1 class="hero-h1" id="hero-h1">
+        <span class="disp">Go</span><br>
+        <span class="disp">freelance.</span><br>
+        <em class="red">Never</em><span class="conn"> return</span>
+      </h1>
+      <p class="hero-sub">Freelance through the lens of self-development.</p>
+      <p class="hero-lead">Not because you burned the bridges and you’re standing in the ashes. Because there’s nothing left to go back to. No promises of gold, no secret move that changes everything overnight.</p>
+      <form class="subscribe-form hero-form" novalidate>
+        <label for="hero-email-inp" class="sr-only">Email address</label>
+        <input
+          type="email"
+          id="hero-email-inp"
+          name="email"
+          class="email-inp"
+          placeholder="you@email.com"
+          autocomplete="email"
+          inputmode="email"
+          required
+          aria-required="true"
+          aria-describedby="hero-msg-ok hero-msg-err"
+        >
+        <button type="submit" class="sub-btn">Get it first →</button>
+      </form>
+      <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Done. You’re on the list.</div>
+      <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
+      <div class="hero-form-foot">
+        <a href="#posyl" class="btn-ghost">What’s inside</a>
+      </div>
+      <span class="hero-hint" aria-hidden="true">↓ scroll ↓</span>
+    </div>
+
+    <div class="hero-cover" aria-hidden="true">
+      <div class="book" role="img" aria-label="Ultimatum book cover">
+        <img class="book-cover-img" src="images/cover-better-eng.jpg" alt="" loading="eager" onload="this.closest('.book').classList.add('has-cover')" onerror="this.style.display='none'">
+        <div class="book-top">
+          <span class="book-author-n">Konstantin<br>Ivanov</span>
+          <span class="book-soon">Soon</span>
+        </div>
+        <div class="book-main">
+          <div class="book-t">ULTIMATUM</div>
+          <div class="book-st">freelance × self-development</div>
+        </div>
+        <div class="book-stripe"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     01 ПОСЫЛ
+════════════════════════════════════════════════════ -->
+<section id="posyl" class="s" aria-labelledby="posyl-h2">
+  <span class="leaf-num" aria-hidden="true">01</span>
+  <div class="s-inner wrap">
+    <div class="posyl-grid">
+      <div class="posyl-main reveal">
+        <span class="label">01 · Honest</span>
+        <h2 id="posyl-h2">Theory doesn’t change your life</h2>
+        <p>Knowledge doesn’t. Skills don’t. Motivation lets you down, habits don’t build themselves. This book isn’t about learning something — it’s about doing it. Every chapter has tasks. Read it, say “good” or “bad” — nothing changes. Do it — and you turn your routine, goals and values into working tools.</p>
+      </div>
+      <div class="oath reveal" style="transition-delay:.15s">
+        <p class="oath-head">Start simple — give yourself an ultimatum</p>
+        <blockquote class="oath-q">“I’ll walk this path and test all of it on myself. The conclusions will be my own.”</blockquote>
+        <p class="oath-foot">20 minutes a day. With the “this won’t work” and “this is obvious” reflexes switched off. In the end — what do you have to lose?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     02 ТРИ МАРШРУТА
+════════════════════════════════════════════════════ -->
+<section id="routes" class="s" aria-labelledby="routes-h2">
+  <span class="leaf-num" aria-hidden="true">02</span>
+  <div class="s-inner wrap">
+    <span class="label reveal">02 · Who it’s for</span>
+    <h2 class="routes-h reveal" id="routes-h2">Three routes. Pick yours.</h2>
+    <p class="routes-intro reveal" style="transition-delay:.1s">The book doesn’t corner you. It’s about getting off autopilot and running your own life on purpose — from any starting point.</p>
+    <div class="routes-grid reveal" style="transition-delay:.2s">
+      <article class="route-card">
+        <span class="route-n">01</span>
+        <h3 class="route-t">Employed, thinking about freelance</h3>
+        <p class="route-p">Not a heroic leap into the void — a calm, controlled transition. A cushion, a direction, first clients — alongside your job. No “new life starting Monday.”</p>
+      </article>
+      <article class="route-card">
+        <span class="route-n">02</span>
+        <h3 class="route-t">Freelancing already, but chaotically</h3>
+        <p class="route-p">Feast or famine. One day on fire, the next hating everything you do. The job: move from random motion to directed motion. Not to become a superhero — to become the one holding the wheel.</p>
+      </article>
+      <article class="route-card">
+        <span class="route-n">03</span>
+        <h3 class="route-t">Experienced, want to grow without burning out</h3>
+        <p class="route-p">How to grow without turning life into a caffeine-fuelled red-eye marathon. A system instead of burning yourself down. Keep yourself intact while you grow the business.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     03 СТРУКТУРА
+════════════════════════════════════════════════════ -->
+<section id="structure" class="s" aria-labelledby="structure-h2">
+  <span class="leaf-num" aria-hidden="true">03</span>
+  <div class="s-inner wrap">
+    <div class="structure-head">
+      <div class="reveal">
+        <span class="label">03 · Structure</span>
+        <h2 class="structure-h2" id="structure-h2">7 parts. 33 chapters.<br>One tool at the core.</h2>
+      </div>
+    </div>
+    <ul class="parts reveal" style="transition-delay:.15s" aria-label="Book parts">
+      <li class="part">
+        <span class="part-n">I</span>
+        <div><div class="part-t">Why freelance at all</div><div class="part-tags">start · fears · money</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">II</span>
+        <div><div class="part-t">Learn and master</div><div class="part-tags">skills · learning</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">III</span>
+        <div><div class="part-t">The Daily Frame</div><div class="part-tags">the core tool</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">IV</span>
+        <div><div class="part-t">Build your system</div><div class="part-tags">productivity</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">V</span>
+        <div><div class="part-t">Leap into freelance: clients</div><div class="part-tags">sales</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">VI</span>
+        <div><div class="part-t">Freelancer, blogger, marketer</div><div class="part-tags">marketing · brand</div></div>
+      </li>
+      <li class="part">
+        <span class="part-n">VII</span>
+        <div><div class="part-t">Off to the stratosphere</div><div class="part-tags">scale · team</div></div>
+      </li>
+    </ul>
+    <p class="structure-note reveal" style="transition-delay:.25s">Tasks in every chapter. Not to tick a box — to change something.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     04 ТРИ ОПОРЫ
+════════════════════════════════════════════════════ -->
+<section id="pillars" class="s" aria-labelledby="pillars-h2">
+  <span class="leaf-num" aria-hidden="true">04</span>
+  <div class="s-inner wrap">
+    <span class="label reveal">04 · Foundation</span>
+    <h2 class="pillars-h2 reveal" id="pillars-h2">Three things that hold up everything else</h2>
+    <ul class="pillars-list" aria-label="Three foundations of the book">
+      <li class="pillar reveal">
+        <span class="pillar-arr" aria-hidden="true">→</span>
+        <div>
+          <span class="pillar-n">01</span>
+          <h3 class="pillar-t">The ultimatum vow</h3>
+          <p class="pillar-p">The decision after which you stop hunting for an exit at the first hard moment. Not an “intention,” not “someday.”</p>
+        </div>
+      </li>
+      <li class="pillar reveal" style="transition-delay:.1s">
+        <span class="pillar-arr" aria-hidden="true">→</span>
+        <div>
+          <span class="pillar-n">02</span>
+          <h3 class="pillar-t">Consistency × Small actions</h3>
+          <p class="pillar-p">The formula for wins. No heroics required. Repeating the key actions drags you toward progress — even when it’s brutal.</p>
+        </div>
+      </li>
+      <li class="pillar reveal" style="transition-delay:.2s">
+        <span class="pillar-arr" aria-hidden="true">→</span>
+        <div>
+          <span class="pillar-n">03</span>
+          <h3 class="pillar-t">“Leave and never return”</h3>
+          <p class="pillar-p">Not about your legal employment status. It’s an inner certainty: I know how to make my own work, money and growth.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     05 DAILY FRAME
+════════════════════════════════════════════════════ -->
+<section id="app" class="s" aria-labelledby="app-h2">
+  <span class="leaf-num" aria-hidden="true">05</span>
+  <div class="s-inner wrap">
+    <div class="app-layout">
+      <div class="app-text">
+        <span class="label reveal">05 · The Tool</span>
+        <h2 class="app-h2 reveal" id="app-h2">
+          Daily Frame —<br><span>the structure for your day that works every single day</span>
+        </h2>
+        <p class="app-intro reveal" style="transition-delay:.1s">The book’s core tool — the Daily Frame (Consistency × Small actions) — as an app: you assemble the day, check off what’s done, and the system tracks whether you’re holding the rhythm.</p>
+
+        <div class="feature-block reveal" style="transition-delay:.15s">
+          <span class="feature-label">Basic version — almost ready, alpha soon</span>
+          <ul class="feature-list">
+            <li class="feature-item">
+              <span class="feature-dot" aria-hidden="true"></span>
+              <span>Today — build the day’s frame from items, mark them done, the DF% counts itself; plus non-percentage habits and an end-of-day reflection (score, the wins and the one fail, mood, what to change).</span>
+            </li>
+            <li class="feature-item">
+              <span class="feature-dot" aria-hidden="true"></span>
+              <span>Days — a dated history with percentages; you can see if you’re holding the rhythm or falling apart.</span>
+            </li>
+            <li class="feature-item">
+              <span class="feature-dot" aria-hidden="true"></span>
+              <span>Templates — your own frame for each day of the week.</span>
+            </li>
+            <li class="feature-item">
+              <span class="feature-dot" aria-hidden="true"></span>
+              <span>Goals &amp; the 12-week cycle — year → cycle (12 weeks) → week → day; progress rolls up from the bottom on its own.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="accord-wrap reveal" style="transition-delay:.2s">
+          <button class="accord-trigger" aria-expanded="false" aria-controls="accord-body" id="accord-btn">
+            <span>Full version — later</span>
+            <span class="accord-icon" aria-hidden="true">›</span>
+          </button>
+          <div class="accord-body" id="accord-body" role="region" aria-labelledby="accord-btn">
+            <ul class="feature-list" style="padding-top:.25rem">
+              <li class="accord-item">
+                <span class="feature-dot" aria-hidden="true"></span>
+                <span>Work — clients → projects → tasks, time tracking, money.</span>
+              </li>
+              <li class="accord-item">
+                <span class="feature-dot" aria-hidden="true"></span>
+                <span>Strategy — an interactive map of goals and values.</span>
+              </li>
+              <li class="accord-item">
+                <span class="feature-dot" aria-hidden="true"></span>
+                <span>Analytics — Excel export with AI breakdown, focus modes.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="app-ctas reveal" style="transition-delay:.25s">
+          <a href="#waitlist" class="btn-primary">Join the book waitlist →</a>
+        </div>
+      </div>
+
+      <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Daily Frame app screenshots">
+        <div class="app-screen">
+          <img src="images/app-1.png" alt="Daily Frame — Today screen" loading="lazy" onerror="this.style.display='none'">
+          <div class="app-screen-ph" aria-hidden="true">Today</div>
+        </div>
+        <div class="app-screen">
+          <img src="images/app-2.png" alt="Daily Frame — History screen" loading="lazy" onerror="this.style.display='none'">
+          <div class="app-screen-ph" aria-hidden="true">History</div>
+        </div>
+        <div class="app-screen">
+          <img src="images/app-3.png" alt="Daily Frame — Goals screen" loading="lazy" onerror="this.style.display='none'">
+          <div class="app-screen-ph" aria-hidden="true">Goals</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     06 ГОЛОС
+════════════════════════════════════════════════════ -->
+<section id="voice" class="s" aria-label="The book’s voice">
+  <span class="leaf-num" aria-hidden="true">06</span>
+  <div class="s-inner">
+    <div class="marquee-band" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-txt">The only people who never make mistakes are the ones doing nothing · The biggest risk is taking none at all · In a gold rush, don’t dig — sell shovels · Minimum in, maximum out · Lists should lighten the load, not add to it · A samurai has no goal, only the path. And all that ·</span>
+        <span class="marquee-txt" aria-hidden="true">The only people who never make mistakes are the ones doing nothing · The biggest risk is taking none at all · In a gold rush, don’t dig — sell shovels · Minimum in, maximum out · Lists should lighten the load, not add to it · A samurai has no goal, only the path. And all that ·</span>
+      </div>
+    </div>
+    <div class="pullquote-wrap reveal">
+      <blockquote class="pullquote">When you have clients, you have a freelance business. When you don’t, you don’t. Everything else is a hobby, volunteering, whatever you want to call it.</blockquote>
+      <cite class="pullquote-src">Chapter 16. Where to find clients</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     07 АВТОР
+════════════════════════════════════════════════════ -->
+<section id="author" class="s" aria-labelledby="author-h2">
+  <span class="leaf-num" aria-hidden="true">07</span>
+  <div class="s-inner wrap">
+    <span class="label reveal">07 · Author</span>
+    <div class="author-layout">
+      <div class="author-photo-wrap reveal">
+        <img class="author-photo" src="images/photo.jpg" alt="Konstantin Ivanov, author of Ultimatum" loading="lazy" width="280" height="350" onerror="this.style.display='none'">
+        <div class="author-ph" aria-hidden="true">
+          <span class="author-initials">KI</span>
+          <span class="author-ph-tag">photo.jpg</span>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.15s">
+        <h2 class="author-name" id="author-h2">Konstantin Ivanov</h2>
+        <p class="author-bio">7+ years in B2B and B2C sales, 8+ years marketing small businesses and experts. Personally promoted 78 projects, logged 2,500 hours on social, read and tested ideas from 80+ books on self-development and marketing. Freelancing for 7+ years — with a team and solo.</p>
+        <p class="author-bio-em">I’m not the smartest guy and I’m no guru. I’ve probably screwed up, stalled, burned out and rebuilt myself more than most. This book is, in large part, about my own mistakes.</p>
+        <div class="author-stats" role="list" aria-label="Author’s experience">
+          <div role="listitem">
+            <div class="stat-val">7+</div>
+            <div class="stat-lbl">years<br>freelancing</div>
+          </div>
+          <div role="listitem">
+            <div class="stat-val">78</div>
+            <div class="stat-lbl">projects</div>
+          </div>
+          <div role="listitem">
+            <div class="stat-val">2,500</div>
+            <div class="stat-lbl">hours on<br>social</div>
+          </div>
+          <div role="listitem">
+            <div class="stat-val">80+</div>
+            <div class="stat-lbl">books<br>tested</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     08 WAITLIST
+════════════════════════════════════════════════════ -->
+<section id="waitlist" class="s" aria-labelledby="waitlist-h2">
+  <span class="leaf-num" aria-hidden="true">08</span>
+  <div class="s-inner wrap">
+    <div class="waitlist-inner">
+      <span class="label reveal">08 · Start</span>
+      <h2 class="waitlist-h2 reveal" id="waitlist-h2">The book is coming. Be the first to grab it.</h2>
+      <p class="waitlist-sub reveal" style="transition-delay:.1s">No spam, no 28-message “warm-up” funnels. One email — when it’s ready.</p>
+      <form class="subscribe-form reveal" id="subscribe-form" novalidate style="transition-delay:.15s">
+        <label for="email-inp" class="sr-only">Email address</label>
+        <input
+          type="email"
+          id="email-inp"
+          name="email"
+          class="email-inp"
+          placeholder="you@email.com"
+          autocomplete="email"
+          inputmode="email"
+          required
+          aria-required="true"
+          aria-describedby="msg-ok msg-err"
+        >
+        <button type="submit" class="sub-btn" id="sub-btn">Join the list →</button>
+      </form>
+      <p class="form-fine">Your address is only for the book announcement.</p>
+      <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Done. You’re on the list.</div>
+      <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" class="footer-link" target="_blank" rel="noopener">marketing.dark</a> · <a href="https://mindextractor.com" class="footer-link" target="_blank" rel="noopener">MindExtractor</a> · Ultimatum</span>
+    <nav class="lang-sw" aria-label="Language">
+      <a href="/ru/" class="lang-btn" hreflang="ru" lang="ru">RU</a>
+      <a href="/" class="lang-btn active" hreflang="en" aria-current="page" lang="en">EN</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ── Year ── */
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ── Dark leaf: torn edge + scattered anxiety words ──
+   The leaf spans the full document. We generate a ragged
+   clip-path (random-walk grain + occasional sharp jags, NOT
+   a smooth wave) whose width slowly drifts down the page,
+   and fill it with faint, angled, multi-tint freelance fears
+   that get cut by the edge. Regenerated on resize/load. */
+!function(){
+  var leaf=document.querySelector('.dark-leaf');
+  if(!leaf)return;
+
+  var WORDS=['fear','deadlines','unstable income','“what if it fails?”','bills',
+    'burnout','debt','“where do I find clients?”','alone','no safety net',
+    'rent','taxes','no sick days','impostor','no clients',
+    'overwork','late nights','competition','“what if I can’t?”','uncertainty',
+    'exhaustion','risk','chaos','price wars','endless revisions'];
+  /* tints: greys weighted heaviest, a few warm/red, a couple cool */
+  var TINTS=[[229,230,233],[229,230,233],[229,230,233],[212,214,220],[200,202,210],
+    [255,150,120],[255,90,100],[150,180,220]];
+
+  var built=[];
+  function rnd(a,b){return a+Math.random()*(b-a);}
+
+  function build(){
+    var doc=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,
+                     document.documentElement.offsetHeight);
+    var vw=window.innerWidth;
+    var mobile=vw<=760;
+    leaf.style.height=doc+'px';
+    var W=leaf.offsetWidth; /* px = max torn-edge width (29vw / 14vw) */
+    if(!W||!doc)return;
+
+    /* ---- torn right edge ----
+       maxF < 1 leaves headroom so the grain always wiggles on BOTH
+       sides — otherwise min(W,base+grain) clamps the peak dead flat. */
+    var minF=mobile?0.42:0.55;          /* narrowest point as fraction of W */
+    var maxF=0.9;                        /* widest point (keep < 1 for headroom) */
+    var driftFreq=(mobile?2.4:1.5)*Math.PI*2/doc; /* ~1.5–2.4 slow cycles down page */
+    var driftPhase=Math.random()*Math.PI*2;
+    var grainAmp=mobile?4:9;            /* random-walk step */
+    var grainMax=mobile?8:20;           /* bound on the walk */
+    var grain=0;
+    function edge(y){
+      var t=0.5+0.5*Math.sin(y*driftFreq+driftPhase);
+      var base=(minF+(maxF-minF)*t)*W;
+      return Math.max(2,Math.min(W,base+grain));
+    }
+    /* NB: clip-path polygon coords need units — bare numbers are invalid */
+    var pts=['0 0',edge(0).toFixed(1)+'px 0'];
+    var y=0;
+    while(y<doc){
+      grain+=rnd(-grainAmp,grainAmp);
+      if(grain>grainMax)grain=grainMax; if(grain<-grainMax)grain=-grainMax;
+      var x=edge(y);
+      if(Math.random()<0.12){ /* sharp shale jag */
+        x+=rnd(-grainMax,grainMax); x=Math.max(2,Math.min(W,x));
+      }
+      pts.push(x.toFixed(1)+'px '+y.toFixed(1)+'px');
+      y+=rnd(mobile?6:8,mobile?13:18); /* irregular vertical cadence */
+    }
+    pts.push(edge(doc).toFixed(1)+'px '+doc+'px','0 '+doc+'px');
+    var poly='polygon('+pts.join(',')+')';
+    leaf.style.clipPath=poly;
+    leaf.style.webkitClipPath=poly;
+
+    /* ---- scattered words ---- */
+    built.forEach(function(el){el.remove();});
+    built=[];
+    var n=Math.round(doc/(mobile?170:95));
+    var frag=document.createDocumentFragment();
+    for(var i=0;i<n;i++){
+      var s=document.createElement('span');
+      s.className='leaf-word';
+      s.textContent=WORDS[(Math.random()*WORDS.length)|0];
+      var t=TINTS[(Math.random()*TINTS.length)|0];
+      var op=rnd(0.05,mobile?0.11:0.16);
+      s.style.color='rgba('+t[0]+','+t[1]+','+t[2]+','+op.toFixed(3)+')';
+      s.style.top=rnd(0,doc).toFixed(0)+'px';
+      s.style.left=rnd(-W*0.05,W*1.02).toFixed(0)+'px';
+      s.style.fontSize=rnd(mobile?9:11,mobile?15:30).toFixed(0)+'px';
+      s.style.transform='rotate('+rnd(-30,30).toFixed(1)+'deg)';
+      s.style.fontFamily=Math.random()<0.5?'var(--font-mono)':'var(--font-text)';
+      frag.appendChild(s);
+      built.push(s);
+    }
+    leaf.appendChild(frag);
+  }
+
+  build();
+  window.addEventListener('load',build);
+  var rt;
+  window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,200);});
+  /* Let other scripts trigger a rebuild when document height changes */
+  window.__rebuildLeaf=build;
+}();
+
+/* ── Scroll reveal ── */
+!function(){
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+}();
+
+/* ── Accordion ── */
+!function(){
+  var btn=document.getElementById('accord-btn');
+  var body=document.getElementById('accord-body');
+  if(!btn||!body)return;
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    body.classList.toggle('open',!open);
+    /* Height changed — rebuild the leaf so the torn edge/words still
+       span the full document. */
+    if(window.__rebuildLeaf)window.__rebuildLeaf();
+  });
+}();
+
+/* ── Subscribe forms (hero + waitlist share one handler/source) ──
+   Each form scopes its own success/error messages to its parent,
+   so submitting one never touches the other. */
+!function(){
+  var SOURCE='book-en';
+  function init(form){
+    var inp=form.querySelector('.email-inp');
+    var btn=form.querySelector('.sub-btn');
+    if(!inp||!btn)return;
+    var label=btn.textContent;
+    var scope=form.parentNode;
+    var ok=scope.querySelector('.msg-ok');
+    var err=scope.querySelector('.msg-err');
+    function clr(){if(ok)ok.classList.remove('show');if(err){err.classList.remove('show');err.textContent=''}}
+    function showOk(){clr();if(ok)ok.classList.add('show');form.style.display='none'}
+    function showErr(m){clr();if(err){err.textContent=m;err.classList.add('show')}}
+
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();clr();
+      var email=inp.value.trim();
+      if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        showErr('That email looks off.');inp.focus();return;
+      }
+      btn.disabled=true;btn.textContent='…';
+      try{
+        var r=await fetch('/api/subscribe',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({email:email,source:SOURCE})
+        });
+        r.ok?showOk():showErr('Something went wrong. Try again.');
+      }catch(_){showErr('Something went wrong. Try again.')}
+      finally{btn.disabled=false;btn.textContent=label}
+    });
+  }
+  document.querySelectorAll('.subscribe-form').forEach(init);
+}();
+</script>
+</body>
+</html>

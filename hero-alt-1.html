@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Alt 1 — Полный экран, текст центр</title>
+<style>
+@font-face { font-family:'Albertus Nova'; src:url('fonts/albertus-nova-black.woff2') format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Jost'; src:url('fonts/jost-variable.woff2') format('woff2'); font-weight:100 900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Jost'; src:url('fonts/jost-italic-variable.woff2') format('woff2'); font-weight:100 900; font-style:italic; font-display:swap; }
+@font-face { font-family:'Ubuntu Mono'; src:url('fonts/ubuntu-mono-regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+
+:root {
+  --d-bg: #0E0F15;
+  --d-text: #E5E6E9;
+  --d-muted: rgba(229,230,233,.5);
+  --acc: #FF2A38;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Jost', system-ui, sans-serif;
+  background: var(--d-bg);
+  color: var(--d-text);
+  overflow-x: hidden;
+}
+
+/* Alt 1: full screen centered, cover as giant background word */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem clamp(1.25rem,5vw,4rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-word {
+  position: absolute;
+  font-family: 'Albertus Nova', serif;
+  font-weight: 900;
+  font-size: clamp(8rem,25vw,22rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: rgba(229,230,233,.025);
+  pointer-events: none;
+  user-select: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
+}
+.kicker {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .625rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--d-muted);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.kicker::before, .kicker::after {
+  content: '—';
+  display: inline-block;
+  margin-inline: .75rem;
+  opacity: .3;
+}
+h1 {
+  font-family: 'Albertus Nova', serif;
+  font-weight: 900;
+  font-size: clamp(2.75rem,8vw,7rem);
+  line-height: 1.0;
+  letter-spacing: -.04em;
+  margin-bottom: 2rem;
+  max-width: 14ch;
+  overflow-wrap: break-word;
+  position: relative;
+}
+h1 .acc { color: var(--acc); }
+.sub {
+  font-size: clamp(1rem,1.8vw,1.25rem);
+  font-weight: 300;
+  color: var(--d-muted);
+  max-width: 42ch;
+  line-height: 1.65;
+  margin-bottom: 3rem;
+  position: relative;
+}
+.ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 4rem;
+}
+.btn {
+  font-family: 'Jost', sans-serif;
+  font-size: .875rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  padding: .875rem 2rem;
+  background: var(--acc);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+.btn-outline {
+  background: none;
+  border: 1px solid rgba(229,230,233,.15);
+  color: var(--d-muted);
+}
+.stats {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  position: relative;
+}
+.stat-item {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .625rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(229,230,233,.22);
+  line-height: 1.8;
+  text-align: center;
+}
+.stat-big {
+  font-family: 'Albertus Nova', serif;
+  font-weight: 900;
+  font-size: 1.75rem;
+  letter-spacing: -.03em;
+  color: rgba(229,230,233,.18);
+  display: block;
+}
+/* Bottom red line */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--acc) 50%, transparent);
+  opacity: .4;
+}
+.label-alt {
+  position: absolute;
+  top: 2rem;
+  left: clamp(1.25rem,5vw,4rem);
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: .625rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(229,230,233,.2);
+}
+</style>
+</head>
+<body>
+<section class="hero" aria-labelledby="h1">
+  <span class="label-alt">Альтернативный герой 1 — Центровка, слово-фон</span>
+  <div class="hero-bg-word" aria-hidden="true">УЛЬТИ&shy;МАТУМ</div>
+
+  <span class="kicker">Нон-фикшн о фрилансе</span>
+  <h1 id="h1">
+    Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться
+  </h1>
+  <p class="sub">Фриланс сквозь призму саморазвития. Не потому что сжёг мосты. А потому что больше незачем возвращаться.</p>
+  <div class="ctas">
+    <a href="#waitlist" class="btn">Забрать первым →</a>
+    <a href="#posyl" class="btn btn-outline">Что внутри</a>
+  </div>
+  <div class="stats" aria-label="Состав книги">
+    <div class="stat-item">
+      <span class="stat-big">33</span>
+      главы
+    </div>
+    <div class="stat-item">
+      <span class="stat-big">7</span>
+      частей
+    </div>
+    <div class="stat-item">
+      <span class="stat-big">∞</span>
+      заданий
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Font Lab · Ультиматум</title>
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg-d:#0E0F15; --fg-d:#E5E6E9;
+  --bg-l:#ECEFF2; --fg-l:#14151C;
+  --acc:#FF2A38;
+  --ui:#13151C; --ui2:#1C1E27; --uibrd:#252830; --fg2:#8B8FA0;
+  --card-bg:var(--bg-d); --card-fg:var(--fg-d);
+  --disp-fam:'font-0001'; --text-fam:'font-0001'; --mono-fam:'font-0001';
+  --disp-wt:700;
+}
+body{background:var(--ui);color:var(--fg-d);font-family:-apple-system,'Helvetica Neue',sans-serif;min-height:100vh}
+
+/* ── TOP BAR ── */
+#bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:#0a0b10ee;backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--uibrd);
+  padding:8px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.bar-logo{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#444;white-space:nowrap}
+.bar-sep{width:1px;height:24px;background:var(--uibrd);flex-shrink:0}
+.ctrl{display:flex;align-items:center;gap:6px}
+.ctrl-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#555;white-space:nowrap}
+select,.pill{
+  background:var(--ui2);border:1px solid var(--uibrd);color:#ccc;
+  font-size:11px;border-radius:4px;cursor:pointer;outline:none;
+}
+select{padding:5px 8px;max-width:200px}
+select:focus{border-color:var(--acc)}
+.pill{padding:4px 12px;transition:background .15s,color .15s,border-color .15s;user-select:none}
+.pill:hover{background:#252830}
+.pill.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+input[type=range]{
+  -webkit-appearance:none;width:80px;height:3px;background:#252830;
+  border-radius:2px;outline:none;cursor:pointer
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:12px;height:12px;background:var(--acc);border-radius:50%
+}
+#wt-val{font-size:10px;color:#555;min-width:26px}
+#load-stat{font-size:10px;color:#555;white-space:nowrap;margin-left:auto}
+
+/* ── HERO ── */
+#hero{margin-top:56px;display:flex;min-height:calc(100vh - 56px)}
+.world{flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,5vw,72px) clamp(24px,4vw,64px)}
+.world-d{background:var(--bg-d);color:var(--fg-d)}
+.world-l{background:var(--bg-l);color:var(--fg-l)}
+.world-tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;opacity:.3;margin-bottom:28px}
+.h-kicker{font-family:var(--mono-fam),monospace;font-size:clamp(9px,1vw,12px);letter-spacing:.2em;text-transform:uppercase;opacity:.45;margin-bottom:14px}
+.h-h1{
+  font-family:var(--disp-fam),serif;font-weight:var(--disp-wt);
+  font-size:clamp(2.2rem,5.5vw,5rem);line-height:1.04;letter-spacing:-.025em;
+  margin-bottom:18px;
+}
+.h-h1 .acc{color:var(--acc);font-style:normal}
+.h-sub{font-family:var(--text-fam),serif;font-size:clamp(13px,1.5vw,19px);opacity:.65;margin-bottom:16px}
+.h-lead{font-family:var(--text-fam),serif;font-size:clamp(12px,1.2vw,16px);line-height:1.65;opacity:.5;max-width:44ch;margin-bottom:24px}
+.h-quote{font-family:var(--text-fam),serif;font-style:italic;font-size:clamp(12px,1.3vw,17px);opacity:.45;padding-left:16px;border-left:2px solid currentColor;margin-bottom:28px;max-width:38ch}
+.h-tech{font-family:var(--mono-fam),monospace;font-size:clamp(9px,.9vw,11px);letter-spacing:.28em;text-transform:uppercase;opacity:.3}
+
+/* ── GALLERY TOOLBAR ── */
+#gtb{
+  position:sticky;top:56px;z-index:100;
+  background:#0a0b10ee;backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--uibrd);
+  padding:8px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.gtb-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-right:4px}
+.f-btn{
+  background:none;border:1px solid #252830;color:#666;
+  font-size:10px;letter-spacing:.06em;padding:4px 10px;border-radius:20px;
+  cursor:pointer;transition:all .15s
+}
+.f-btn:hover{border-color:#555;color:#bbb}
+.f-btn.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+#search{
+  background:var(--ui2);border:1px solid var(--uibrd);color:#ccc;
+  font-size:11px;padding:4px 10px;border-radius:4px;outline:none;width:150px;
+}
+#search:focus{border-color:var(--acc)}
+#vis-cnt{font-size:10px;color:#444;margin-left:4px}
+#fail-wrap{width:100%;margin-top:4px;display:none}
+#fail-toggle{font-size:10px;color:#FF6B6B;cursor:pointer;background:none;border:none;padding:0;letter-spacing:.04em}
+#fail-list{font-size:10px;color:#FF6B6B;margin-top:6px;opacity:.7;line-height:1.6;display:none;max-height:120px;overflow:auto}
+
+/* ── GALLERY ── */
+#gallery{padding:0 20px 80px}
+.grp{margin-top:36px}
+.grp-hd{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:#444;padding:10px 0;border-bottom:1px solid #1a1c24;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.grp-lbl{color:#555}
+.grp-cnt{background:#1a1c24;color:#444;font-size:9px;padding:1px 6px;border-radius:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+
+/* ── CARD ── */
+.card{
+  background:var(--card-bg);border:1px solid #1e2028;border-radius:6px;
+  overflow:hidden;cursor:pointer;transition:border-color .12s,transform .1s;
+  position:relative;
+}
+.card:hover{border-color:#3a3d4a;transform:translateY(-1px)}
+.card.sel-d{border-color:var(--acc);box-shadow:0 0 0 1px #FF2A3830}
+.card.sel-t{border-color:#2AB8FF;box-shadow:0 0 0 1px #2AB8FF30}
+.card.sel-m{border-color:#2AFF88;box-shadow:0 0 0 1px #2AFF8830}
+.card.hidden{display:none!important}
+
+/* role dot */
+.card::after{
+  content:'';position:absolute;top:8px;right:8px;
+  width:7px;height:7px;border-radius:50%;display:none
+}
+.card.sel-d::after{display:block;background:var(--acc)}
+.card.sel-t::after{display:block;background:#2AB8FF}
+.card.sel-m::after{display:block;background:#2AFF88}
+
+.card-prev{
+  padding:14px 14px 10px;color:var(--card-fg);
+  min-height:96px;display:flex;flex-direction:column;justify-content:center;
+}
+.cv-kicker{font-size:8px;letter-spacing:.18em;text-transform:uppercase;opacity:.35;margin-bottom:3px}
+.cv-h1{font-size:clamp(16px,2.4vw,26px);line-height:1.08;font-weight:700;color:inherit}
+.cv-h1 .acc{color:var(--acc)}
+.cv-tech{font-size:9px;letter-spacing:.22em;opacity:.3;margin-top:6px;text-transform:uppercase}
+.card-foot{
+  padding:7px 12px 9px;border-top:1px solid #1e2028;
+  display:flex;justify-content:space-between;align-items:center;gap:6px
+}
+.card-name{font-size:11px;color:#9BA0B0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.card-bdgs{display:flex;gap:3px;flex-shrink:0}
+.bdg{font-size:8px;font-weight:700;letter-spacing:.06em;padding:2px 5px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+.bdg-cyr{background:#0d2a15;color:#3faa5f}
+.bdg-ital{background:#1a1540;color:#7070c8}
+.bdg-type{background:#1a1c24;color:#444}
+
+/* ── FONT-FACE ── */
+@font-face{font-family:'font-0001';src:url('lab-fonts/font-0001.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0002';src:url('lab-fonts/font-0002.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0003';src:url('lab-fonts/font-0003.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0004';src:url('lab-fonts/font-0004.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0005';src:url('lab-fonts/font-0005.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0006';src:url('lab-fonts/font-0006.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0007';src:url('lab-fonts/font-0007.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0008';src:url('lab-fonts/font-0008.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0009';src:url('lab-fonts/font-0009.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0010';src:url('lab-fonts/font-0010.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0011';src:url('lab-fonts/font-0011.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0012';src:url('lab-fonts/font-0012.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0013';src:url('lab-fonts/font-0013.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0014';src:url('lab-fonts/font-0014.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0015';src:url('lab-fonts/font-0015.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0016';src:url('lab-fonts/font-0016.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0017';src:url('lab-fonts/font-0017.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0018';src:url('lab-fonts/font-0018.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0019';src:url('lab-fonts/font-0019.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0020';src:url('lab-fonts/font-0020.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0021';src:url('lab-fonts/font-0021.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0022';src:url('lab-fonts/font-0022.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0023';src:url('lab-fonts/font-0023.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0024';src:url('lab-fonts/font-0024.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0025';src:url('lab-fonts/font-0025.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0026';src:url('lab-fonts/font-0026.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0027';src:url('lab-fonts/font-0027.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0028';src:url('lab-fonts/font-0028.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0029';src:url('lab-fonts/font-0029.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0030';src:url('lab-fonts/font-0030.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0031';src:url('lab-fonts/font-0031.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0032';src:url('lab-fonts/font-0032.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0033';src:url('lab-fonts/font-0033.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0034';src:url('lab-fonts/font-0034.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0035';src:url('lab-fonts/font-0035.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0036';src:url('lab-fonts/font-0036.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0037';src:url('lab-fonts/font-0037.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0038';src:url('lab-fonts/font-0038.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0039';src:url('lab-fonts/font-0039.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0040';src:url('lab-fonts/font-0040.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0041';src:url('lab-fonts/font-0041.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0042';src:url('lab-fonts/font-0042.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0043';src:url('lab-fonts/font-0043.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0044';src:url('lab-fonts/font-0044.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0045';src:url('lab-fonts/font-0045.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0046';src:url('lab-fonts/font-0046.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0047';src:url('lab-fonts/font-0047.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0048';src:url('lab-fonts/font-0048.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0049';src:url('lab-fonts/font-0049.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0050';src:url('lab-fonts/font-0050.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0051';src:url('lab-fonts/font-0051.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0052';src:url('lab-fonts/font-0052.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0053';src:url('lab-fonts/font-0053.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0054';src:url('lab-fonts/font-0054.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0055';src:url('lab-fonts/font-0055.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0056';src:url('lab-fonts/font-0056.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0057';src:url('lab-fonts/font-0057.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0058';src:url('lab-fonts/font-0058.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0059';src:url('lab-fonts/font-0059.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0060';src:url('lab-fonts/font-0060.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0061';src:url('lab-fonts/font-0061.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0062';src:url('lab-fonts/font-0062.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0063';src:url('lab-fonts/font-0063.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0064';src:url('lab-fonts/font-0064.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0065';src:url('lab-fonts/font-0065.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0066';src:url('lab-fonts/font-0066.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0067';src:url('lab-fonts/font-0067.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0068';src:url('lab-fonts/font-0068.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0069';src:url('lab-fonts/font-0069.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0070';src:url('lab-fonts/font-0070.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0071';src:url('lab-fonts/font-0071.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0072';src:url('lab-fonts/font-0072.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0073';src:url('lab-fonts/font-0073.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0074';src:url('lab-fonts/font-0074.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0075';src:url('lab-fonts/font-0075.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0076';src:url('lab-fonts/font-0076.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0077';src:url('lab-fonts/font-0077.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0078';src:url('lab-fonts/font-0078.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0079';src:url('lab-fonts/font-0079.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0080';src:url('lab-fonts/font-0080.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0081';src:url('lab-fonts/font-0081.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0082';src:url('lab-fonts/font-0082.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0083';src:url('lab-fonts/font-0083.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0084';src:url('lab-fonts/font-0084.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0085';src:url('lab-fonts/font-0085.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0086';src:url('lab-fonts/font-0086.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0087';src:url('lab-fonts/font-0087.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0088';src:url('lab-fonts/font-0088.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0089';src:url('lab-fonts/font-0089.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0090';src:url('lab-fonts/font-0090.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0091';src:url('lab-fonts/font-0091.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0092';src:url('lab-fonts/font-0092.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0093';src:url('lab-fonts/font-0093.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0094';src:url('lab-fonts/font-0094.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0095';src:url('lab-fonts/font-0095.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0096';src:url('lab-fonts/font-0096.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0097';src:url('lab-fonts/font-0097.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0098';src:url('lab-fonts/font-0098.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0099';src:url('lab-fonts/font-0099.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0100';src:url('lab-fonts/font-0100.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0101';src:url('lab-fonts/font-0101.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0102';src:url('lab-fonts/font-0102.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0103';src:url('lab-fonts/font-0103.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0104';src:url('lab-fonts/font-0104.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0105';src:url('lab-fonts/font-0105.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0106';src:url('lab-fonts/font-0106.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0107';src:url('lab-fonts/font-0107.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0108';src:url('lab-fonts/font-0108.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0109';src:url('lab-fonts/font-0109.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0110';src:url('lab-fonts/font-0110.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0111';src:url('lab-fonts/font-0111.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0112';src:url('lab-fonts/font-0112.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0113';src:url('lab-fonts/font-0113.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0114';src:url('lab-fonts/font-0114.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0115';src:url('lab-fonts/font-0115.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0116';src:url('lab-fonts/font-0116.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0117';src:url('lab-fonts/font-0117.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0118';src:url('lab-fonts/font-0118.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0119';src:url('lab-fonts/font-0119.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0120';src:url('lab-fonts/font-0120.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0121';src:url('lab-fonts/font-0121.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0122';src:url('lab-fonts/font-0122.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0123';src:url('lab-fonts/font-0123.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0124';src:url('lab-fonts/font-0124.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0125';src:url('lab-fonts/font-0125.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0126';src:url('lab-fonts/font-0126.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0127';src:url('lab-fonts/font-0127.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0128';src:url('lab-fonts/font-0128.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0129';src:url('lab-fonts/font-0129.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0130';src:url('lab-fonts/font-0130.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0131';src:url('lab-fonts/font-0131.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0132';src:url('lab-fonts/font-0132.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0133';src:url('lab-fonts/font-0133.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0134';src:url('lab-fonts/font-0134.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0135';src:url('lab-fonts/font-0135.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0136';src:url('lab-fonts/font-0136.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0137';src:url('lab-fonts/font-0137.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0138';src:url('lab-fonts/font-0138.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0139';src:url('lab-fonts/font-0139.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0140';src:url('lab-fonts/font-0140.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0141';src:url('lab-fonts/font-0141.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0142';src:url('lab-fonts/font-0142.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0143';src:url('lab-fonts/font-0143.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0144';src:url('lab-fonts/font-0144.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0145';src:url('lab-fonts/font-0145.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0146';src:url('lab-fonts/font-0146.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0147';src:url('lab-fonts/font-0147.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0148';src:url('lab-fonts/font-0148.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0149';src:url('lab-fonts/font-0149.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0150';src:url('lab-fonts/font-0150.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0151';src:url('lab-fonts/font-0151.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0152';src:url('lab-fonts/font-0152.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0153';src:url('lab-fonts/font-0153.woff2')format('woff2');font-display:block;}
+@font-face{font-family:'font-0154';src:url('lab-fonts/font-0154.woff2')format('woff2');font-display:block;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header id="bar">
+  <span class="bar-logo">Font Lab · Ультиматум</span>
+  <div class="bar-sep"></div>
+
+  <div class="ctrl">
+    <span class="ctrl-lbl">Display</span>
+    <select id="sel-d" title="Шрифт H1 — клик по карточке"></select>
+  </div>
+  <div class="ctrl">
+    <span class="ctrl-lbl">Text</span>
+    <select id="sel-t" title="Шрифт тела — Shift+клик"></select>
+  </div>
+  <div class="ctrl">
+    <span class="ctrl-lbl">Mono</span>
+    <select id="sel-m" title="Моно — Ctrl+клик"></select>
+  </div>
+
+  <div class="bar-sep"></div>
+  <div class="ctrl">
+    <span class="ctrl-lbl">Вес</span>
+    <input type="range" id="wt" min="100" max="900" step="100" value="700">
+    <span id="wt-val">700</span>
+  </div>
+
+  <div class="bar-sep"></div>
+  <button class="pill on" id="btn-theme" title="Переключить фон карточек">Ночь</button>
+  <span id="load-stat">загрузка…</span>
+</header>
+
+<!-- HERO: two worlds side by side -->
+<section id="hero">
+  <div class="world world-d">
+    <div class="world-tag">Ночь · Пещера</div>
+    <div class="h-kicker">Нон-фикшн о фрилансе</div>
+    <h1 class="h-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</h1>
+    <p class="h-sub">Фриланс сквозь призму саморазвития.</p>
+    <p class="h-lead">Не потому что сжёг мосты и стоишь на пепелище. А потому что больше незачем возвращаться.</p>
+    <blockquote class="h-quote">Когда клиенты есть — есть фриланс. Нет — нет.</blockquote>
+    <div class="h-tech">33 главы · 7 частей</div>
+  </div>
+  <div class="world world-l">
+    <div class="world-tag">Рассвет · Свет</div>
+    <div class="h-kicker">Нон-фикшн о фрилансе</div>
+    <h1 class="h-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</h1>
+    <p class="h-sub">Фриланс сквозь призму саморазвития.</p>
+    <p class="h-lead">Не потому что сжёг мосты и стоишь на пепелище. А потому что больше незачем возвращаться.</p>
+    <blockquote class="h-quote">Когда клиенты есть — есть фриланс. Нет — нет.</blockquote>
+    <div class="h-tech">33 главы · 7 частей</div>
+  </div>
+</section>
+
+<!-- GALLERY TOOLBAR -->
+<div id="gtb">
+  <span class="gtb-lbl">Галерея</span>
+  <button class="f-btn on" data-f="all">Все</button>
+  <button class="f-btn" data-f="serif">Serif</button>
+  <button class="f-btn" data-f="grotesque">Grotesque</button>
+  <button class="f-btn" data-f="condensed">Condensed</button>
+  <button class="f-btn" data-f="display">Display</button>
+  <button class="f-btn" data-f="mono">Mono</button>
+  <button class="f-btn" data-f="ital" id="btn-ital">Italic</button>
+  <input type="text" id="search" placeholder="Поиск…">
+  <span id="vis-cnt"></span>
+  <div id="fail-wrap">
+    <button id="fail-toggle"></button>
+    <div id="fail-list"></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<main id="gallery">
+<section class="grp" data-type="serif"><h2 class="grp-hd"><span class="grp-lbl">Serif</span><span class="grp-cnt" id="cnt-serif"></span></h2><div class="cards" id="cards-serif">
+<div class="card" data-id="font-0049" data-type="serif" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0049',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Dihjauti</span><span class="card-bdgs"><span class="bdg bdg-type">serif</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+</div></section>
+<section class="grp" data-type="grotesque"><h2 class="grp-hd"><span class="grp-lbl">Grotesque / Sans</span><span class="grp-cnt" id="cnt-grotesque"></span></h2><div class="cards" id="cards-grotesque">
+<div class="card" data-id="font-0003" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0003',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Albertus Nova</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0026" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0026',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bloomsburg</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0034" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0034',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Century Gothic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0053" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0053',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Evolventa</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0057" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0057',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Fairwall Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0061" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0061',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0062" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0062',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Bold Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0063" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0063',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Book Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0069" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0069',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Demi Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0070" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0070',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Extra Bold Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0071" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0071',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Heavy Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0072" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0072',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Light Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0073" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0073',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Medium Italic</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0075" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0075',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Geometria</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0087" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0087',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Lato</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0093" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0093',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Microsoft Sans Serif</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0099" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0099',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Noto Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0100" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0100',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Omnibus</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0101" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0101',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Open Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0104" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0104',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">PF Bague Sans Pro</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0109" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0109',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Peace Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0116" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0116',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ropa Sans PTT</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0117" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0117',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ropa Sans Pro</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0118" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0118',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ropa Sans SC PTT</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0119" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0119',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ropa Sans SC Pro</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0134" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0134',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ubuntu</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0138" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0138',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Vela Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0139" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0139',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Vela Sans GX</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0145" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0145',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Wow Games Sans</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0150" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0150',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">eurofurence</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0151" data-type="grotesque" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0151',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">eurofurence light</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0153" data-type="grotesque" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0153',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">mr_Franklin GothicG</span><span class="card-bdgs"><span class="bdg bdg-type">grotesque</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+</div></section>
+<section class="grp" data-type="condensed"><h2 class="grp-hd"><span class="grp-lbl">Condensed</span><span class="grp-cnt" id="cnt-condensed"></span></h2><div class="cards" id="cards-condensed">
+<div class="card" data-id="font-0064" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0064',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Cond</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0065" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0065',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Cond Bold Italic</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0066" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0066',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Cond Book Italic</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0067" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0067',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Cond Extra Bold Ital</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0068" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0068',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Futura PT Cond Medium Italic</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0102" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0102',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Open Sans Condensed</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0103" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0103',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Open Sans SemiCondensed</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0106" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0106',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Panton Narrow</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0107" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0107',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Panton Narrow-Trial</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0129" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0129',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">TT Lakes Compressed</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0130" data-type="condensed" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0130',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">TT Lakes Condensed</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0135" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0135',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ubuntu Condensed</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0154" data-type="condensed" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0154',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">mr_NorwesterG</span><span class="card-bdgs"><span class="bdg bdg-type">condensed</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+</div></section>
+<section class="grp" data-type="display"><h2 class="grp-hd"><span class="grp-lbl">Display</span><span class="grp-cnt" id="cnt-display"></span></h2><div class="cards" id="cards-display">
+<div class="card" data-id="font-0001" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0001',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Age</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0002" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0002',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Akrobat</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0004" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0004',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Albori</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0005" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0005',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Anesa</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0006" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0006',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Anvyl</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0007" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0007',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Arodora Pro</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0008" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0008',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ArticaPro</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0009" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0009',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ArticaPro-Black</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0010" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0010',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ArticaPro-Bold</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0011" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0011',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ArticaPro-Light</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0012" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0012',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ArticaPro-Medium</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0013" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0013',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Articulat CF</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0014" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0014',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Averta Demo PE</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0015" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0015',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BERNIER Distressed</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0016" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0016',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BERNIER Regular</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0017" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0017',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BERNIER Shade</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0018" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0018',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BOWLER</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0019" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0019',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Banana Brick</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0020" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0020',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bardelin</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0021" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0021',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bebas Neue</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0022" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0022',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bellota Text</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0024" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0024',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bitter</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0025" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0025',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Black crow</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0027" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0027',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Boldstrom</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0028" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0028',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BravoRG</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0029" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0029',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BravoSC</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0030" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0030',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">BravoSCT</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0031" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0031',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Buyan</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0032" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0032',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Carson</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0033" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0033',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Catallina</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0043" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0043',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Comfortaa</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0044" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0044',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Constantine</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0045" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0045',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ConstantineOL</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0046" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0046',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Crosshatcher</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0047" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0047',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Cuprum</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0048" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0048',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">DiabloFont</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0050" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0050',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Downcome(RUS BY LYAJKA)</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0051" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0051',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">El Messiri</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0052" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0052',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Etna</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0054" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0054',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Exo 2</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0055" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0055',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Exo 2.0</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0056" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0056',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">FLUSE</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0058" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0058',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Fibre Vintage Full</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0059" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0059',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Fontuna</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0060" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0060',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Furore</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0074" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0074',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Garet</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0076" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0076',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Gilroy</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0077" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0077',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Inter</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0078" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0078',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0079" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0079',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust Book</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0080" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0080',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust G</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0081" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0081',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust H1</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0082" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0082',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust H2</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0083" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0083',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Intro Rust L</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0084" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0084',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Jost</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0085" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0085',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">KD William</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0086" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0086',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Labor Union</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0088" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0088',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">LogoPixies</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0089" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0089',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Manifold CF</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0090" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0090',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Marmelad</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0091" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0091',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Marske</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0092" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0092',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Marvin Visions</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0094" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0094',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Minaeff Ect</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0095" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0095',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Montserrat</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0096" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0096',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Montserrat Ace</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0097" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0097',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Montserrat Alternates</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0098" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0098',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">NEXT ART</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0105" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0105',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Panton</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0108" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0108',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Panton-Trial</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0110" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0110',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Philosopher</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0111" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0111',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Practicum</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0112" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0112',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Quam</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0113" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0113',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Red October</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0114" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0114',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Roboto</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0115" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0115',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Roboto Slab</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0120" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0120',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Rounds Black</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0121" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0121',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Russo One</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0122" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0122',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Sangha</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0123" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0123',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Sriracha Cyrillic</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0124" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0124',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Stalinist One</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0125" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0125',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Steppe</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0126" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0126',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Sugo Pro Classic Trial</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0127" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0127',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Sugo Pro Display Trial</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0128" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0128',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">TT Lakes</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0131" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0131',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">TT Nooks</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0132" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0132',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Tablon</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0133" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0133',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">This Night</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0137" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0137',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ultima Pro</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0140" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0140',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Veles</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0141" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0141',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Visby CF</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0142" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0142',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Visby Round CF</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0143" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0143',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Vonique 43</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0144" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0144',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Wastebased</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0146" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0146',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">XXII Centar</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0147" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0147',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Yanone Kaffeesatz</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0148" data-type="display" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0148',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">ZINOVIA</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0149" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0149',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">a_SignboardCps</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0152" data-type="display" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0152',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">inglobal</span><span class="card-bdgs"><span class="bdg bdg-type">display</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+</div></section>
+<section class="grp" data-type="mono"><h2 class="grp-hd"><span class="grp-lbl">Mono</span><span class="grp-cnt" id="cnt-mono"></span></h2><div class="cards" id="cards-mono">
+<div class="card" data-id="font-0023" data-type="mono" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0023',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Bergen Mono</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+<div class="card" data-id="font-0035" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0035',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0036" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0036',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Black</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0037" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0037',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Black LC</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0038" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0038',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Bold</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0039" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0039',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Bold LC</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0040" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0040',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro LC</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0041" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0041',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Light</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0042" data-type="mono" data-ital="0" style="display:none"><div class="card-prev" style="font-family:'font-0042',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Code Pro Light LC</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span></span></div></div>
+<div class="card" data-id="font-0136" data-type="mono" data-ital="1" style="display:none"><div class="card-prev" style="font-family:'font-0136',serif"><div class="cv-kicker">Нон-фикшн о фрилансе</div><div class="cv-h1">Уйти<br>на фриланс<br>и&nbsp;<em class="acc">не</em>&nbsp;вернуться</div><div class="cv-tech">33 ГЛАВЫ · 7 ЧАСТЕЙ</div></div><div class="card-foot"><span class="card-name">Ubuntu Mono</span><span class="card-bdgs"><span class="bdg bdg-type">mono</span><span class="bdg bdg-cyr">Cyr</span><span class="bdg bdg-ital">Italic</span></span></div></div>
+</div></section>
+</main>
+
+<script>
+const FONTS = [{"id": "font-0001", "family": "Age", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0002", "family": "Akrobat", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0003", "family": "Albertus Nova", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0004", "family": "Albori", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0005", "family": "Anesa", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0006", "family": "Anvyl", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0007", "family": "Arodora Pro", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0008", "family": "ArticaPro", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0009", "family": "ArticaPro-Black", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0010", "family": "ArticaPro-Bold", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0011", "family": "ArticaPro-Light", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0012", "family": "ArticaPro-Medium", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0013", "family": "Articulat CF", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0014", "family": "Averta Demo PE", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0015", "family": "BERNIER Distressed", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0016", "family": "BERNIER Regular", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0017", "family": "BERNIER Shade", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0018", "family": "BOWLER", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0019", "family": "Banana Brick", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0020", "family": "Bardelin", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0021", "family": "Bebas Neue", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0022", "family": "Bellota Text", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0023", "family": "Bergen Mono", "type": "mono", "has_ital": true, "cyr": true}, {"id": "font-0024", "family": "Bitter", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0025", "family": "Black crow", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0026", "family": "Bloomsburg", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0027", "family": "Boldstrom", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0028", "family": "BravoRG", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0029", "family": "BravoSC", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0030", "family": "BravoSCT", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0031", "family": "Buyan", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0032", "family": "Carson", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0033", "family": "Catallina", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0034", "family": "Century Gothic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0035", "family": "Code Pro", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0036", "family": "Code Pro Black", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0037", "family": "Code Pro Black LC", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0038", "family": "Code Pro Bold", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0039", "family": "Code Pro Bold LC", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0040", "family": "Code Pro LC", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0041", "family": "Code Pro Light", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0042", "family": "Code Pro Light LC", "type": "mono", "has_ital": false, "cyr": true}, {"id": "font-0043", "family": "Comfortaa", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0044", "family": "Constantine", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0045", "family": "ConstantineOL", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0046", "family": "Crosshatcher", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0047", "family": "Cuprum", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0048", "family": "DiabloFont", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0049", "family": "Dihjauti", "type": "serif", "has_ital": false, "cyr": true}, {"id": "font-0050", "family": "Downcome(RUS BY LYAJKA)", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0051", "family": "El Messiri", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0052", "family": "Etna", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0053", "family": "Evolventa", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0054", "family": "Exo 2", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0055", "family": "Exo 2.0", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0056", "family": "FLUSE", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0057", "family": "Fairwall Sans", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0058", "family": "Fibre Vintage Full", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0059", "family": "Fontuna", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0060", "family": "Furore", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0061", "family": "Futura PT", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0062", "family": "Futura PT Bold Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0063", "family": "Futura PT Book Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0064", "family": "Futura PT Cond", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0065", "family": "Futura PT Cond Bold Italic", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0066", "family": "Futura PT Cond Book Italic", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0067", "family": "Futura PT Cond Extra Bold Ital", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0068", "family": "Futura PT Cond Medium Italic", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0069", "family": "Futura PT Demi Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0070", "family": "Futura PT Extra Bold Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0071", "family": "Futura PT Heavy Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0072", "family": "Futura PT Light Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0073", "family": "Futura PT Medium Italic", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0074", "family": "Garet", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0075", "family": "Geometria", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0076", "family": "Gilroy", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0077", "family": "Inter", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0078", "family": "Intro Rust", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0079", "family": "Intro Rust Book", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0080", "family": "Intro Rust G", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0081", "family": "Intro Rust H1", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0082", "family": "Intro Rust H2", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0083", "family": "Intro Rust L", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0084", "family": "Jost", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0085", "family": "KD William", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0086", "family": "Labor Union", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0087", "family": "Lato", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0088", "family": "LogoPixies", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0089", "family": "Manifold CF", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0090", "family": "Marmelad", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0091", "family": "Marske", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0092", "family": "Marvin Visions", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0093", "family": "Microsoft Sans Serif", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0094", "family": "Minaeff Ect", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0095", "family": "Montserrat", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0096", "family": "Montserrat Ace", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0097", "family": "Montserrat Alternates", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0098", "family": "NEXT ART", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0099", "family": "Noto Sans", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0100", "family": "Omnibus", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0101", "family": "Open Sans", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0102", "family": "Open Sans Condensed", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0103", "family": "Open Sans SemiCondensed", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0104", "family": "PF Bague Sans Pro", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0105", "family": "Panton", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0106", "family": "Panton Narrow", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0107", "family": "Panton Narrow-Trial", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0108", "family": "Panton-Trial", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0109", "family": "Peace Sans", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0110", "family": "Philosopher", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0111", "family": "Practicum", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0112", "family": "Quam", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0113", "family": "Red October", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0114", "family": "Roboto", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0115", "family": "Roboto Slab", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0116", "family": "Ropa Sans PTT", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0117", "family": "Ropa Sans Pro", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0118", "family": "Ropa Sans SC PTT", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0119", "family": "Ropa Sans SC Pro", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0120", "family": "Rounds Black", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0121", "family": "Russo One", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0122", "family": "Sangha", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0123", "family": "Sriracha Cyrillic", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0124", "family": "Stalinist One", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0125", "family": "Steppe", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0126", "family": "Sugo Pro Classic Trial", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0127", "family": "Sugo Pro Display Trial", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0128", "family": "TT Lakes", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0129", "family": "TT Lakes Compressed", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0130", "family": "TT Lakes Condensed", "type": "condensed", "has_ital": true, "cyr": true}, {"id": "font-0131", "family": "TT Nooks", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0132", "family": "Tablon", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0133", "family": "This Night", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0134", "family": "Ubuntu", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0135", "family": "Ubuntu Condensed", "type": "condensed", "has_ital": false, "cyr": true}, {"id": "font-0136", "family": "Ubuntu Mono", "type": "mono", "has_ital": true, "cyr": true}, {"id": "font-0137", "family": "Ultima Pro", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0138", "family": "Vela Sans", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0139", "family": "Vela Sans GX", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0140", "family": "Veles", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0141", "family": "Visby CF", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0142", "family": "Visby Round CF", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0143", "family": "Vonique 43", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0144", "family": "Wastebased", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0145", "family": "Wow Games Sans", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0146", "family": "XXII Centar", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0147", "family": "Yanone Kaffeesatz", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0148", "family": "ZINOVIA", "type": "display", "has_ital": false, "cyr": true}, {"id": "font-0149", "family": "a_SignboardCps", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0150", "family": "eurofurence", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0151", "family": "eurofurence light", "type": "grotesque", "has_ital": true, "cyr": true}, {"id": "font-0152", "family": "inglobal", "type": "display", "has_ital": true, "cyr": true}, {"id": "font-0153", "family": "mr_Franklin GothicG", "type": "grotesque", "has_ital": false, "cyr": true}, {"id": "font-0154", "family": "mr_NorwesterG", "type": "condensed", "has_ital": false, "cyr": true}];
+const CONV_ERRORS = [];
+
+// ── State ──────────────────────────────────────────────────────────
+let selD = null, selT = null, selM = null;
+let darkCards = true;
+let typeFilter = 'all';
+let italFilter = false;
+let searchQ = '';
+let loadedCount = 0;
+let failedFonts = [];
+
+// ── CSS var applier ────────────────────────────────────────────────
+const root = document.documentElement.style;
+function applyVars() {
+  if (selD !== null) root.setProperty('--disp-fam', `'${selD}'`);
+  if (selT !== null) root.setProperty('--text-fam', `'${selT}'`);
+  if (selM !== null) root.setProperty('--mono-fam', `'${selM}'`);
+  root.setProperty('--disp-wt', document.getElementById('wt').value);
+  // Update card highlights
+  document.querySelectorAll('.card').forEach(c => {
+    c.classList.remove('sel-d','sel-t','sel-m');
+    const id = c.dataset.id;
+    if (id === selD) c.classList.add('sel-d');
+    if (id === selT) c.classList.add('sel-t');
+    if (id === selM) c.classList.add('sel-m');
+  });
+}
+
+// ── Canvas font verification ───────────────────────────────────────
+const _canvas = document.createElement('canvas');
+const _ctx = _canvas.getContext('2d');
+const TEST_STR = 'Уйти на фриланс и не вернуться 0123';
+
+function measureWith(fam) {
+  _ctx.font = `22px ${fam}`;
+  return _ctx.measureText(TEST_STR).width;
+}
+const W_SERIF = measureWith('serif');
+const W_SANS  = measureWith('sans-serif');
+
+async function verifyFont(fontId) {
+  try {
+    const faces = await Promise.race([
+      document.fonts.load(`22px '${fontId}'`),
+      new Promise(r => setTimeout(() => r([]), 6000))
+    ]);
+    if (!faces || faces.length === 0) return false;
+    // Canvas double-check: must differ from at least one fallback
+    const w = measureWith(`'${fontId}', serif`);
+    if (Math.abs(w - W_SERIF) < 0.5 && Math.abs(w - W_SANS) < 0.5) return false;
+    return true;
+  } catch { return false; }
+}
+
+// ── Populate selects ───────────────────────────────────────────────
+const selDEl = document.getElementById('sel-d');
+const selTEl = document.getElementById('sel-t');
+const selMEl = document.getElementById('sel-m');
+
+function addOption(el, fid, fname) {
+  const o = document.createElement('option');
+  o.value = fid; o.textContent = fname;
+  el.appendChild(o);
+}
+
+// ── Stat updater ───────────────────────────────────────────────────
+function updateStat() {
+  document.getElementById('load-stat').textContent =
+    `✓ ${loadedCount} / ${FONTS.length}`;
+  if (failedFonts.length > 0) {
+    const fw = document.getElementById('fail-wrap');
+    fw.style.display = 'block';
+    document.getElementById('fail-toggle').textContent =
+      `⚠ ${failedFonts.length} семейств не загрузилось (нажать)`;
+  }
+}
+
+function updateCounts() {
+  // Per-group visible count
+  document.querySelectorAll('.grp').forEach(grp => {
+    const t = grp.dataset.type;
+    const vis = grp.querySelectorAll('.card:not(.hidden)').length;
+    const cntEl = document.getElementById(`cnt-${t}`);
+    if (cntEl) cntEl.textContent = vis > 0 ? vis : '';
+    grp.style.display = vis > 0 ? '' : 'none';
+  });
+  const total = document.querySelectorAll('.card:not(.hidden)').length;
+  document.getElementById('vis-cnt').textContent = `${total} шрифтов`;
+}
+
+// ── Filters ────────────────────────────────────────────────────────
+function applyFilters() {
+  document.querySelectorAll('.card[data-id]').forEach(card => {
+    const t = card.dataset.type;
+    const ital = card.dataset.ital === '1';
+    const name = card.querySelector('.card-name').textContent.toLowerCase();
+    const passType = typeFilter === 'all' || t === typeFilter;
+    const passItal = !italFilter || ital;
+    const passSearch = !searchQ || name.includes(searchQ);
+    card.classList.toggle('hidden', !(passType && passItal && passSearch));
+  });
+  updateCounts();
+}
+
+// Type filter buttons
+document.querySelectorAll('.f-btn[data-f]').forEach(btn => {
+  if (btn.id === 'btn-ital') return;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.f-btn[data-f]:not(#btn-ital)').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    typeFilter = btn.dataset.f;
+    applyFilters();
+  });
+});
+
+document.getElementById('btn-ital').addEventListener('click', function() {
+  italFilter = !italFilter;
+  this.classList.toggle('on', italFilter);
+  applyFilters();
+});
+
+document.getElementById('search').addEventListener('input', function() {
+  searchQ = this.value.toLowerCase().trim();
+  applyFilters();
+});
+
+// ── Theme toggle ───────────────────────────────────────────────────
+document.getElementById('btn-theme').addEventListener('click', function() {
+  darkCards = !darkCards;
+  this.textContent = darkCards ? 'Ночь' : 'Рассвет';
+  this.classList.toggle('on', darkCards);
+  root.setProperty('--card-bg', darkCards ? 'var(--bg-d)' : 'var(--bg-l)');
+  root.setProperty('--card-fg', darkCards ? 'var(--fg-d)' : 'var(--fg-l)');
+});
+
+// ── Card click → set role ──────────────────────────────────────────
+document.getElementById('gallery').addEventListener('click', e => {
+  const card = e.target.closest('.card[data-id]');
+  if (!card) return;
+  const id = card.dataset.id;
+  if (e.shiftKey) {
+    selT = id; selTEl.value = id;
+  } else if (e.ctrlKey || e.metaKey) {
+    selM = id; selMEl.value = id;
+  } else {
+    selD = id; selDEl.value = id;
+  }
+  applyVars();
+  document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+});
+
+// Select changes
+selDEl.addEventListener('change', () => { selD = selDEl.value; applyVars(); });
+selTEl.addEventListener('change', () => { selT = selTEl.value; applyVars(); });
+selMEl.addEventListener('change', () => { selM = selMEl.value; applyVars(); });
+
+// Weight slider
+document.getElementById('wt').addEventListener('input', function() {
+  document.getElementById('wt-val').textContent = this.value;
+  applyVars();
+});
+
+// Failed list toggle
+document.getElementById('fail-toggle').addEventListener('click', () => {
+  const el = document.getElementById('fail-list');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+});
+
+// ── Font verification loop ─────────────────────────────────────────
+async function loadAll() {
+  // Show static conv errors immediately
+  if (CONV_ERRORS.length > 0) {
+    CONV_ERRORS.forEach(e => failedFonts.push(e.family + ' (build error)'));
+    updateStat();
+  }
+
+  // Process in batches of 12
+  const BATCH = 12;
+  let firstD = null, firstT = null, firstM = null;
+
+  for (let i = 0; i < FONTS.length; i += BATCH) {
+    const batch = FONTS.slice(i, i + BATCH);
+    await Promise.all(batch.map(async f => {
+      const ok = await verifyFont(f.id);
+      if (ok) {
+        loadedCount++;
+        // Show card
+        const card = document.querySelector(`.card[data-id="${f.id}"]`);
+        if (card) card.style.display = '';
+
+        // Add to selects
+        addOption(selDEl, f.id, f.family);
+        addOption(selTEl, f.id, f.family);
+        if (f.type === 'mono') addOption(selMEl, f.id, f.family);
+
+        // Default picks
+        if (!firstD) { firstD = f.id; selD = f.id; selDEl.value = f.id; }
+        if (!firstT && f.type !== 'mono') { firstT = f.id; selT = f.id; selTEl.value = f.id; }
+        if (!firstM && f.type === 'mono') { firstM = f.id; selM = f.id; selMEl.value = f.id; }
+      } else {
+        failedFonts.push(f.family);
+        const card = document.querySelector(`.card[data-id="${f.id}"]`);
+        if (card) card.remove();
+      }
+    }));
+    updateStat();
+    applyVars();
+    applyFilters();
+  }
+
+  // If no mono found, use first font
+  if (!firstM && firstD) {
+    selM = firstD;
+    if (selMEl.options.length === 0) addOption(selMEl, firstD, selDEl.options[0]?.text || '');
+    selMEl.value = firstD;
+  }
+
+  // Final update
+  document.getElementById('fail-list').innerHTML =
+    failedFonts.map(n => `<div>· ${n}</div>`).join('');
+  updateStat();
+  applyVars();
+  applyFilters();
+}
+
+loadAll();
+// hint
+document.getElementById('gtb').insertAdjacentHTML('afterbegin',
+  '<span style="font-size:9px;color:#2a2d38;margin-right:6px;white-space:nowrap">Клик=Display · Shift=Text · Ctrl=Mono</span>'
+);
+</script>
+</body>
+</html>

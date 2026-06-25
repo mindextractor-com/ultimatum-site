@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/jpeg" href="/images/cover-better-eng.jpg">
+<link rel="apple-touch-icon" href="/images/cover-better-eng.jpg">
+<title>Privacy — Ultimatum</title>
+<meta name="description" content="How the Ultimatum book site handles your email and analytics: what we collect, why, how to unsubscribe or request deletion. Contact ask@mindextractor.com.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://ultimatumbook.com/privacy">
+<link rel="alternate" hreflang="en" href="https://ultimatumbook.com/privacy">
+<link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/privacy">
+<style>
+@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-black.woff2')format('woff2');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Jost';src:url('/fonts/jost-variable.woff2')format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('/fonts/ubuntu-mono-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{
+  --font-display:'Albertus Nova',Georgia,serif;
+  --font-text:'Jost',system-ui,sans-serif;
+  --font-mono:'Ubuntu Mono','Courier New',monospace;
+  --d-bg:#0E0F15;--d-text:#E5E6E9;--d-subtle:rgba(229,230,233,.22);
+  --l-bg:#ECEFF2;--l-text:#14151C;--l-muted:rgba(20,21,28,.55);--l-border:rgba(20,21,28,.1);
+  --acc:#FF2A38;
+  --px:clamp(1.25rem,5vw,4rem);--mw:1120px;
+  --sz-label:.625rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html,body{background:var(--l-bg);color:var(--l-text)}
+body{font-family:var(--font-text);font-size:clamp(.9375rem,1.15vw,1.0625rem);line-height:1.65;min-width:320px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.nav{position:fixed;inset:0 0 auto 0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding-inline:var(--px);background:rgba(236,239,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--l-border)}
+.nav-brand{font-family:var(--font-display);font-weight:900;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.02em;color:var(--l-text);text-decoration:none}
+.nav-meta{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--l-muted)}
+main{max-width:720px;margin-inline:auto;padding:calc(52px + 4rem) var(--px) 5rem}
+.eyebrow{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
+h1{font-family:var(--font-display);font-weight:900;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:.5rem}
+.updated{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;color:var(--l-muted);margin-bottom:2.5rem}
+h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.25rem,2.4vw,1.5rem);margin:2.25rem 0 .65rem}
+p{margin-bottom:1rem;color:var(--l-text)}
+ul{margin:0 0 1rem 1.25rem}
+li{margin-bottom:.4rem}
+a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
+.lead{font-size:clamp(1.0625rem,1.6vw,1.25rem);color:var(--l-muted);margin-bottom:2rem}
+.site-footer{background:var(--d-bg);border-top:1px solid rgba(229,230,233,.08);padding:1.75rem var(--px)}
+.footer-inner{max-width:var(--mw);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
+.footer-copy{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;color:var(--d-subtle)}
+.footer-copy a{color:var(--d-subtle);text-decoration:underline;text-underline-offset:2px}
+.lang-sw{display:flex;gap:.375rem}
+.lang-btn{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.18em;text-transform:uppercase;padding:.25rem .5rem;border:1px solid transparent;border-radius:2px;text-decoration:none;color:var(--d-subtle);transition:all .15s}
+.lang-btn.active{border-color:rgba(229,230,233,.08);color:var(--d-text)}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Navigation">
+  <a href="/" class="nav-brand">ULTIMATUM</a>
+  <span class="nav-meta">Privacy</span>
+</nav>
+
+<main>
+  <p class="eyebrow">Privacy</p>
+  <h1>Privacy &amp; cookies</h1>
+  <p class="updated">Last updated · 26 June 2026</p>
+
+  <p class="lead">Short version: we collect your email only to tell you when the book is out, and analytics scripts load only after you accept cookies. Nothing hidden, no resale.</p>
+
+  <h2>Who we are</h2>
+  <p>This is the landing page for the book <em>Ultimatum — Go Freelance. Never Return</em> by Konstantin Ivanov. For anything in this policy, contact <a class="lnk" href="mailto:ask@mindextractor.com">ask@mindextractor.com</a>.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Your email address</strong> — only if you type it into the waitlist form and submit it.</li>
+    <li><strong>Basic analytics</strong> — anonymous usage data (pages viewed, rough location, device), and only after you consent (see below).</li>
+  </ul>
+
+  <h2>Why we collect it</h2>
+  <p>The email is used for one thing: to send you the announcement when the book launches, plus a small number of closely related updates about it. We do not sell, rent, or share your email with third parties.</p>
+
+  <h2>Analytics &amp; cookies</h2>
+  <p>On this English page, analytics load <strong>only after you click “Accept”</strong> in the cookie banner. If you decline, no analytics scripts are loaded at all. When accepted, we use:</p>
+  <ul>
+    <li><strong>Google Analytics 4</strong> — aggregate traffic measurement (Google LLC).</li>
+    <li><strong>Meta Pixel</strong> — conversion measurement for the waitlist (Meta Platforms, Inc.).</li>
+  </ul>
+  <p>The legal basis for analytics is your consent, which you can withdraw at any time by clearing this site’s cookies / local storage in your browser, after which the banner will appear again.</p>
+
+  <h2>How long we keep it</h2>
+  <p>We keep your email until the launch announcement has gone out and for a short period after, or until you ask us to delete it — whichever comes first. Analytics data is retained according to Google’s and Meta’s standard retention windows.</p>
+
+  <h2>Your rights</h2>
+  <p>You can ask us to show you what we hold, correct it, or delete it. Under the GDPR you also have the right to object and to data portability; under the CCPA you have the right to know and delete, and we do not sell personal information.</p>
+
+  <h2>Unsubscribe / delete your data</h2>
+  <p>Email <a class="lnk" href="mailto:ask@mindextractor.com?subject=Delete%20my%20data">ask@mindextractor.com</a> and we will remove your email from the list and delete it. Every announcement email will also include an unsubscribe link.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or your data: <a class="lnk" href="mailto:ask@mindextractor.com">ask@mindextractor.com</a>.</p>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">marketing.dark</a> · <a href="https://mindextractor.com" target="_blank" rel="noopener">MindExtractor</a> · Ultimatum</span>
+    <nav class="lang-sw" aria-label="Language">
+      <a href="/ru/privacy" class="lang-btn" hreflang="ru" lang="ru">RU</a>
+      <a href="/privacy" class="lang-btn active" hreflang="en" aria-current="page" lang="en">EN</a>
+    </nav>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>

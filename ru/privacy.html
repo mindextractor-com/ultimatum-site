@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/jpeg" href="/images/cover-ru.jpg">
+<link rel="apple-touch-icon" href="/images/cover-ru.jpg">
+<title>Политика обработки данных — Ультиматум</title>
+<meta name="description" content="Как сайт книги «Ультиматум» обрабатывает e-mail и аналитику: какие данные собираются, цели, срок хранения, права субъекта ПДн и отзыв согласия. Контакт ask@mindextractor.com.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://ultimatumbook.com/ru/privacy">
+<link rel="alternate" hreflang="en" href="https://ultimatumbook.com/privacy">
+<link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/privacy">
+<style>
+@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-black.woff2')format('woff2');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Jost';src:url('/fonts/jost-variable.woff2')format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Ubuntu Mono';src:url('/fonts/ubuntu-mono-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{
+  --font-display:'Albertus Nova',Georgia,serif;
+  --font-text:'Jost',system-ui,sans-serif;
+  --font-mono:'Ubuntu Mono','Courier New',monospace;
+  --d-bg:#0E0F15;--d-text:#E5E6E9;--d-subtle:rgba(229,230,233,.22);
+  --l-bg:#ECEFF2;--l-text:#14151C;--l-muted:rgba(20,21,28,.55);--l-border:rgba(20,21,28,.1);
+  --acc:#FF2A38;
+  --px:clamp(1.25rem,5vw,4rem);--mw:1120px;
+  --sz-label:.625rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html,body{background:var(--l-bg);color:var(--l-text)}
+body{font-family:var(--font-text);font-size:clamp(.9375rem,1.15vw,1.0625rem);line-height:1.65;min-width:320px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.nav{position:fixed;inset:0 0 auto 0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding-inline:var(--px);background:rgba(236,239,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--l-border)}
+.nav-brand{font-family:var(--font-display);font-weight:900;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.02em;color:var(--l-text);text-decoration:none}
+.nav-meta{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--l-muted)}
+main{max-width:720px;margin-inline:auto;padding:calc(52px + 4rem) var(--px) 5rem}
+.eyebrow{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
+h1{font-family:var(--font-display);font-weight:900;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:.5rem}
+.updated{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;color:var(--l-muted);margin-bottom:2.5rem}
+h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.25rem,2.4vw,1.5rem);margin:2.25rem 0 .65rem}
+p{margin-bottom:1rem;color:var(--l-text)}
+ul{margin:0 0 1rem 1.25rem}
+li{margin-bottom:.4rem}
+a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
+.lead{font-size:clamp(1.0625rem,1.6vw,1.25rem);color:var(--l-muted);margin-bottom:2rem}
+.site-footer{background:var(--d-bg);border-top:1px solid rgba(229,230,233,.08);padding:1.75rem var(--px)}
+.footer-inner{max-width:var(--mw);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
+.footer-copy{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;color:var(--d-subtle)}
+.footer-copy a{color:var(--d-subtle);text-decoration:underline;text-underline-offset:2px}
+.lang-sw{display:flex;gap:.375rem}
+.lang-btn{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.18em;text-transform:uppercase;padding:.25rem .5rem;border:1px solid transparent;border-radius:2px;text-decoration:none;color:var(--d-subtle);transition:all .15s}
+.lang-btn.active{border-color:rgba(229,230,233,.08);color:var(--d-text)}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Навигация">
+  <a href="/ru/" class="nav-brand">ULTIMATUM</a>
+  <span class="nav-meta">Конфиденциальность</span>
+</nav>
+
+<main>
+  <p class="eyebrow">Конфиденциальность</p>
+  <h1>Политика обработки данных</h1>
+  <p class="updated">Обновлено · 26 июня 2026</p>
+
+  <p class="lead">Коротко: e-mail мы собираем только чтобы сообщить о выходе книги, аналитику подключаем с уведомлением. Данные не продаём и не передаём третьим лицам.</p>
+
+  <h2>Оператор</h2>
+  <p>Сайт — лендинг книги «Ультиматум. Уйти на фриланс и не вернуться», автор Константин Иванов. По любым вопросам этой политики и обработки персональных данных: <a class="lnk" href="mailto:ask@mindextractor.com">ask@mindextractor.com</a>.</p>
+
+  <h2>Какие данные обрабатываем</h2>
+  <ul>
+    <li><strong>Адрес электронной почты</strong> — только если вы сами вводите его в форму подписки и отправляете.</li>
+    <li><strong>Обезличенные данные аналитики</strong> — просмотры страниц, примерный регион, тип устройства.</li>
+  </ul>
+
+  <h2>Цель обработки</h2>
+  <p>E-mail используется с единственной целью — отправить уведомление о выходе книги и небольшое число связанных с этим сообщений. Персональные данные не продаются и не передаются третьим лицам, кроме сервисов аналитики, указанных ниже.</p>
+
+  <h2>Аналитика</h2>
+  <p>На русской версии сайта счётчики загружаются сразу при открытии страницы, о чём вы уведомляетесь строкой в подвале со ссылкой на эту политику. Используются:</p>
+  <ul>
+    <li><strong>Яндекс.Метрика</strong> (№ 110149555), включая Вебвизор — ООО «ЯНДЕКС».</li>
+    <li><strong>Google Analytics 4</strong> — агрегированная статистика посещений (Google LLC).</li>
+    <li><strong>Meta Pixel</strong> — измерение конверсий формы (Meta Platforms, Inc.).</li>
+  </ul>
+
+  <h2>Правовое основание и согласие</h2>
+  <p>Обработка осуществляется на основании вашего согласия (152-ФЗ «О персональных данных»), которое вы даёте, отправляя форму. Согласие можно отозвать в любой момент — см. ниже.</p>
+
+  <h2>Срок хранения</h2>
+  <p>E-mail хранится до отправки анонса о выходе книги и непродолжительное время после, либо до момента, когда вы попросите его удалить, — в зависимости от того, что наступит раньше. Данные аналитики хранятся в пределах стандартных сроков соответствующих сервисов.</p>
+
+  <h2>Права субъекта персональных данных</h2>
+  <p>Вы вправе получить сведения об обработке ваших данных, потребовать их уточнения, блокирования или уничтожения, а также отозвать согласие на обработку.</p>
+
+  <h2>Отзыв согласия / удаление данных</h2>
+  <p>Напишите на <a class="lnk" href="mailto:ask@mindextractor.com?subject=Удалить%20мои%20данные">ask@mindextractor.com</a> — мы удалим ваш e-mail из списка. Чтобы отключить аналитику в браузере, очистите cookie и localStorage этого сайта или используйте блокировщик счётчиков.</p>
+
+  <h2>Контакт</h2>
+  <p>Вопросы по политике и обработке данных: <a class="lnk" href="mailto:ask@mindextractor.com">ask@mindextractor.com</a>.</p>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">маркетинг.dark</a> · <a href="https://mindextractor.com" target="_blank" rel="noopener">MindExtractor</a> · Ультиматум</span>
+    <nav class="lang-sw" aria-label="Язык">
+      <a href="/ru/privacy" class="lang-btn active" hreflang="ru" aria-current="page" lang="ru">RU</a>
+      <a href="/privacy" class="lang-btn" hreflang="en" lang="en">EN</a>
+    </nav>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>

@@ -23,8 +23,105 @@
 <link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/">
 <link rel="alternate" hreflang="x-default" href="https://ultimatumbook.com/">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Book",
+      "name": "Ultimatum — Go Freelance. Never Return",
+      "inLanguage": "en",
+      "url": "https://ultimatumbook.com/",
+      "bookFormat": "https://schema.org/EBook",
+      "about": "freelancing, self-development",
+      "author": {
+        "@type": "Person",
+        "name": "Konstantin Ivanov",
+        "url": "https://mindextractor.com",
+        "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Konstantin Ivanov",
+      "url": "https://mindextractor.com",
+      "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
+    },
+    {
+      "@type": "WebSite",
+      "name": "Ultimatum",
+      "url": "https://ultimatumbook.com/",
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
+
 <!-- Analytics slot -->
-<!-- ANALYTICS -->
+<!-- ANALYTICS — EN is GDPR consent-gated. Nothing loads until Accept. No Yandex.Metrika here. -->
+<script>
+(function(){
+  var KEY='ult_consent';
+  var choice=null; try{choice=localStorage.getItem(KEY);}catch(_){}
+
+  function loadGA(){
+    if(window.__gaLoaded)return; window.__gaLoaded=1;
+    var s=document.createElement('script');
+    s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=G-N2ML90MHHF';
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){dataLayer.push(arguments);};
+    gtag('js',new Date()); gtag('config','G-N2ML90MHHF');
+  }
+  function loadPixel(){
+    if(window.__fbqLoaded)return; window.__fbqLoaded=1;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,
+    'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1020962827086917');
+  }
+  function enable(){ loadGA(); loadPixel(); try{if(window.fbq)fbq('track','PageView');}catch(_){} }
+
+  window.__consent=(choice==='accepted');
+  if(window.__consent) enable();
+
+  // Conversion helper — respects consent on EN; never throws.
+  window.UltTrack=function(source){
+    if(!window.__consent) return;
+    try{if(window.fbq)fbq('track','Lead',{content_name:'ultimatum-waitlist',source:source});}catch(_){}
+    try{if(window.gtag)gtag('event','generate_lead',{source:source,language:'en'});}catch(_){}
+  };
+
+  // Cookie banner — only when no prior choice this device.
+  if(choice!=='accepted'&&choice!=='declined'){
+    var build=function(){
+      var bar=document.createElement('div');
+      bar.className='cookie-bar'; bar.setAttribute('role','dialog');
+      bar.setAttribute('aria-label','Cookie consent');
+      bar.innerHTML='<span class="cookie-txt">We use cookies to measure traffic. '+
+        '<a href="/privacy">Privacy</a></span>'+
+        '<span class="cookie-btns">'+
+        '<button type="button" class="cookie-btn cookie-decline">Decline</button>'+
+        '<button type="button" class="cookie-btn cookie-accept">Accept</button></span>';
+      document.body.appendChild(bar);
+      requestAnimationFrame(function(){bar.classList.add('show');});
+      function close(){bar.classList.remove('show');setTimeout(function(){if(bar.parentNode)bar.parentNode.removeChild(bar);},260);}
+      bar.querySelector('.cookie-accept').addEventListener('click',function(){
+        try{localStorage.setItem(KEY,'accepted');}catch(_){}
+        window.__consent=true; enable(); close();
+      });
+      bar.querySelector('.cookie-decline').addEventListener('click',function(){
+        try{localStorage.setItem(KEY,'declined');}catch(_){}
+        window.__consent=false; close();
+      });
+    };
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build);
+    else build();
+  }
+})();
+</script>
 
 <style>
 /* ─────────────────────────────────────────────
@@ -1141,6 +1238,36 @@ button{font-family:inherit;cursor:pointer}
 }
 .footer-link{color:var(--d-muted);text-decoration:underline;text-underline-offset:2px;transition:color .15s}
 .footer-link:hover{color:var(--d-text)}
+
+/* ── Cookie consent banner (EN / GDPR) — light theme ── */
+.cookie-bar{
+  position:fixed;left:50%;bottom:1rem;
+  transform:translate(-50%,calc(100% + 2rem));
+  z-index:9999;max-width:min(640px,calc(100vw - 2rem));
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;
+  background:var(--l-bg);color:var(--l-text);
+  border:1px solid var(--l-border);border-radius:12px;
+  box-shadow:0 12px 40px rgba(20,21,28,.18);
+  padding:.85rem 1.1rem;font-size:var(--sz-sm);line-height:1.45;
+  opacity:0;transition:transform .28s ease,opacity .28s ease;
+}
+.cookie-bar.show{transform:translate(-50%,0);opacity:1}
+.cookie-txt{color:var(--l-muted)}
+.cookie-txt a{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
+.cookie-btns{display:flex;gap:.5rem;flex-shrink:0}
+.cookie-btn{
+  font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.08em;
+  text-transform:uppercase;border:1px solid var(--l-border);
+  background:transparent;color:var(--l-text);
+  padding:.5rem .9rem;border-radius:8px;transition:background .15s,border-color .15s,filter .15s;
+}
+.cookie-decline:hover{border-color:var(--l-subtle)}
+.cookie-accept{background:var(--acc);color:#fff;border-color:var(--acc)}
+.cookie-accept:hover{filter:brightness(1.08)}
+@media(max-width:480px){
+  .cookie-bar{flex-direction:column;align-items:stretch;text-align:center}
+  .cookie-btns{justify-content:center}
+}
 .lang-sw{display:flex;gap:.375rem}
 .lang-btn{
   font-family:var(--font-mono);
@@ -1735,7 +1862,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
    Each form scopes its own success/error messages to its parent,
    so submitting one never touches the other. */
 !function(){
-  var SOURCE='book-en';
+  var SOURCE='ultimatum-en';
   function init(form){
     var inp=form.querySelector('.email-inp');
     var btn=form.querySelector('.sub-btn');
@@ -1761,7 +1888,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({email:email,source:SOURCE})
         });
-        r.ok?showOk():showErr('Something went wrong. Try again.');
+        if(r.ok){try{if(window.UltTrack)window.UltTrack(SOURCE);}catch(_){}showOk();}
+        else showErr('Something went wrong. Try again.');
       }catch(_){showErr('Something went wrong. Try again.')}
       finally{btn.disabled=false;btn.textContent=label}
     });

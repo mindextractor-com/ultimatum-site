@@ -22,8 +22,86 @@
 <link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/">
 <link rel="alternate" hreflang="x-default" href="https://ultimatumbook.com/">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Book",
+      "name": "Ультиматум — Уйти на фриланс и не вернуться",
+      "inLanguage": "ru",
+      "url": "https://ultimatumbook.com/ru/",
+      "bookFormat": "https://schema.org/EBook",
+      "about": "фриланс, саморазвитие",
+      "author": {
+        "@type": "Person",
+        "name": "Константин Иванов",
+        "url": "https://mindextractor.com",
+        "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Константин Иванов",
+      "url": "https://mindextractor.com",
+      "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
+    },
+    {
+      "@type": "WebSite",
+      "name": "Ultimatum",
+      "url": "https://ultimatumbook.com/ru/",
+      "inLanguage": "ru"
+    }
+  ]
+}
+</script>
+
 <!-- Analytics slot -->
-<!-- ANALYTICS -->
+<!-- ANALYTICS — RU loads immediately, no consent gate (152-ФЗ notice in footer) -->
+
+<!-- Yandex.Metrika -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+   ym(110149555,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/110149555" style="position:absolute;left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika -->
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2ML90MHHF"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());
+  gtag('config','G-N2ML90MHHF');
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,
+  'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1020962827086917');
+  fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1020962827086917&ev=PageView&noscript=1"/></noscript>
+<!-- /Meta Pixel -->
+
+<!-- Conversion helper — RU always fires; every call guarded -->
+<script>
+window.UltTrack=function(source){
+  try{if(window.fbq)fbq('track','Lead',{content_name:'ultimatum-waitlist',source:source});}catch(_){}
+  try{if(window.gtag)gtag('event','generate_lead',{source:source,language:'ru'});}catch(_){}
+  try{if(window.ym)ym(110149555,'reachGoal','waitlist');}catch(_){}
+};
+</script>
 
 <style>
 /* ─────────────────────────────────────────────
@@ -1598,6 +1676,7 @@ button{font-family:inherit;cursor:pointer}
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" class="footer-link" target="_blank" rel="noopener">маркетинг.dark</a> · <a href="https://mindextractor.com" class="footer-link" target="_blank" rel="noopener">MindExtractor</a> · Ультиматум</span>
+    <span class="footer-copy">Используем cookie и аналитику. Оставляя e-mail, вы соглашаетесь с <a href="/ru/privacy" class="footer-link">политикой обработки данных</a>.</span>
     <nav class="lang-sw" aria-label="Язык">
       <a href="/ru/" class="lang-btn active" hreflang="ru" aria-current="page" lang="ru">RU</a>
       <a href="/" class="lang-btn" hreflang="en" lang="en">EN</a>
@@ -1735,7 +1814,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
    Each form scopes its own success/error messages to its parent,
    so submitting one never touches the other. */
 !function(){
-  var SOURCE='book-ru';
+  var SOURCE='ultimatum-ru';
   function init(form){
     var inp=form.querySelector('.email-inp');
     var btn=form.querySelector('.sub-btn');
@@ -1761,7 +1840,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({email:email,source:SOURCE})
         });
-        r.ok?showOk():showErr('Что-то пошло не так. Попробуй ещё раз.');
+        if(r.ok){try{if(window.UltTrack)window.UltTrack(SOURCE);}catch(_){}showOk();}
+        else showErr('Что-то пошло не так. Попробуй ещё раз.');
       }catch(_){showErr('Что-то пошло не так. Попробуй ещё раз.')}
       finally{btn.disabled=false;btn.textContent=label}
     });

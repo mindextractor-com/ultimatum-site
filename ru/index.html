@@ -101,6 +101,22 @@ window.UltTrack=function(source){
   try{if(window.gtag)gtag('event','generate_lead',{source:source,language:'ru'});}catch(_){}
   try{if(window.ym)ym(110149555,'reachGoal','waitlist');}catch(_){}
 };
+
+// Generic funnel event — RU: always dispatches; carries source+language; Metrika reachGoal too.
+window.UltEvent=function(name,extra){
+  var p={source:'ultimatum-ru',language:'ru'};
+  if(extra)for(var k in extra)p[k]=extra[k];
+  try{if(window.gtag)gtag('event',name,p);}catch(_){}
+  try{if(window.fbq)fbq('trackCustom',name,p);}catch(_){}
+  try{if(window.ym)ym(110149555,'reachGoal',name);}catch(_){}
+  return true;
+};
+// Fire an event at most once per page view, shared across both forms.
+window.__ultFired=window.__ultFired||{};
+window.UltOnce=function(flag,name,extra){
+  if(window.__ultFired[flag])return;
+  if(window.UltEvent&&window.UltEvent(name,extra))window.__ultFired[flag]=true;
+};
 </script>
 
 <style>
@@ -1819,6 +1835,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     var inp=form.querySelector('.email-inp');
     var btn=form.querySelector('.sub-btn');
     if(!inp||!btn)return;
+    inp.addEventListener('focus',function(){if(window.UltOnce)UltOnce('form_focus','form_focus');});
     var label=btn.textContent;
     var scope=form.parentNode;
     var ok=scope.querySelector('.msg-ok');
@@ -1831,6 +1848,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       e.preventDefault();clr();
       var email=inp.value.trim();
       if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:'invalid_email'});
         showErr('Похоже, в адресе опечатка.');inp.focus();return;
       }
       btn.disabled=true;btn.textContent='…';
@@ -1841,12 +1859,43 @@ document.getElementById('yr').textContent=new Date().getFullYear();
           body:JSON.stringify({email:email,source:SOURCE})
         });
         if(r.ok){try{if(window.UltTrack)window.UltTrack(SOURCE);}catch(_){}showOk();}
-        else showErr('Что-то пошло не так. Попробуй ещё раз.');
-      }catch(_){showErr('Что-то пошло не так. Попробуй ещё раз.')}
+        else{if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:r.status===409?'duplicate':'error'});showErr('Что-то пошло не так. Попробуй ещё раз.');}
+      }catch(_){if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:'error'});showErr('Что-то пошло не так. Попробуй ещё раз.')}
       finally{btn.disabled=false;btn.textContent=label}
     });
   }
   document.querySelectorAll('.subscribe-form').forEach(init);
+}();
+
+/* ── Funnel: scroll depth (50/100) + subscribe-section view ── */
+!function(){
+  function fire(flag,name){if(window.UltOnce)UltOnce(flag,name);}
+  var d=document.documentElement,b=document.body;
+  function onScroll(){
+    var st=window.pageYOffset||d.scrollTop;
+    var h=(d.scrollHeight||b.scrollHeight)-window.innerHeight;
+    if(h>0){
+      var p=st/h;
+      if(p>=0.5)fire('scroll_50','scroll_50');
+      if(p>=0.98)fire('scroll_100','scroll_100');
+    }
+    var f=window.__ultFired||{};
+    if(f.scroll_50&&f.scroll_100)window.removeEventListener('scroll',onScroll);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var sec=document.getElementById('waitlist')||document.getElementById('subscribe-form');
+  if(sec&&'IntersectionObserver'in window){
+    var io=new IntersectionObserver(function(es){
+      for(var i=0;i<es.length;i++){
+        if(es[i].isIntersecting){
+          fire('form_view','form_view');
+          if((window.__ultFired||{}).form_view)io.disconnect();
+        }
+      }
+    },{threshold:0.25});
+    io.observe(sec);
+  }
 }();
 </script>
 </body>

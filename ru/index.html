@@ -1197,6 +1197,13 @@ button{font-family:inherit;cursor:pointer}
   color:var(--l-subtle);
   margin-bottom:1rem;
 }
+.form-offer{
+  font-size:var(--sz-sm);
+  line-height:1.55;
+  color:var(--l-muted);
+  margin-top:.875rem;
+  max-width:48ch;
+}
 .form-msg{
   display:none;
   padding:.75rem 1.25rem;
@@ -1354,7 +1361,8 @@ button{font-family:inherit;cursor:pointer}
         >
         <button type="submit" class="sub-btn">Забрать первым →</button>
       </form>
-      <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Готово. Ты в списке.</div>
+      <p class="form-offer">Подписчикам — спеццена на книгу, ранний доступ и бесплатный доступ к приложению Daily Frame (Каркас дня).</p>
+      <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Почти готово. Я отправил письмо — открой его и нажми «Подтвердить подписку». Без подтверждения в список не попадёшь.</div>
       <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
       <div class="hero-form-foot">
         <a href="#posyl" class="btn-ghost">Что внутри</a>
@@ -1681,8 +1689,9 @@ button{font-family:inherit;cursor:pointer}
         >
         <button type="submit" class="sub-btn" id="sub-btn">В список →</button>
       </form>
+      <p class="form-offer">Подписчикам — спеццена на книгу, ранний доступ и бесплатный доступ к приложению Daily Frame (Каркас дня).</p>
       <p class="form-fine">Адрес — только для анонса книги.</p>
-      <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Готово. Ты в списке.</div>
+      <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Почти готово. Я отправил письмо — открой его и нажми «Подтвердить подписку». Без подтверждения в список не попадёшь.</div>
       <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>
     </div>
   </div>

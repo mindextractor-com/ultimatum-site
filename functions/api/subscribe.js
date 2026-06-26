@@ -27,7 +27,20 @@ export async function onRequestPost({ request, env }) {
       }
     });
 
-    // 1) Upsert the signup as pending (keeps existing source logic).
+    // 1) If this (email, source) is already confirmed, never downgrade it and
+    //    never re-send the DOI — just succeed.
+    try {
+      const g = await sb(
+        `book_waitlist?email=eq.${encodeURIComponent(email)}` +
+        `&source=eq.${encodeURIComponent(source)}&select=status&limit=1`
+      );
+      if (g.ok) {
+        const existing = (await g.json())[0];
+        if (existing && existing.status === 'confirmed') return json({ ok: true }, 200);
+      }
+    } catch (_) { /* lookup failed → fall through and treat as new */ }
+
+    // 2) Upsert the signup as pending (new row, or refresh an existing pending one).
     const up = await sb('book_waitlist?on_conflict=email,source', {
       method: 'POST',
       headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
@@ -35,7 +48,7 @@ export async function onRequestPost({ request, env }) {
     });
     if (!up.ok && up.status !== 409) return json({ error: 'db' }, 500);
 
-    // 2) Look up the Brevo config for this source.
+    // 3) Look up the Brevo config for this source.
     let cfg = null;
     try {
       const c = await sb(
@@ -45,8 +58,8 @@ export async function onRequestPost({ request, env }) {
       if (c.ok) cfg = (await c.json())[0] || null;
     } catch (_) { /* no config → skip Brevo, still succeed */ }
 
-    // 3) Fire the Brevo double opt-in. Any failure keeps the pending row and
-    //    still returns success — we never lose a signup.
+    // 4) Fire the Brevo double opt-in (only reached for new/pending rows). Any
+    //    failure keeps the pending row and still returns success — never lose a signup.
     if (cfg && env.BREVO_API_KEY) {
       try {
         const origin = new URL(request.url).origin;

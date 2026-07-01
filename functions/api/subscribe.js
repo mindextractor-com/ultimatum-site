@@ -1,5 +1,6 @@
 // Cloudflare Pages Function — POST /api/subscribe
-// Writes a pending row to book_waitlist, then triggers a Brevo double opt-in email.
+// Writes a pending row to book_waitlist, then adds the contact to Brevo directly
+// (no double opt-in) and marks the row confirmed on success.
 //
 // Env (Pages → Settings → Environment variables):
 //   SUPABASE_URL
@@ -28,7 +29,7 @@ export async function onRequestPost({ request, env }) {
     });
 
     // 1) If this (email, source) is already confirmed, never downgrade it and
-    //    never re-send the DOI — just succeed.
+    //    skip the Brevo call — just succeed.
     try {
       const g = await sb(
         `book_waitlist?email=eq.${encodeURIComponent(email)}` +
@@ -48,47 +49,44 @@ export async function onRequestPost({ request, env }) {
     });
     if (!up.ok && up.status !== 409) return json({ error: 'db' }, 500);
 
-    // 3) Look up the Brevo config for this source.
+    // 3) Look up the Brevo list for this source.
     let cfg = null;
     try {
       const c = await sb(
-        `waitlists?source=eq.${encodeURIComponent(source)}` +
-        `&select=brevo_list_id,doi_template_id,redirect_url,lang&limit=1`
+        `waitlists?source=eq.${encodeURIComponent(source)}&select=brevo_list_id&limit=1`
       );
       if (c.ok) cfg = (await c.json())[0] || null;
-      else console.log('DIAG config_lookup_error=', 'status ' + c.status);
-    } catch (e) { console.log('DIAG config_lookup_error=', String(e)); }
-    if (!cfg) console.log('DIAG config_empty');
+    } catch (_) { /* no config → skip Brevo, still succeed */ }
 
-    // ── TEMPORARY diagnostics (remove after debugging) ──
-    console.log('DIAG source=', source);
-    console.log('DIAG config=', cfg ? JSON.stringify(cfg) : 'config: none');
-    console.log('DIAG brevo_key_len=', (env.BREVO_API_KEY ? env.BREVO_API_KEY.length : 0));
-    console.log('DIAG service_role_present=', !!env.SUPABASE_SERVICE_ROLE_KEY);
-    console.log('DIAG supabase_url=', env.SUPABASE_URL ? 'set' : 'MISSING');
-
-    // 4) Fire the Brevo double opt-in (only reached for new/pending rows). Any
-    //    failure keeps the pending row and still returns success — never lose a signup.
+    // 4) Add the contact to Brevo directly. On success — or if the contact already
+    //    exists (400 duplicate_parameter) — mark the row confirmed. Any failure keeps
+    //    it pending and still returns success — never lose a signup.
     if (cfg && env.BREVO_API_KEY) {
       try {
-        const origin = new URL(request.url).origin;
-        const redirectionUrl = /^https?:\/\//.test(cfg.redirect_url)
-          ? cfg.redirect_url
-          : origin + cfg.redirect_url;
-        const resp = await fetch('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', {
+        const resp = await fetch('https://api.brevo.com/v3/contacts', {
           method: 'POST',
           headers: { 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
           body: JSON.stringify({
             email,
-            includeListIds: [cfg.brevo_list_id],
-            templateId: cfg.doi_template_id,
-            redirectionUrl,
+            listIds: [cfg.brevo_list_id],
+            updateEnabled: true,
             attributes: { SOURCE: source }
           })
         });
-        console.log('DIAG brevo_status=', resp.status);
-        console.log('DIAG brevo_body=', await resp.text());
-      } catch (e) { console.log('DIAG brevo_threw=', String(e)); /* keep pending; succeed anyway */ }
+        const body = await resp.text();
+        const added = resp.ok || (resp.status === 400 && /duplicate_parameter/.test(body));
+        if (added) {
+          await sb(
+            `book_waitlist?email=eq.${encodeURIComponent(email)}` +
+            `&source=eq.${encodeURIComponent(source)}`,
+            {
+              method: 'PATCH',
+              headers: { Prefer: 'return=minimal' },
+              body: JSON.stringify({ status: 'confirmed', confirmed_at: new Date().toISOString() })
+            }
+          );
+        }
+      } catch (_) { /* keep pending; succeed anyway */ }
     }
 
     return json({ ok: true }, 200);

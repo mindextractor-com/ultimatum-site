@@ -56,7 +56,16 @@ export async function onRequestPost({ request, env }) {
         `&select=brevo_list_id,doi_template_id,redirect_url,lang&limit=1`
       );
       if (c.ok) cfg = (await c.json())[0] || null;
-    } catch (_) { /* no config → skip Brevo, still succeed */ }
+      else console.log('DIAG config_lookup_error=', 'status ' + c.status);
+    } catch (e) { console.log('DIAG config_lookup_error=', String(e)); }
+    if (!cfg) console.log('DIAG config_empty');
+
+    // ── TEMPORARY diagnostics (remove after debugging) ──
+    console.log('DIAG source=', source);
+    console.log('DIAG config=', cfg ? JSON.stringify(cfg) : 'config: none');
+    console.log('DIAG brevo_key_len=', (env.BREVO_API_KEY ? env.BREVO_API_KEY.length : 0));
+    console.log('DIAG service_role_present=', !!env.SUPABASE_SERVICE_ROLE_KEY);
+    console.log('DIAG supabase_url=', env.SUPABASE_URL ? 'set' : 'MISSING');
 
     // 4) Fire the Brevo double opt-in (only reached for new/pending rows). Any
     //    failure keeps the pending row and still returns success — never lose a signup.
@@ -66,7 +75,7 @@ export async function onRequestPost({ request, env }) {
         const redirectionUrl = /^https?:\/\//.test(cfg.redirect_url)
           ? cfg.redirect_url
           : origin + cfg.redirect_url;
-        await fetch('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', {
+        const resp = await fetch('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', {
           method: 'POST',
           headers: { 'api-key': env.BREVO_API_KEY, 'content-type': 'application/json' },
           body: JSON.stringify({
@@ -77,7 +86,9 @@ export async function onRequestPost({ request, env }) {
             attributes: { SOURCE: source }
           })
         });
-      } catch (_) { /* keep pending; succeed anyway */ }
+        console.log('DIAG brevo_status=', resp.status);
+        console.log('DIAG brevo_body=', await resp.text());
+      } catch (e) { console.log('DIAG brevo_threw=', String(e)); /* keep pending; succeed anyway */ }
     }
 
     return json({ ok: true }, 200);

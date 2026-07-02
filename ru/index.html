@@ -1128,6 +1128,9 @@ button{font-family:inherit;cursor:pointer}
   background:transparent;
   color:var(--l-text);
 }
+/* Extra breathing room below the last content section so the form/offer
+   line doesn't crowd the footer. */
+#waitlist .s-inner{padding-bottom:calc(var(--sy) + 3rem)}
 #waitlist .label{color:var(--l-muted)}
 .waitlist-inner{
   max-width:600px;
@@ -1737,6 +1740,12 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   function rnd(a,b){return a+Math.random()*(b-a);}
 
   function build(){
+    /* Collapse the leaf before measuring: it's absolutely positioned, so its
+       own height feeds back into scrollHeight. If it ever exceeds the real
+       content it would ratchet taller each build and spill a dark strip +
+       scattered words BELOW the footer. Measuring at height 0 yields the true
+       document height (footer bottom) so the leaf terminates exactly there. */
+    leaf.style.height='0';
     var doc=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,
                      document.documentElement.offsetHeight);
     var vw=window.innerWidth;

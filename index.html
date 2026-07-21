@@ -450,7 +450,7 @@ button{font-family:inherit;cursor:pointer}
 }
 /* Compact inline subscribe in the hero — reuses .email-inp/.sub-btn */
 .hero-form{
-  flex-wrap:nowrap;
+  flex-wrap:wrap;
   justify-content:flex-start;
   max-width:440px;
   margin-bottom:.875rem;
@@ -1228,6 +1228,30 @@ button{font-family:inherit;cursor:pointer}
   margin-top:.875rem;
   max-width:48ch;
 }
+.form-choices{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:.6rem;
+  margin-top:.875rem;
+  text-align:left;
+}
+.form-check{
+  display:flex;
+  align-items:flex-start;
+  gap:.6rem;
+  font-size:var(--sz-sm);
+  line-height:1.5;
+  color:var(--l-muted);
+  cursor:pointer;
+}
+.form-check input{
+  margin-top:.15rem;
+  width:1rem;height:1rem;
+  accent-color:var(--acc);
+  flex-shrink:0;
+  cursor:pointer;
+}
 .form-msg{
   display:none;
   padding:.75rem 1.25rem;
@@ -1414,8 +1438,12 @@ button{font-family:inherit;cursor:pointer}
           aria-describedby="hero-msg-ok hero-msg-err"
         >
         <button type="submit" class="sub-btn">Get it first →</button>
+        <div class="form-choices">
+          <label class="form-check"><input type="checkbox" class="chk-book" id="hero-chk-book" checked><span>Notify me when the book launches</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="hero-chk-beta"><span>Beta access to the Daily Frame app — testers get 3 months of Pro free</span></label>
+        </div>
       </form>
-      <p class="form-offer">Subscribers get: a special launch price, early access, and free access to the Daily Frame app.</p>
+      <p class="form-offer">The book at launch, ~$10 — pre-order or buy on release. Beta testers get 3 months of Daily Frame Pro free.</p>
       <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">You’re on the list. Talk soon.</div>
       <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
       <div class="hero-form-foot">
@@ -1743,8 +1771,12 @@ button{font-family:inherit;cursor:pointer}
           aria-describedby="msg-ok msg-err"
         >
         <button type="submit" class="sub-btn" id="sub-btn">Join the list →</button>
+        <div class="form-choices">
+          <label class="form-check"><input type="checkbox" class="chk-book" id="chk-book" checked><span>Notify me when the book launches</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta"><span>Beta access to the Daily Frame app — testers get 3 months of Pro free</span></label>
+        </div>
       </form>
-      <p class="form-offer">Subscribers get: a special launch price, early access, and free access to the Daily Frame app.</p>
+      <p class="form-offer">The book at launch, ~$10 — pre-order or buy on release. Beta testers get 3 months of Daily Frame Pro free.</p>
       <p class="form-fine">Your address is only for the book announcement.</p>
       <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">You’re on the list. Talk soon.</div>
       <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>
@@ -1919,12 +1951,16 @@ document.getElementById('yr').textContent=new Date().getFullYear();
         if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:'invalid_email'});
         showErr('That email looks off.');inp.focus();return;
       }
+      var bookEl=form.querySelector('.chk-book');
+      var betaEl=form.querySelector('.chk-beta');
+      var wantsBook=bookEl?bookEl.checked:true;
+      var wantsBeta=betaEl?betaEl.checked:false;
       btn.disabled=true;btn.textContent='…';
       try{
         var r=await fetch('/api/subscribe',{
           method:'POST',
           headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({email:email,source:SOURCE})
+          body:JSON.stringify({email:email,source:SOURCE,wantsBook:wantsBook,wantsBeta:wantsBeta})
         });
         if(r.ok){try{if(window.UltTrack)window.UltTrack(SOURCE);}catch(_){}showOk();}
         else{if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:r.status===409?'duplicate':'error'});showErr('Something went wrong. Try again.');}

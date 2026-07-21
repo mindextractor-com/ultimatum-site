@@ -12,11 +12,14 @@
 // Schema + seed config: see /db/brevo-doi.sql
 export async function onRequestPost({ request, env }) {
   try {
-    const { email, source: rawSource } = await request.json();
+    const { email, source: rawSource, wantsBook, wantsBeta } = await request.json();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return json({ error: 'invalid email' }, 400);
     }
     const source = rawSource || 'md';
+    // Dual-intent signup: book box defaults on, beta box defaults off.
+    const WANTS_BOOK = wantsBook !== false;
+    const WANTS_BETA = wantsBeta === true;
     const KEY = env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_ANON_KEY;
     const sb = (path, init = {}) => fetch(`${env.SUPABASE_URL}/rest/v1/${path}`, {
       ...init,
@@ -70,7 +73,7 @@ export async function onRequestPost({ request, env }) {
             email,
             listIds: [cfg.brevo_list_id],
             updateEnabled: true,
-            attributes: { SOURCE: source }
+            attributes: { SOURCE: source, WANTS_BOOK, WANTS_BETA }
           })
         });
         const body = await resp.text();

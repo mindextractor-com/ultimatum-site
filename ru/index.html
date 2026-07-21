@@ -429,7 +429,7 @@ button{font-family:inherit;cursor:pointer}
 }
 /* Compact inline subscribe in the hero — reuses .email-inp/.sub-btn */
 .hero-form{
-  flex-wrap:nowrap;
+  flex-wrap:wrap;
   justify-content:flex-start;
   max-width:440px;
   margin-bottom:.875rem;
@@ -1207,6 +1207,30 @@ button{font-family:inherit;cursor:pointer}
   margin-top:.875rem;
   max-width:48ch;
 }
+.form-choices{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:.6rem;
+  margin-top:.875rem;
+  text-align:left;
+}
+.form-check{
+  display:flex;
+  align-items:flex-start;
+  gap:.6rem;
+  font-size:var(--sz-sm);
+  line-height:1.5;
+  color:var(--l-muted);
+  cursor:pointer;
+}
+.form-check input{
+  margin-top:.15rem;
+  width:1rem;height:1rem;
+  accent-color:var(--acc);
+  flex-shrink:0;
+  cursor:pointer;
+}
 .form-msg{
   display:none;
   padding:.75rem 1.25rem;
@@ -1363,8 +1387,12 @@ button{font-family:inherit;cursor:pointer}
           aria-describedby="hero-msg-ok hero-msg-err"
         >
         <button type="submit" class="sub-btn">Забрать первым →</button>
+        <div class="form-choices">
+          <label class="form-check"><input type="checkbox" class="chk-book" id="hero-chk-book" checked><span>Сообщить о выходе книги</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="hero-chk-beta"><span>Бета-доступ к приложению «Каркас дня» — тестерам 3 месяца Pro бесплатно</span></label>
+        </div>
       </form>
-      <p class="form-offer">Подписчикам — спеццена на книгу, ранний доступ и бесплатный доступ к приложению Daily Frame (Каркас дня).</p>
+      <p class="form-offer">Книга на старте ~700₽ — предзаказ или покупка на релизе. Бета-тестерам — 3 месяца «Каркас дня» Pro бесплатно.</p>
       <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
       <div class="hero-form-foot">
@@ -1692,8 +1720,12 @@ button{font-family:inherit;cursor:pointer}
           aria-describedby="msg-ok msg-err"
         >
         <button type="submit" class="sub-btn" id="sub-btn">В список →</button>
+        <div class="form-choices">
+          <label class="form-check"><input type="checkbox" class="chk-book" id="chk-book" checked><span>Сообщить о выходе книги</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta"><span>Бета-доступ к приложению «Каркас дня» — тестерам 3 месяца Pro бесплатно</span></label>
+        </div>
       </form>
-      <p class="form-offer">Подписчикам — спеццена на книгу, ранний доступ и бесплатный доступ к приложению Daily Frame (Каркас дня).</p>
+      <p class="form-offer">Книга на старте ~700₽ — предзаказ или покупка на релизе. Бета-тестерам — 3 месяца «Каркас дня» Pro бесплатно.</p>
       <p class="form-fine">Адрес — только для анонса книги.</p>
       <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>
@@ -1870,12 +1902,16 @@ document.getElementById('yr').textContent=new Date().getFullYear();
         if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:'invalid_email'});
         showErr('Похоже, в адресе опечатка.');inp.focus();return;
       }
+      var bookEl=form.querySelector('.chk-book');
+      var betaEl=form.querySelector('.chk-beta');
+      var wantsBook=bookEl?bookEl.checked:true;
+      var wantsBeta=betaEl?betaEl.checked:false;
       btn.disabled=true;btn.textContent='…';
       try{
         var r=await fetch('/api/subscribe',{
           method:'POST',
           headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({email:email,source:SOURCE})
+          body:JSON.stringify({email:email,source:SOURCE,wantsBook:wantsBook,wantsBeta:wantsBeta})
         });
         if(r.ok){try{if(window.UltTrack)window.UltTrack(SOURCE);}catch(_){}showOk();}
         else{if(window.UltOnce)UltOnce('form_submit_fail','form_submit_fail',{reason:r.status===409?'duplicate':'error'});showErr('Что-то пошло не так. Попробуй ещё раз.');}

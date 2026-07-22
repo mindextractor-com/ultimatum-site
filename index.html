@@ -181,6 +181,8 @@
   --px:clamp(1.25rem,5vw,4rem);
   --sy:clamp(5rem,10vw,8rem);
   --mw:1120px;
+  /* Shared width for the subscribe form group (input, checkboxes, offer, note) */
+  --form-w:440px;
 
   /* Dark leaf width — content always starts past this */
   --leaf-w:30vw;
@@ -452,7 +454,7 @@ button{font-family:inherit;cursor:pointer}
 .hero-form{
   flex-wrap:wrap;
   justify-content:flex-start;
-  max-width:440px;
+  max-width:var(--form-w);
   margin-bottom:.875rem;
 }
 .hero-form .email-inp{min-width:0}
@@ -1219,22 +1221,35 @@ button{font-family:inherit;cursor:pointer}
   letter-spacing:.18em;
   text-transform:uppercase;
   color:var(--l-subtle);
+  margin-top:.85rem;
   margin-bottom:1rem;
+  text-align:left;
 }
 .form-offer{
   font-size:var(--sz-sm);
   line-height:1.55;
   color:var(--l-muted);
-  margin-top:.875rem;
-  max-width:48ch;
+  margin-top:1.5rem;
+  max-width:var(--form-w);
+  text-align:left;
+  text-wrap:balance;
 }
 .form-choices{
   width:100%;
   display:flex;
   flex-direction:column;
-  gap:.6rem;
-  margin-top:.875rem;
+  gap:.7rem;
+  margin-top:1.25rem;
   text-align:left;
+}
+/* Keep the whole form group on one left edge as a unit. In section 08 the
+   heading/subhead stay centered while the form, checkboxes, offer and
+   fine-print align to the input's left edge (centered as a block). */
+#waitlist .subscribe-form,
+#waitlist .form-offer,
+#waitlist .form-fine{
+  max-width:var(--form-w);
+  margin-inline:auto;
 }
 .form-check{
   display:flex;

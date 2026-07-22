@@ -17,9 +17,9 @@ export async function onRequestPost({ request, env }) {
       return json({ error: 'invalid email' }, 400);
     }
     const source = rawSource || 'md';
-    // Dual-intent signup: book box defaults on, beta box defaults off.
+    // Dual-intent signup: both boxes default on; only an explicit false opts out.
     const WANTS_BOOK = wantsBook !== false;
-    const WANTS_BETA = wantsBeta === true;
+    const WANTS_BETA = wantsBeta !== false;
     const KEY = env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_ANON_KEY;
     const sb = (path, init = {}) => fetch(`${env.SUPABASE_URL}/rest/v1/${path}`, {
       ...init,

@@ -1065,6 +1065,10 @@ button{font-family:inherit;cursor:pointer}
   width:100%;height:100%;
   object-fit:cover;
   display:block;
+  /* Sit above the .author-ph fallback so a loaded photo hides the initials;
+     if the image fails (onerror → display:none) the placeholder shows through. */
+  position:relative;
+  z-index:1;
 }
 .author-photo[src=""],.author-photo:not([src]){display:none}
 .author-ph{
@@ -1728,10 +1732,10 @@ button{font-family:inherit;cursor:pointer}
     <span class="label reveal">07 · Author</span>
     <div class="author-layout">
       <div class="author-photo-wrap reveal">
-        <img class="author-photo" src="images/photo.jpg" alt="Konstantin Ivanov, author of Ultimatum" loading="lazy" width="280" height="350" onerror="this.style.display='none'">
+        <img class="author-photo" src="images/author.webp" alt="Konstantin Ivanov" loading="lazy" width="800" height="884" onerror="this.style.display='none'">
         <div class="author-ph" aria-hidden="true">
           <span class="author-initials">KI</span>
-          <span class="author-ph-tag">photo.jpg</span>
+          <span class="author-ph-tag">author.webp</span>
         </div>
       </div>
       <div class="reveal" style="transition-delay:.15s">

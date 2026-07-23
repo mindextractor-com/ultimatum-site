@@ -292,40 +292,6 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ─────────────────────────────────────────────
-   NAV — light translucent (site reads light; dark
-   lives only in the leaf below)
-───────────────────────────────────────────── */
-.nav{
-  position:fixed;
-  inset:0 0 auto 0;
-  z-index:500;
-  height:52px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-inline:var(--px);
-  background:rgba(236,239,242,.85);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--l-border);
-}
-.nav-brand{
-  font-family:var(--font-display);
-  font-weight:900;
-  font-size:clamp(.875rem,1.1vw,1.0625rem);
-  letter-spacing:-.02em;
-  color:var(--l-text);
-  text-decoration:none;
-}
-.nav-meta{
-  font-family:var(--font-mono);
-  font-size:var(--sz-label);
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--l-muted);
-}
-
-/* ─────────────────────────────────────────────
    UTILITIES
 ───────────────────────────────────────────── */
 .label{
@@ -350,14 +316,13 @@ button{font-family:inherit;cursor:pointer}
 ───────────────────────────────────────────── */
 #hero{
   min-height:100svh;
-  padding-top:52px;
   background:transparent;
   color:var(--l-text);
 }
 .hero-layout{
   position:relative;
   z-index:2;
-  min-height:calc(100svh - 52px);
+  min-height:100svh;
   padding-block:clamp(3rem,8vw,6rem);
   display:grid;
   grid-template-columns:1fr clamp(180px,26vw,340px);
@@ -378,34 +343,47 @@ button{font-family:inherit;cursor:pointer}
   display:block;
   margin-bottom:2rem;
 }
-/* Typography composition — Albertus key words, Jost connectors */
+/* Book title — dominant, in the display serif (matches the cover) */
 .hero-h1{
+  margin-bottom:.75rem;
+  line-height:.95;
+  overflow-wrap:break-word;
+  min-width:0;
+  font-family:var(--font-display);
+  font-weight:900;
+  /* Sized to stay one line in the narrow text column (leaf + cover);
+     «УЛЬТИМАТУМ» is a long word, so a touch smaller than EN */
+  font-size:clamp(1.85rem,3.7vw,4.5rem);
+  letter-spacing:-.04em;
+}
+/* Promise subheading — Albertus key words, Jost connectors, red accent */
+.hero-promise{
   margin-bottom:1.75rem;
-  line-height:.98;
+  line-height:1.05;
   overflow-wrap:break-word;
   min-width:0;
 }
-.hero-h1 .disp{
+.hero-promise .disp{
   font-family:var(--font-display);
   font-weight:900;
-  font-size:var(--sz-h1);
-  letter-spacing:-.04em;
+  font-size:clamp(1.5rem,3.2vw,2.75rem);
+  letter-spacing:-.02em;
   display:inline;
 }
-.hero-h1 .conn{
+.hero-promise .conn{
   font-family:var(--font-text);
   font-weight:300;
-  font-size:clamp(1.5rem,4vw,3.5rem);
+  font-size:clamp(1.35rem,2.8vw,2.4rem);
   letter-spacing:-.01em;
   opacity:.75;
   display:inline;
 }
-.hero-h1 .red{
+.hero-promise .red{
   color:var(--acc);
   font-family:var(--font-text);
   font-weight:700;
   font-style:italic;
-  font-size:clamp(1.75rem,4.5vw,4rem);
+  font-size:clamp(1.5rem,3vw,2.9rem);
   display:inline;
 }
 .hero-sub{
@@ -480,6 +458,7 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* Book cover */
+.hero-body{min-width:0}
 .hero-cover{align-self:center}
 .book{
   position:relative;
@@ -1371,12 +1350,6 @@ button{font-family:inherit;cursor:pointer}
      inside each section above the leaf. -->
 <div class="dark-leaf" aria-hidden="true"></div>
 
-<!-- ══ NAV ══════════════════════════════════════════ -->
-<nav class="nav" id="nav" aria-label="Навигация">
-  <a href="/ru/" class="nav-brand">Ультиматум</a>
-  <span class="nav-meta" aria-label="33 главы, 7 частей">33 главы · 7 частей</span>
-</nav>
-
 <!-- ═══════════════════════════════════════════════════
      HERO
 ════════════════════════════════════════════════════ -->
@@ -1385,11 +1358,11 @@ button{font-family:inherit;cursor:pointer}
   <div class="hero-layout">
     <div class="hero-body">
       <span class="hero-kicker">Нон-фикшн о фрилансе</span>
-      <h1 class="hero-h1" id="hero-h1">
-        <span class="disp">Уйти</span><br>
-        <span class="conn">на </span><span class="disp">фриланс</span><br>
+      <h1 class="hero-h1" id="hero-h1">УЛЬТИМАТУМ</h1>
+      <p class="hero-promise">
+        <span class="conn">Уйти на </span><span class="disp">фриланс</span><br>
         <span class="conn">и </span><em class="red">не</em><span class="conn"> вернуться</span>
-      </h1>
+      </p>
       <p class="hero-sub">Фриланс сквозь призму саморазвития.</p>
       <p class="hero-lead">Не потому что сжёг мосты и стоишь на пепелище. А потому что больше незачем возвращаться. Без обещаний золотых гор и секретного действия, которое разом всё изменит.</p>
       <form class="subscribe-form hero-form" novalidate>

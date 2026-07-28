@@ -473,11 +473,17 @@ button{font-family:inherit;cursor:pointer}
   padding:clamp(1.25rem,2.5vw,1.75rem);
   overflow:hidden;
 }
-.book-cover-img{
+/* <picture> carries the absolute fill so the <img> can stay a plain
+   block — the WebP is the primary source, JPEG the fallback */
+.book-cover-pic{
   position:absolute;inset:0;
+  z-index:0;
+  display:block;
+}
+.book-cover-img{
+  display:block;
   width:100%;height:100%;
   object-fit:cover;
-  z-index:0;
 }
 .book-cover-img[src=""],.book-cover-img:not([src]){display:none}
 /* Once the real cover loads it carries its own title — hide the
@@ -1396,7 +1402,10 @@ button{font-family:inherit;cursor:pointer}
 
     <div class="hero-cover" aria-hidden="true">
       <div class="book" role="img" aria-label="Обложка книги Ультиматум">
-        <img class="book-cover-img" src="/images/cover-ru.jpg" alt="" loading="eager" onload="this.closest('.book').classList.add('has-cover')" onerror="this.style.display='none'">
+        <picture class="book-cover-pic">
+          <source type="image/webp" srcset="/images/cover-ru.webp">
+          <img class="book-cover-img" src="/images/cover-ru.jpg" alt="" loading="eager" onload="this.closest('.book').classList.add('has-cover')" onerror="this.style.display='none'">
+        </picture>
         <div class="book-top">
           <span class="book-author-n">Константин<br>Иванов</span>
           <span class="book-soon">Скоро</span>

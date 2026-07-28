@@ -7,3 +7,8 @@ dist/
 *.log
 assets/fonts-src/*.ttf
 assets/fonts-src/*.otf
+
+# Multi-MB design export sources — the site ships .webp/.jpg only.
+# app-*.png stays allowed: index.html references images/app-1..3.png.
+images/*.png
+!images/app-*.png

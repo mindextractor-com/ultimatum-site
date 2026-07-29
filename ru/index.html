@@ -1014,6 +1014,44 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ─────────────────────────────────────────────
+   ПУБЛИКАЦИЯ — secondary credibility block that
+   sits just before the author bio. Deliberately
+   quieter than a numbered section: no ghost
+   number, heading well under --sz-h2, and a
+   .btn-ghost link so it can't read as a second
+   CTA next to the waitlist button.
+───────────────────────────────────────────── */
+.pub-card{
+  max-width:46rem;
+  padding:clamp(1.5rem,3vw,2.25rem);
+  background:rgba(255,255,255,.5);
+  border:1px solid var(--l-border);
+  border-left:3px solid var(--acc);
+  border-radius:4px;
+}
+.pub-h{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1.1875rem,2.1vw,1.625rem);
+  line-height:1.18;
+  letter-spacing:-.02em;
+  color:var(--l-text);
+  margin-bottom:1rem;
+}
+.pub-p{
+  font-size:var(--sz-body);
+  line-height:1.75;
+  color:var(--l-muted);
+}
+.pub-note{
+  margin-top:.875rem;
+  font-size:var(--sz-sm);
+  line-height:1.6;
+  color:var(--l-subtle);
+}
+.pub-link{margin-top:1.5rem}
+
+/* ─────────────────────────────────────────────
    SECTION 07 — АВТОР
 ───────────────────────────────────────────── */
 .author-layout{
@@ -1651,6 +1689,24 @@ button{font-family:inherit;cursor:pointer}
     <div class="pullquote-wrap reveal">
       <blockquote class="pullquote">Когда клиенты есть — есть фриланс. Нет — нет. Всё остальное — хобби, волонтёрство, как угодно.</blockquote>
       <cite class="pullquote-src">Глава 16. Где брать клиентов</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     ПУБЛИКАЦИЯ — secondary block, intentionally
+     outside the 01–08 numbering
+════════════════════════════════════════════════════ -->
+<section id="publication" class="s" aria-labelledby="publication-h2">
+  <div class="s-inner wrap">
+    <span class="label reveal">Публикация</span>
+    <div class="pub-card reveal" style="transition-delay:.1s">
+      <h2 class="pub-h" id="publication-h2">Введение и первые четыре главы — опубликованы</h2>
+      <p class="pub-p">Вошли в сборник издательства «Альпина» — «Мастера слова», сборник работ выпускников курса «Мастерская писателя».</p>
+      <p class="pub-note">Версия до финальной редактуры. Для доступа Альпина попросит номер телефона.</p>
+      <div class="pub-link">
+        <a class="btn-ghost" href="https://plus.alpina.ru/product/14262/49220/" target="_blank" rel="noopener">Читать на Альпине →</a>
+      </div>
     </div>
   </div>
 </section>

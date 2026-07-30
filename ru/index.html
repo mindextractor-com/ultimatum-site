@@ -187,6 +187,19 @@ window.UltOnce=function(flag,name,extra){
      "ULTIMATUM", so the vw term is lower to fill the same measure. */
   --h1-size:clamp(3rem,10.8vw,13rem);
   --h1-size-m:clamp(2.5rem,14vw,6rem);
+
+  /* Hero vertical budget. Every term below is also what the layout
+     actually uses, so --cover-cap is exact: it is the height left for
+     the cover once padding, kicker and title are taken out of the fold.
+     That is what keeps the cover inside the viewport at any height. */
+  --hero-pt:clamp(1.25rem,3vw,2.5rem);
+  --hero-pb:clamp(1.25rem,2.5vw,2.25rem);
+  --kicker-block:1.5rem;
+  /* Descender reserve — «УЛЬТИМАТУМ» — «У» descends .166em, so it needs real reserve */
+  --h1-pb:.23em;
+  /* line-height .8 + --h1-pb + margin */
+  --h1-block:calc(var(--h1-size)*1.03 + max(.5rem,var(--h1-size)*.09));
+  --cover-cap:calc(100svh - var(--hero-pt) - var(--hero-pb) - var(--kicker-block) - var(--h1-block));
 }
 
 /* ─────────────────────────────────────────────
@@ -344,12 +357,12 @@ button{font-family:inherit;cursor:pointer}
   min-height:100svh;
   /* Asymmetric on purpose: little air above the kicker, the
      surplus goes below, so the block sits high and grounded */
-  padding-top:clamp(1.25rem,3vw,2.75rem);
-  padding-bottom:clamp(1.5rem,3vw,2.5rem);
+  padding-top:var(--hero-pt);
+  padding-bottom:var(--hero-pb);
   display:grid;
-  /* The cover is capped by viewport HEIGHT as well as width — at 2:3
-     a wide cover gets tall fast and it has to stay inside the fold */
-  grid-template-columns:minmax(0,1fr) min(clamp(230px,30vw,560px),47svh);
+  /* Width is whichever is smaller: a sensible measure, or the width
+     implied by the height still available in the fold (2:3 aspect) */
+  grid-template-columns:minmax(0,1fr) min(clamp(210px,29vw,440px),max(0px,calc(var(--cover-cap)/1.5)));
   grid-template-areas:
     "kicker  kicker"
     "title   title"
@@ -380,6 +393,7 @@ button{font-family:inherit;cursor:pointer}
   /* Quiet: it labels the title, it does not compete with it */
   color:var(--l-subtle);
   display:block;
+  line-height:1.2;
   margin-bottom:.7rem;
 }
 /* Book title — the loudest element on the page. Oswald caps, tracked
@@ -388,7 +402,8 @@ button{font-family:inherit;cursor:pointer}
    different vw terms to fill the same measure. */
 .hero-h1{
   grid-area:title;
-  margin-bottom:clamp(.5rem,1.2vw,1rem);
+  margin-bottom:max(.5rem,.09em);
+  padding-bottom:var(--h1-pb);
   line-height:.8;
   overflow-wrap:break-word;
   min-width:0;
@@ -398,7 +413,7 @@ button{font-family:inherit;cursor:pointer}
   letter-spacing:-.035em;
   text-transform:uppercase;
 }
-.hero-body{grid-area:body;min-width:0;align-self:start}
+.hero-body{grid-area:body;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
 /* Promise subheading — ONE register, mirroring the cover's subtitle:
    Oswald caps, single weight, single size across the whole line. The
    only variation is the red accent word. */
@@ -471,7 +486,7 @@ button{font-family:inherit;cursor:pointer}
 
 /* Book cover — bottom-aligned so it sits on the same baseline as
    the form and closes the vertical gap under the title */
-.hero-cover{grid-area:cover;align-self:end;justify-self:end;width:100%}
+.hero-cover{grid-area:cover;align-self:start;justify-self:end;width:100%}
 .book{
   position:relative;
   width:100%;
@@ -1364,6 +1379,7 @@ button{font-family:inherit;cursor:pointer}
       "promise"
       "cover"
       "body";
+    grid-template-rows:none;
     min-height:auto;
     row-gap:0;
     padding-bottom:3rem;
@@ -1382,7 +1398,8 @@ button{font-family:inherit;cursor:pointer}
 @media(max-width:760px){
   /* Big condensed caps carry tighter tracking well, and the
      extra tightening is what buys the size on a narrow screen */
-  .hero-h1{font-size:var(--h1-size-m);letter-spacing:-.05em;margin-bottom:.85rem}
+  .hero-h1{font-size:var(--h1-size-m);letter-spacing:-.05em}
+  .hero-body{display:block}
   .hero-layout{padding-left:.75rem;padding-right:.75rem}
 }
 @media(max-width:520px){

@@ -22,6 +22,10 @@
 <link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/">
 <link rel="alternate" hreflang="x-default" href="https://ultimatumbook.com/">
 
+<!-- Hero H1 is Oswald cyrillic — preload so the biggest element on the page
+     never renders in the fallback face -->
+<link rel="preload" href="/fonts/oswald-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -123,9 +127,14 @@ window.UltOnce=function(flag,name,extra){
 /* ─────────────────────────────────────────────
    FONTS
 ───────────────────────────────────────────── */
-@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-black.woff2')format('woff2');font-weight:900;font-style:normal;font-display:swap}
+/* Oswald — the display face for every heading. Condensed heavy sans,
+   matching the lettering on the book cover. Self-hosted from Google
+   Fonts as a VARIABLE font (wght 400–700), so the three weights we
+   actually use (500/600/700) all come out of one file per subset.
+   Only latin + cyrillic are shipped; unicode-range keeps the browser
+   from fetching the subset a given page never needs. */
+@font-face{font-family:'Oswald';src:url('/fonts/oswald-latin.woff2')format('woff2');font-weight:400 700;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Oswald';src:url('/fonts/oswald-cyrillic.woff2')format('woff2');font-weight:400 700;font-style:normal;font-display:swap;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Jost';src:url('/fonts/jost-variable.woff2')format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:'Jost';src:url('/fonts/jost-italic-variable.woff2')format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
 @font-face{font-family:'Ubuntu Mono';src:url('/fonts/ubuntu-mono-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
@@ -137,7 +146,8 @@ window.UltOnce=function(flag,name,extra){
    TOKENS
 ───────────────────────────────────────────── */
 :root{
-  --font-display:'Albertus Nova',Georgia,serif;
+  /* Condensed fallbacks keep the pre-swap layout close to Oswald's metrics */
+  --font-display:'Oswald','Arial Narrow','Helvetica Neue Condensed',Impact,system-ui,sans-serif;
   --font-text:'Jost',system-ui,sans-serif;
   --font-mono:'Ubuntu Mono','Courier New',monospace;
 
@@ -173,6 +183,10 @@ window.UltOnce=function(flag,name,extra){
   --sz-h3:clamp(1.25rem,2.4vw,1.625rem);
   --sz-h2:clamp(1.875rem,4.5vw,3.25rem);
   --sz-h1:clamp(3.5rem,10vw,8.5rem);
+  /* Hero title size — RU. «УЛЬТИМАТУМ» sets ~21% wider than
+     "ULTIMATUM", so the vw term is lower to fill the same measure. */
+  --h1-size:clamp(3rem,10.8vw,13rem);
+  --h1-size-m:clamp(2.5rem,14vw,6rem);
 }
 
 /* ─────────────────────────────────────────────
@@ -226,9 +240,9 @@ button{font-family:inherit;cursor:pointer}
   text-align:center;
   bottom:clamp(1.5rem,5vh,3.5rem);
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(2rem,8vw,7rem);
-  letter-spacing:-.04em;
+  letter-spacing:-.02em;
   line-height:1;
   color:rgba(229,230,233,.08);
   pointer-events:none;
@@ -311,8 +325,13 @@ button{font-family:inherit;cursor:pointer}
 
 /* ─────────────────────────────────────────────
    HERO — light, part of the same split (the dark
-   leaf runs through it on the left; cover + title
-   sit on the light side)
+   leaf runs through it on the left).
+
+   Composition: the H1 is the single focal point and
+   spans the FULL content width as a banner; the
+   kicker sits quietly above it; the cover sits hard
+   against the supporting copy so the two read as one
+   block instead of two islands.
 ───────────────────────────────────────────── */
 #hero{
   min-height:100svh;
@@ -323,11 +342,29 @@ button{font-family:inherit;cursor:pointer}
   position:relative;
   z-index:2;
   min-height:100svh;
-  padding-block:clamp(3rem,8vw,6rem);
+  /* Asymmetric on purpose: little air above the kicker, the
+     surplus goes below, so the block sits high and grounded */
+  padding-top:clamp(1.25rem,3vw,2.75rem);
+  padding-bottom:clamp(1.5rem,3vw,2.5rem);
   display:grid;
-  grid-template-columns:1fr clamp(180px,26vw,340px);
-  gap:clamp(2rem,5vw,5rem);
-  align-items:center;
+  /* The cover is capped by viewport HEIGHT as well as width — at 2:3
+     a wide cover gets tall fast and it has to stay inside the fold */
+  grid-template-columns:minmax(0,1fr) min(clamp(230px,30vw,560px),47svh);
+  grid-template-areas:
+    "kicker  kicker"
+    "title   title"
+    "promise cover"
+    "body    cover";
+  /* The cover spans the last two rows; without explicit sizing the grid
+     inflates the promise row to help hold it, opening a gap under the
+     subtitle. Pin promise to its content and let the body row absorb
+     the cover's remaining height. */
+  grid-template-rows:auto auto max-content 1fr;
+  /* Small on purpose — this is the gap that used to split the
+     hero into two unrelated halves */
+  column-gap:clamp(1rem,2.2vw,2.25rem);
+  row-gap:0;
+  align-content:center;
   /* Start after the dark leaf */
   margin-left:var(--leaf-w);
   padding-left:var(--px);
@@ -335,77 +372,65 @@ button{font-family:inherit;cursor:pointer}
 }
 #hero .label{color:var(--l-muted)}
 .hero-kicker{
+  grid-area:kicker;
   font-family:var(--font-mono);
   font-size:var(--sz-label);
   letter-spacing:.3em;
   text-transform:uppercase;
-  color:var(--l-muted);
+  /* Quiet: it labels the title, it does not compete with it */
+  color:var(--l-subtle);
   display:block;
-  margin-bottom:2rem;
+  margin-bottom:.7rem;
 }
-/* Book title — dominant, in the display serif (matches the cover) */
+/* Book title — the loudest element on the page. Oswald caps, tracked
+   tight to match the cover lettering. --h1-size is set per language:
+   «УЛЬТИМАТУМ» sets ~21% wider than "ULTIMATUM", so the two need
+   different vw terms to fill the same measure. */
 .hero-h1{
-  margin-bottom:.75rem;
-  line-height:.95;
+  grid-area:title;
+  margin-bottom:clamp(.5rem,1.2vw,1rem);
+  line-height:.8;
   overflow-wrap:break-word;
   min-width:0;
   font-family:var(--font-display);
-  font-weight:900;
-  /* Sized to stay one line in the narrow text column (leaf + cover);
-     «УЛЬТИМАТУМ» is a long word, so a touch smaller than EN */
-  font-size:clamp(1.85rem,3.7vw,4.5rem);
-  letter-spacing:-.04em;
-}
-/* Promise subheading — Albertus key words, Jost connectors, red accent */
-.hero-promise{
-  margin-bottom:1.75rem;
-  line-height:1.05;
-  overflow-wrap:break-word;
-  min-width:0;
-}
-.hero-promise .disp{
-  font-family:var(--font-display);
-  font-weight:900;
-  font-size:clamp(1.5rem,3.2vw,2.75rem);
-  letter-spacing:-.02em;
-  display:inline;
-}
-.hero-promise .conn{
-  font-family:var(--font-text);
-  font-weight:300;
-  font-size:clamp(1.35rem,2.8vw,2.4rem);
-  letter-spacing:-.01em;
-  opacity:.75;
-  display:inline;
-}
-.hero-promise .red{
-  color:var(--acc);
-  font-family:var(--font-text);
   font-weight:700;
-  font-style:italic;
-  font-size:clamp(1.5rem,3vw,2.9rem);
-  display:inline;
+  font-size:var(--h1-size);
+  letter-spacing:-.035em;
+  text-transform:uppercase;
 }
+.hero-body{grid-area:body;min-width:0;align-self:start}
+/* Promise subheading — ONE register, mirroring the cover's subtitle:
+   Oswald caps, single weight, single size across the whole line. The
+   only variation is the red accent word. */
+.hero-promise{
+  grid-area:promise;
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(1.25rem,3.4vw,3rem);
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+  line-height:1.06;
+  color:var(--l-text);
+  margin-bottom:clamp(1rem,2vw,1.6rem);
+  overflow-wrap:break-word;
+  min-width:0;
+}
+/* Accent word only — same face, weight and size as the rest of the line */
+.hero-promise .red{color:var(--acc);font-style:normal}
 .hero-sub{
-  font-size:var(--sz-lead);
+  font-size:var(--sz-body);
   font-weight:400;
-  color:var(--l-muted);
-  margin-bottom:1rem;
-  line-height:1.5;
+  color:var(--l-text);
+  margin-bottom:.4rem;
+  line-height:1.6;
+  max-width:44ch;
 }
 .hero-lead{
   font-size:var(--sz-body);
-  line-height:1.78;
+  line-height:1.7;
   color:var(--l-muted);
   max-width:44ch;
-  margin-bottom:2.75rem;
-}
-.hero-ctas{
-  display:flex;
-  flex-wrap:wrap;
-  gap:1rem;
-  align-items:center;
-  margin-bottom:clamp(2rem,5vw,4rem);
+  margin-bottom:clamp(1.25rem,2.5vw,2rem);
 }
 /* Compact inline subscribe in the hero — reuses .email-inp/.sub-btn */
 .hero-form{
@@ -416,7 +441,6 @@ button{font-family:inherit;cursor:pointer}
 }
 .hero-form .email-inp{min-width:0}
 .hero-form .sub-btn{white-space:nowrap;flex-shrink:0}
-.hero-form-foot{margin-bottom:clamp(2rem,5vw,4rem)}
 .btn-primary{
   font-family:var(--font-text);
   font-size:var(--sz-sm);
@@ -433,6 +457,7 @@ button{font-family:inherit;cursor:pointer}
   transition:opacity .15s,transform .12s;
 }
 .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+/* Quiet secondary link — used by the ПУБЛИКАЦИЯ block's Alpina link */
 .btn-ghost{
   font-family:var(--font-text);
   font-size:var(--sz-sm);
@@ -443,23 +468,10 @@ button{font-family:inherit;cursor:pointer}
   transition:color .15s,border-color .15s;
 }
 .btn-ghost:hover{color:var(--l-text);border-color:var(--l-muted)}
-.hero-hint{
-  font-family:var(--font-mono);
-  font-size:var(--sz-label);
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--l-subtle);
-  animation:hint 2.5s ease-in-out infinite;
-  display:inline-block;
-}
-@keyframes hint{
-  0%,100%{opacity:.3;transform:translateY(0)}
-  55%{opacity:.7;transform:translateY(6px)}
-}
 
-/* Book cover */
-.hero-body{min-width:0}
-.hero-cover{align-self:center}
+/* Book cover — bottom-aligned so it sits on the same baseline as
+   the form and closes the vertical gap under the title */
+.hero-cover{grid-area:cover;align-self:end;justify-self:end;width:100%}
 .book{
   position:relative;
   width:100%;
@@ -525,10 +537,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .book-t{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(.9375rem,1.9vw,1.5rem);
   line-height:.95;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   color:var(--d-text);
   margin-bottom:.625rem;
   overflow-wrap:break-word;
@@ -556,10 +568,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .posyl-main h2{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:var(--sz-h2);
   line-height:1.04;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   margin-bottom:1.75rem;
   color:var(--l-text);
 }
@@ -577,10 +589,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .oath-head{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(1rem,2.2vw,1.5rem);
   line-height:1.18;
-  letter-spacing:-.015em;
+  letter-spacing:-.005em;
   color:var(--d-text);
   margin-bottom:1.25rem;
 }
@@ -603,10 +615,10 @@ button{font-family:inherit;cursor:pointer}
 ───────────────────────────────────────────── */
 .routes-h{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:var(--sz-h2);
   line-height:1.04;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   color:var(--l-text);
   margin-bottom:.875rem;
 }
@@ -642,10 +654,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .route-t{
   font-family:var(--font-display);
-  font-weight:700;
+  font-weight:600;
   font-size:clamp(1.125rem,2.2vw,1.5rem);
   line-height:1.12;
-  letter-spacing:-.015em;
+  letter-spacing:-.005em;
   color:var(--d-text);
   margin-bottom:1rem;
 }
@@ -668,10 +680,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .structure-h2{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:var(--sz-h2);
   line-height:1.04;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   color:var(--l-text);
 }
 .parts{
@@ -706,9 +718,9 @@ button{font-family:inherit;cursor:pointer}
 }
 .part-t{
   font-family:var(--font-display);
-  font-weight:700;
+  font-weight:600;
   font-size:1rem;
-  letter-spacing:-.01em;
+  letter-spacing:0;
   line-height:1.25;
   color:var(--d-text);
   margin-bottom:.25rem;
@@ -731,10 +743,10 @@ button{font-family:inherit;cursor:pointer}
 ───────────────────────────────────────────── */
 .pillars-h2{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:var(--sz-h2);
   line-height:1.04;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   color:var(--l-text);
   margin-bottom:clamp(2.5rem,5vw,4rem);
 }
@@ -766,10 +778,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .pillar-t{
   font-family:var(--font-display);
-  font-weight:700;
+  font-weight:600;
   font-size:var(--sz-h3);
   line-height:1.12;
-  letter-spacing:-.015em;
+  letter-spacing:-.005em;
   color:var(--l-text);
   margin-bottom:.75rem;
 }
@@ -790,10 +802,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .app-h2{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(1.5rem,3.5vw,2.5rem);
   line-height:1.06;
-  letter-spacing:-.025em;
+  letter-spacing:-.012em;
   color:var(--l-text);
   margin-bottom:1.25rem;
 }
@@ -1031,10 +1043,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .pub-h{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(1.1875rem,2.1vw,1.625rem);
   line-height:1.18;
-  letter-spacing:-.02em;
+  letter-spacing:-.01em;
   color:var(--l-text);
   margin-bottom:1rem;
 }
@@ -1086,11 +1098,11 @@ button{font-family:inherit;cursor:pointer}
 }
 .author-initials{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(2rem,5vw,3rem);
   color:rgba(20,21,28,.12);
   line-height:1;
-  letter-spacing:-.04em;
+  letter-spacing:-.02em;
 }
 .author-ph-tag{
   font-family:var(--font-mono);
@@ -1109,10 +1121,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .author-name{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(1.75rem,3.5vw,2.75rem);
   line-height:1.04;
-  letter-spacing:-.025em;
+  letter-spacing:-.012em;
   color:var(--l-text);
   margin-bottom:1.25rem;
 }
@@ -1138,10 +1150,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .stat-val{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:clamp(1.5rem,2.8vw,2.25rem);
   line-height:1;
-  letter-spacing:-.025em;
+  letter-spacing:-.012em;
   color:var(--l-text);
   margin-bottom:.25rem;
 }
@@ -1172,10 +1184,10 @@ button{font-family:inherit;cursor:pointer}
 }
 .waitlist-h2{
   font-family:var(--font-display);
-  font-weight:900;
+  font-weight:700;
   font-size:var(--sz-h2);
   line-height:1.04;
-  letter-spacing:-.03em;
+  letter-spacing:-.015em;
   color:var(--l-text);
   margin-bottom:1rem;
 }
@@ -1345,18 +1357,33 @@ button{font-family:inherit;cursor:pointer}
 ───────────────────────────────────────────── */
 @media(max-width:860px){
   .hero-layout{
-    grid-template-columns:1fr;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:
+      "kicker"
+      "title"
+      "promise"
+      "cover"
+      "body";
     min-height:auto;
+    row-gap:0;
     padding-bottom:3rem;
   }
-  .hero-cover{order:-1;padding-top:2rem}
-  .book{width:clamp(140px,45vw,200px);margin-inline:auto}
+  /* Cover sits straight under the title so the two stay tied
+     together; the title still leads. */
+  .hero-cover{margin:.25rem 0 1.25rem}
+  .book{width:min(54vw,250px);margin-inline:0}
 
   .posyl-grid{grid-template-columns:1fr;gap:2rem}
   .routes-grid{grid-template-columns:1fr}
   .author-layout{grid-template-columns:1fr}
   .author-photo-wrap{max-width:200px}
   .author-stats{grid-template-columns:repeat(2,auto);gap:1.5rem 2rem}
+}
+@media(max-width:760px){
+  /* Big condensed caps carry tighter tracking well, and the
+     extra tightening is what buys the size on a narrow screen */
+  .hero-h1{font-size:var(--h1-size-m);letter-spacing:-.05em;margin-bottom:.85rem}
+  .hero-layout{padding-left:.75rem;padding-right:.75rem}
 }
 @media(max-width:520px){
   .subscribe-form{flex-direction:column}
@@ -1400,13 +1427,13 @@ button{font-family:inherit;cursor:pointer}
 <section id="hero" class="s" aria-labelledby="hero-h1">
   <span class="leaf-num" aria-hidden="true">00</span>
   <div class="hero-layout">
+    <span class="hero-kicker">Нон-фикшн о фрилансе</span>
+    <h1 class="hero-h1" id="hero-h1">УЛЬТИМАТУМ</h1>
+    <p class="hero-promise">
+      Уйти на фриланс<br>
+      и <em class="red">не</em> вернуться
+    </p>
     <div class="hero-body">
-      <span class="hero-kicker">Нон-фикшн о фрилансе</span>
-      <h1 class="hero-h1" id="hero-h1">УЛЬТИМАТУМ</h1>
-      <p class="hero-promise">
-        <span class="conn">Уйти на </span><span class="disp">фриланс</span><br>
-        <span class="conn">и </span><em class="red">не</em><span class="conn"> вернуться</span>
-      </p>
       <p class="hero-sub">Фриланс сквозь призму саморазвития.</p>
       <p class="hero-lead">Не потому что сжёг мосты и стоишь на пепелище. А потому что больше незачем возвращаться. Без обещаний золотых гор и секретного действия, которое разом всё изменит.</p>
       <form class="subscribe-form hero-form" novalidate>
@@ -1432,10 +1459,6 @@ button{font-family:inherit;cursor:pointer}
       <p class="form-offer">Подписчикам — специальные условия на старте и ранний доступ.</p>
       <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
-      <div class="hero-form-foot">
-        <a href="#posyl" class="btn-ghost">Что внутри</a>
-      </div>
-      <span class="hero-hint" aria-hidden="true">↓ листай ↓</span>
     </div>
 
     <div class="hero-cover" aria-hidden="true">

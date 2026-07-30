@@ -13,12 +13,14 @@
 <link rel="alternate" hreflang="en" href="https://ultimatumbook.com/privacy">
 <link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/privacy">
 <style>
-@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-bold.woff2')format('woff2');font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:'Albertus Nova';src:url('/fonts/albertus-nova-black.woff2')format('woff2');font-weight:900;font-style:normal;font-display:swap}
+/* Oswald — display face for all headings, matching the book cover.
+   Variable (wght 400–700), latin + cyrillic subsets only. */
+@font-face{font-family:'Oswald';src:url('/fonts/oswald-latin.woff2')format('woff2');font-weight:400 700;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Oswald';src:url('/fonts/oswald-cyrillic.woff2')format('woff2');font-weight:400 700;font-style:normal;font-display:swap;unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Jost';src:url('/fonts/jost-variable.woff2')format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:'Ubuntu Mono';src:url('/fonts/ubuntu-mono-regular.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
 :root{
-  --font-display:'Albertus Nova',Georgia,serif;
+  --font-display:'Oswald','Arial Narrow','Helvetica Neue Condensed',Impact,system-ui,sans-serif;
   --font-text:'Jost',system-ui,sans-serif;
   --font-mono:'Ubuntu Mono','Courier New',monospace;
   --d-bg:#0E0F15;--d-text:#E5E6E9;--d-subtle:rgba(229,230,233,.22);
@@ -34,13 +36,13 @@ body{font-family:var(--font-text);font-size:clamp(.9375rem,1.15vw,1.0625rem);lin
 a{color:inherit}
 :focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .nav{position:fixed;inset:0 0 auto 0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding-inline:var(--px);background:rgba(236,239,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--l-border)}
-.nav-brand{font-family:var(--font-display);font-weight:900;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.02em;color:var(--l-text);text-decoration:none}
+.nav-brand{font-family:var(--font-display);font-weight:700;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.01em;color:var(--l-text);text-decoration:none}
 .nav-meta{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--l-muted)}
 main{max-width:720px;margin-inline:auto;padding:calc(52px + 4rem) var(--px) 5rem}
 .eyebrow{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
-h1{font-family:var(--font-display);font-weight:900;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:.5rem}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:0;margin-bottom:.5rem}
 .updated{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;color:var(--l-muted);margin-bottom:2.5rem}
-h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.25rem,2.4vw,1.5rem);margin:2.25rem 0 .65rem}
+h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.5rem);margin:2.25rem 0 .65rem}
 p{margin-bottom:1rem;color:var(--l-text)}
 ul{margin:0 0 1rem 1.25rem}
 li{margin-bottom:.4rem}

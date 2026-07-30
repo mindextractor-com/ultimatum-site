@@ -179,6 +179,8 @@ window.UltOnce=function(flag,name,extra){
   --sz-label:.625rem;
   --sz-sm:.875rem;
   --sz-body:clamp(.9375rem,1.15vw,1.0625rem);
+  /* Max prose line length (~680-720px at body size) */
+  --measure:68ch;
   --sz-lead:clamp(1.0625rem,1.6vw,1.25rem);
   --sz-h3:clamp(1.25rem,2.4vw,1.625rem);
   --sz-h2:clamp(1.875rem,4.5vw,3.25rem);
@@ -809,6 +811,7 @@ button{font-family:inherit;cursor:pointer}
 /* ─────────────────────────────────────────────
    SECTION 05 — APP (DAILY FRAME)
 ───────────────────────────────────────────── */
+.app-text{max-width:var(--measure)}
 .app-layout{
   display:grid;
   grid-template-columns:1fr;
@@ -850,7 +853,7 @@ button{font-family:inherit;cursor:pointer}
 .feature-list{list-style:none}
 .feature-item{
   display:grid;
-  grid-template-columns:1.5rem 1fr;
+  grid-template-columns:1.5rem minmax(0,var(--measure));
   gap:0 .75rem;
   padding-block:.875rem;
   border-bottom:1px solid var(--l-border);
@@ -1368,6 +1371,28 @@ button{font-family:inherit;cursor:pointer}
 .reveal.in{opacity:1;transform:none}
 
 /* ─────────────────────────────────────────────
+   READING MEASURE — site-wide rule
+   Prose is capped at --measure so no line runs past a
+   comfortable length. Expressed in ch, so the cap tracks
+   each block's own font-size instead of being a fixed pixel
+   width. Headings, cards and full-width design elements are
+   deliberately NOT listed here.
+───────────────────────────────────────────── */
+.posyl-main p,
+.oath-q,
+.oath-foot,
+.structure-note,
+.pillar-p,
+.app-intro,
+.route-p,
+.pub-p,
+.pub-note,
+.author-bio,
+.author-bio-em{
+  max-width:var(--measure);
+}
+
+/* ─────────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────────── */
 @media(max-width:860px){
@@ -1641,7 +1666,7 @@ button{font-family:inherit;cursor:pointer}
       <div class="app-text">
         <span class="label reveal">05 · Инструмент</span>
         <h2 class="app-h2 reveal" id="app-h2">
-          Daily Frame —<br><span>«Каркас дня», который работает каждый день</span>
+          Каркас дня,<br><span>который работает каждый день</span>
         </h2>
         <p class="app-intro reveal" style="transition-delay:.1s">Главный инструмент книги — «Каркас дня» (Регулярность × Маленькие действия) — как приложение: собираешь день, отмечаешь сделанное, система сама считает, держишь ли ты ритм.</p>
 
@@ -1696,7 +1721,7 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </div>
 
-      <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Скриншоты приложения Daily Frame">
+      <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Скриншоты приложения «Каркас дня»">
         <div class="app-screen">
           <img src="/images/app-today.webp" alt="«Каркас дня — сегодня»" loading="lazy" width="760" height="1484" onerror="this.style.display='none'">
           <div class="app-screen-ph" aria-hidden="true">Сегодня</div>

@@ -200,6 +200,8 @@
   --sz-label:.625rem;
   --sz-sm:.875rem;
   --sz-body:clamp(.9375rem,1.15vw,1.0625rem);
+  /* Max prose line length (~680-720px at body size) */
+  --measure:68ch;
   --sz-lead:clamp(1.0625rem,1.6vw,1.25rem);
   --sz-h3:clamp(1.25rem,2.4vw,1.625rem);
   --sz-h2:clamp(1.875rem,4.5vw,3.25rem);
@@ -819,6 +821,7 @@ button{font-family:inherit;cursor:pointer}
 /* ─────────────────────────────────────────────
    SECTION 05 — APP (DAILY FRAME)
 ───────────────────────────────────────────── */
+.app-text{max-width:var(--measure)}
 .app-layout{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -860,7 +863,7 @@ button{font-family:inherit;cursor:pointer}
 .feature-list{list-style:none}
 .feature-item{
   display:grid;
-  grid-template-columns:1.5rem 1fr;
+  grid-template-columns:1.5rem minmax(0,var(--measure));
   gap:0 .75rem;
   padding-block:.875rem;
   border-bottom:1px solid var(--l-border);
@@ -1364,6 +1367,26 @@ button{font-family:inherit;cursor:pointer}
   transition:opacity .6s,transform .6s;
 }
 .reveal.in{opacity:1;transform:none}
+
+/* ─────────────────────────────────────────────
+   READING MEASURE — site-wide rule
+   Prose is capped at --measure so no line runs past a
+   comfortable length. Expressed in ch, so the cap tracks
+   each block's own font-size instead of being a fixed pixel
+   width. Headings, cards and full-width design elements are
+   deliberately NOT listed here.
+───────────────────────────────────────────── */
+.posyl-main p,
+.oath-q,
+.oath-foot,
+.structure-note,
+.pillar-p,
+.app-intro,
+.route-p,
+.author-bio,
+.author-bio-em{
+  max-width:var(--measure);
+}
 
 /* ─────────────────────────────────────────────
    RESPONSIVE

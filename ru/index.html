@@ -474,7 +474,8 @@ button{font-family:inherit;cursor:pointer}
   transition:opacity .15s,transform .12s;
 }
 .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
-/* Quiet secondary link — used by the ПУБЛИКАЦИЯ block's Alpina link */
+/* Quiet secondary link — ПУБЛИКАЦИЯ block's Alpina link and the
+   direct-purchase bonus block's Daily Frame link */
 .btn-ghost{
   font-family:var(--font-text);
   font-size:var(--sz-sm);
@@ -1274,6 +1275,35 @@ button{font-family:inherit;cursor:pointer}
   text-align:left;
   text-wrap:balance;
 }
+
+/* Direct-purchase bonus — lives with the form because that's where the
+   buy-direct-or-not call gets made. Accent rule matches .oath / .pub-card. */
+.form-bonus{
+  max-width:var(--form-w);
+  margin-top:1.25rem;
+  padding:1.05rem 1.15rem;
+  background:rgba(255,255,255,.5);
+  border:1px solid var(--l-border);
+  border-left:3px solid var(--acc);
+  border-radius:4px;
+  text-align:left;
+}
+.form-bonus-label{
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:.6rem;
+  color:var(--acc);
+}
+.form-bonus-p{
+  font-size:var(--sz-sm);
+  line-height:1.6;
+  color:var(--l-muted);
+}
+.form-bonus-p strong{color:var(--l-text);font-weight:600}
+.form-bonus-link{margin-top:.9rem}
 .form-choices{
   width:100%;
   display:flex;
@@ -1287,6 +1317,7 @@ button{font-family:inherit;cursor:pointer}
    fine-print align to the input's left edge (centered as a block). */
 #waitlist .subscribe-form,
 #waitlist .form-offer,
+#waitlist .form-bonus,
 #waitlist .form-fine{
   max-width:var(--form-w);
   margin-inline:auto;
@@ -1499,6 +1530,11 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </form>
       <p class="form-offer">Подписчикам — специальные условия на старте и ранний доступ.</p>
+      <div class="form-bonus">
+        <span class="form-bonus-label">Бонус · напрямую у автора</span>
+        <p class="form-bonus-p">Купишь книгу напрямую у автора — получишь ещё и <strong>2 месяца Pro в приложении «Каркас дня»</strong>. В первый месяц продаж — 3 месяца. В магазинной копии этого нет.</p>
+        <div class="form-bonus-link"><a class="btn-ghost" href="https://daily-frame.com/" target="_blank" rel="noopener">Что такое «Каркас дня» →</a></div>
+      </div>
       <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
     </div>
@@ -1849,6 +1885,11 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </form>
       <p class="form-offer">Подписчикам — специальные условия на старте и ранний доступ.</p>
+      <div class="form-bonus">
+        <span class="form-bonus-label">Бонус · напрямую у автора</span>
+        <p class="form-bonus-p">Купишь книгу напрямую у автора — получишь ещё и <strong>2 месяца Pro в приложении «Каркас дня»</strong>. В первый месяц продаж — 3 месяца. В магазинной копии этого нет.</p>
+        <div class="form-bonus-link"><a class="btn-ghost" href="https://daily-frame.com/" target="_blank" rel="noopener">Что такое «Каркас дня» →</a></div>
+      </div>
       <p class="form-fine">Адрес — только для анонса книги.</p>
       <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>

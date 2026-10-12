@@ -1216,7 +1216,7 @@ button{font-family:inherit;cursor:pointer}
   /* Subgrid lines up number, name, price and gift across the row,
      whatever the name or gift length */
   display:grid;
-  grid-row:span 4;
+  grid-row:span 5;
   grid-template-rows:subgrid;
   row-gap:0;
 }
@@ -1254,6 +1254,13 @@ button{font-family:inherit;cursor:pointer}
   color:var(--d-muted);
   padding-top:.875rem;
   border-top:1px solid var(--d-border);
+}
+.edition-btn{
+  margin-top:1.5rem;
+  padding-inline:1rem;
+  align-self:end;
+  text-align:center;
+  white-space:nowrap;
 }
 .editions-buy{
   margin-top:1.75rem;
@@ -1957,24 +1964,28 @@ button{font-family:inherit;cursor:pointer}
         <h3 class="edition-t">Текст</h3>
         <p class="edition-price">770₽</p>
         <p class="edition-gift">2 месяца «Каркаса дня» Pro в подарок</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Внести предоплату за «Текст» — написать в Telegram">Предоплата →</a>
       </li>
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Аудио</h3>
         <p class="edition-price">870₽</p>
         <p class="edition-gift">2 месяца «Каркаса дня» Pro в подарок</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Внести предоплату за «Аудио» — написать в Telegram">Предоплата →</a>
       </li>
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">Текст + аудио</h3>
         <p class="edition-price">970₽</p>
         <p class="edition-gift">3 месяца «Каркаса дня» Pro в подарок</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Внести предоплату за «Текст + аудио» — написать в Telegram">Предоплата →</a>
       </li>
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">Текст + аудио + год&nbsp;Pro</h3>
         <p class="edition-price">2970₽</p>
         <p class="edition-gift">Годовая подписка «Каркаса дня» Pro включена</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Внести предоплату за «Текст + аудио + год Pro» — написать в Telegram">Предоплата →</a>
       </li>
     </ul>
     <p class="editions-buy reveal" style="transition-delay:.15s">Внести предоплату — напиши мне в <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>, или оставь почту ниже и получи анонс на старте.</p>

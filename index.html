@@ -1194,7 +1194,7 @@ button{font-family:inherit;cursor:pointer}
   /* Subgrid lines up number, name, price and gift across the row,
      whatever the name or gift length */
   display:grid;
-  grid-row:span 4;
+  grid-row:span 5;
   grid-template-rows:subgrid;
   row-gap:0;
 }
@@ -1232,6 +1232,13 @@ button{font-family:inherit;cursor:pointer}
   color:var(--d-muted);
   padding-top:.875rem;
   border-top:1px solid var(--d-border);
+}
+.edition-btn{
+  margin-top:1.5rem;
+  padding-inline:1rem;
+  align-self:end;
+  text-align:center;
+  white-space:nowrap;
 }
 .editions-buy{
   margin-top:1.75rem;
@@ -1948,24 +1955,28 @@ button{font-family:inherit;cursor:pointer}
         <h3 class="edition-t">Text</h3>
         <p class="edition-price">$9.7</p>
         <p class="edition-gift">2 months of Daily Frame Pro included</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Pre-pay for Text — message on Telegram">Pre-pay →</a>
       </li>
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Audio</h3>
         <p class="edition-price">$12.7</p>
         <p class="edition-gift">2 months of Daily Frame Pro included</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Pre-pay for Audio — message on Telegram">Pre-pay →</a>
       </li>
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">Text + Audio</h3>
         <p class="edition-price">$15.7</p>
         <p class="edition-gift">3 months of Daily Frame Pro included</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Pre-pay for Text + Audio — message on Telegram">Pre-pay →</a>
       </li>
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">Text + Audio + 1&nbsp;year&nbsp;Pro</h3>
         <p class="edition-price">$45.7</p>
         <p class="edition-gift">A year of Daily Frame Pro included</p>
+        <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Pre-pay for Text + Audio + 1 year Pro — message on Telegram">Pre-pay →</a>
       </li>
     </ul>
     <p class="editions-buy reveal" style="transition-delay:.15s">To pre-pay, message me at <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a> — or leave your email below and get the launch announcement.</p>

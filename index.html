@@ -489,6 +489,9 @@ button{font-family:inherit;cursor:pointer}
   transition:opacity .15s,transform .12s;
 }
 .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+/* Hero buy CTA — jumps to the editions block */
+.hero-cta{margin-bottom:clamp(.25rem,1vw,.75rem)}
+.hero-cta .btn-primary{font-size:var(--sz-body);padding:1rem 2rem;white-space:nowrap}
 /* Quiet secondary link — used by the direct-purchase bonus block */
 .btn-ghost{
   font-family:var(--font-text);
@@ -1521,8 +1524,11 @@ button{font-family:inherit;cursor:pointer}
       "kicker"
       "title"
       "promise"
+      "cta"
       "cover"
-      "body";
+      "sub"
+      "lead"
+      "bonus";
     grid-template-rows:none;
     min-height:auto;
     row-gap:0;
@@ -1531,6 +1537,14 @@ button{font-family:inherit;cursor:pointer}
   /* Cover sits straight under the title so the two stay tied
      together; the title still leads. */
   .hero-cover{margin:.25rem 0 1.25rem}
+  /* Unwrap the body so the buy button lands above the cover,
+     inside the first screen on a phone */
+  .hero-body{display:contents}
+  .hero-sub{grid-area:sub}
+  .hero-lead{grid-area:lead}
+  .hero-cta{grid-area:cta;margin:0 0 1.25rem}
+  .hero-cta .btn-primary{display:block;text-align:center;padding-inline:1rem}
+  .hero-body .form-bonus{grid-area:bonus}
   .book{width:min(54vw,250px);margin-inline:0}
 
   .posyl-grid{grid-template-columns:1fr;gap:2rem}
@@ -1545,7 +1559,6 @@ button{font-family:inherit;cursor:pointer}
   /* Big condensed caps carry tighter tracking well, and the
      extra tightening is what buys the size on a narrow screen */
   .hero-h1{font-size:var(--h1-size-m);letter-spacing:-.05em}
-  .hero-body{display:block}
   .hero-layout{padding-left:.75rem;padding-right:.75rem}
 }
 @media(max-width:520px){
@@ -1601,6 +1614,7 @@ button{font-family:inherit;cursor:pointer}
     <div class="hero-body">
       <p class="hero-sub">Freelance through the lens of self-development.</p>
       <p class="hero-lead">Not because you burned the bridges and you’re standing in the ashes. Because there’s nothing left to go back to. No promises of gold, no secret move that changes everything overnight.</p>
+      <div class="hero-cta"><a class="btn-primary" href="#editions" aria-label="Buy the book — see the editions and prices">Buy the book · from $9.7 →</a></div>
       <div class="form-bonus">
         <span class="form-bonus-label">Bonus · direct from the author</span>
         <p class="form-bonus-p">Buy the book straight from the author and you also get <strong>from 2 months to a year of Pro in the Daily Frame app</strong>, depending on the edition. A store copy doesn’t include it.</p>

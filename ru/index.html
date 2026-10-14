@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" type="image/jpeg" href="/images/cover-ru.jpg">
-<link rel="apple-touch-icon" href="/images/cover-ru.jpg">
+<link rel="icon" type="image/jpeg" href="/images/cover-ru.jpg?v=2">
+<link rel="apple-touch-icon" href="/images/cover-ru.jpg?v=2">
 <title>Ультиматум — Уйти на фриланс и не вернуться</title>
 <meta name="description" content="Нон-фикшн о фрилансе сквозь призму саморазвития. 7 частей, 33 главы. Константин Иванов. Подпишись на спецпредложения.">
 
 <meta property="og:title" content="Ультиматум. Уйти на фриланс и не вернуться">
 <meta property="og:description" content="Нон-фикшн о фрилансе сквозь призму саморазвития. 7 частей, 33 главы. Подпишись на спецпредложения.">
-<meta property="og:image" content="https://ultimatumbook.com/images/og-ru.jpg">
+<meta property="og:image" content="https://ultimatumbook.com/images/og-ru.jpg?v=2">
 <meta property="og:url" content="https://ultimatumbook.com/ru/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ultimatumbook.com/images/og-ru.jpg">
+<meta name="twitter:image" content="https://ultimatumbook.com/images/og-ru.jpg?v=2">
 <link rel="canonical" href="https://ultimatumbook.com/ru/">
 <link rel="alternate" hreflang="en" href="https://ultimatumbook.com/">
 <link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/">
@@ -372,7 +372,7 @@ button{font-family:inherit;cursor:pointer}
   display:grid;
   /* Width is whichever is smaller: a sensible measure, or the width
      implied by the height still available in the fold (2:3 aspect) */
-  grid-template-columns:minmax(0,1fr) min(clamp(210px,29vw,440px),max(0px,calc(var(--cover-cap)/1.5)));
+  grid-template-columns:minmax(0,1fr) min(clamp(210px,29vw,440px),max(0px,calc(var(--cover-cap)/1.6)));
   grid-template-areas:
     "kicker  kicker"
     "title   title"
@@ -457,15 +457,6 @@ button{font-family:inherit;cursor:pointer}
   max-width:44ch;
   margin-bottom:clamp(1.25rem,2.5vw,2rem);
 }
-/* Compact inline subscribe in the hero — reuses .email-inp/.sub-btn */
-.hero-form{
-  flex-wrap:wrap;
-  justify-content:flex-start;
-  max-width:var(--form-w);
-  margin-bottom:.875rem;
-}
-.hero-form .email-inp{min-width:0}
-.hero-form .sub-btn{white-space:nowrap;flex-shrink:0}
 .btn-primary{
   font-family:var(--font-text);
   font-size:var(--sz-sm);
@@ -501,7 +492,7 @@ button{font-family:inherit;cursor:pointer}
 .book{
   position:relative;
   width:100%;
-  aspect-ratio:2/3;
+  aspect-ratio:5/8;
   background:#11121A;
   box-shadow:0 18px 60px rgba(20,21,28,.28),inset 5px 0 0 var(--acc);
   border:1px solid rgba(20,21,28,.06);
@@ -526,6 +517,7 @@ button{font-family:inherit;cursor:pointer}
 .book-cover-img[src=""],.book-cover-img:not([src]){display:none}
 /* Once the real cover loads it carries its own title — hide the
    text placeholder, keep the СКОРО badge + author overlay */
+.book.has-cover .book-top,
 .book.has-cover .book-t,
 .book.has-cover .book-st{display:none}
 .book-top{
@@ -541,17 +533,6 @@ button{font-family:inherit;cursor:pointer}
   text-transform:uppercase;
   color:rgba(229,230,233,.35);
   line-height:1.5;
-}
-.book-soon{
-  font-family:var(--font-mono);
-  font-size:.5rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--acc);
-  border:1px solid rgba(255,42,56,.45);
-  padding:.2rem .45rem;
-  line-height:1.5;
-  white-space:nowrap;
 }
 .book-main{
   flex:1;
@@ -1616,45 +1597,21 @@ button{font-family:inherit;cursor:pointer}
     <div class="hero-body">
       <p class="hero-sub">Фриланс сквозь призму саморазвития.</p>
       <p class="hero-lead">Не потому что сжёг мосты и стоишь на пепелище. А потому что больше незачем возвращаться. Без обещаний золотых гор и секретного действия, которое разом всё изменит.</p>
-      <form class="subscribe-form hero-form" novalidate>
-        <label for="hero-email-inp" class="sr-only">Email-адрес</label>
-        <input
-          type="email"
-          id="hero-email-inp"
-          name="email"
-          class="email-inp"
-          placeholder="твой@email.ru"
-          autocomplete="email"
-          inputmode="email"
-          required
-          aria-required="true"
-          aria-describedby="hero-msg-ok hero-msg-err"
-        >
-        <button type="submit" class="sub-btn">Подписаться →</button>
-        <div class="form-choices">
-          <label class="form-check"><input type="checkbox" class="chk-book" id="hero-chk-book" checked><span>Сообщить о выходе книги</span></label>
-          <label class="form-check"><input type="checkbox" class="chk-beta" id="hero-chk-beta" checked><span>Хочу в бета-тест приложения «Каркас дня»</span></label>
-        </div>
-      </form>
-      <p class="form-offer">Рассылка — полезный контент и спецпредложения.</p>
       <div class="form-bonus">
         <span class="form-bonus-label">Бонус · напрямую у автора</span>
         <p class="form-bonus-p">Купишь книгу напрямую у автора — получишь ещё и <strong>от 2 месяцев до года Pro в приложении «Каркас дня»</strong>, в зависимости от издания. В магазинной копии этого нет.</p>
         <div class="form-bonus-link"><a class="btn-ghost" href="https://daily-frame.com/" target="_blank" rel="noopener">Что такое «Каркас дня» →</a></div>
       </div>
-      <div class="form-msg msg-ok" id="hero-msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
-      <div class="form-msg msg-err" id="hero-msg-err" role="alert" aria-live="polite"></div>
     </div>
 
     <div class="hero-cover" aria-hidden="true">
       <div class="book" role="img" aria-label="Обложка книги Ультиматум">
         <picture class="book-cover-pic">
-          <source type="image/webp" srcset="/images/cover-ru.webp">
-          <img class="book-cover-img" src="/images/cover-ru.jpg" alt="" loading="eager" onload="this.closest('.book').classList.add('has-cover')" onerror="this.style.display='none'">
+          <source type="image/webp" srcset="/images/cover-ru.webp?v=2">
+          <img class="book-cover-img" src="/images/cover-ru.jpg?v=2" alt="" loading="eager" onload="this.closest('.book').classList.add('has-cover')" onerror="this.style.display='none'">
         </picture>
         <div class="book-top">
           <span class="book-author-n">Константин<br>Иванов</span>
-          <span class="book-soon">Скоро</span>
         </div>
         <div class="book-main">
           <div class="book-t">УЛЬТИМАТУМ</div>
@@ -1859,7 +1816,6 @@ button{font-family:inherit;cursor:pointer}
         </div>
 
         <div class="app-ctas reveal" style="transition-delay:.25s">
-          <a href="#waitlist" class="btn-primary">Подписаться на рассылку →</a>
           <a href="https://daily-frame.com/ru/" class="btn-outline" target="_blank" rel="noopener">Попробовать «Каркас дня» →</a>
         </div>
       </div>
@@ -2012,7 +1968,7 @@ button{font-family:inherit;cursor:pointer}
   <div class="s-inner wrap">
     <div class="waitlist-inner">
       <span class="label reveal">08 · Старт</span>
-      <h2 class="waitlist-h2 reveal" id="waitlist-h2">Книга выходит. Забери её первым.</h2>
+      <h2 class="waitlist-h2 reveal" id="waitlist-h2">Спецпредложения и контент от автора.</h2>
       <p class="waitlist-sub reveal" style="transition-delay:.1s">Подпишись на рассылку специальных предложений и полезной инфы.</p>
       <form class="subscribe-form reveal" id="subscribe-form" novalidate style="transition-delay:.15s">
         <label for="email-inp" class="sr-only">Email-адрес</label>
@@ -2030,7 +1986,6 @@ button{font-family:inherit;cursor:pointer}
         >
         <button type="submit" class="sub-btn" id="sub-btn">Подписаться →</button>
         <div class="form-choices">
-          <label class="form-check"><input type="checkbox" class="chk-book" id="chk-book" checked><span>Сообщить о выходе книги</span></label>
           <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta" checked><span>Хочу в бета-тест приложения «Каркас дня»</span></label>
         </div>
       </form>
@@ -2190,7 +2145,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   });
 }();
 
-/* ── Subscribe forms (hero + waitlist share one handler/source) ──
+/* ── Subscribe form (section 08; handler supports any .subscribe-form) ──
    Each form scopes its own success/error messages to its parent,
    so submitting one never touches the other. */
 !function(){

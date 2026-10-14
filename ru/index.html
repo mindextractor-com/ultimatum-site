@@ -862,53 +862,6 @@ button{font-family:inherit;cursor:pointer}
   background:var(--acc);
   margin-top:.45rem;
 }
-/* Full version — accordion */
-.accord-wrap{
-  border:1px solid var(--l-border);
-}
-.accord-trigger{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.875rem 1rem;
-  background:none;
-  border:none;
-  color:var(--l-muted);
-  font-family:var(--font-mono);
-  font-size:var(--sz-label);
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:color .15s;
-  gap:.5rem;
-  text-align:left;
-}
-.accord-trigger:hover{color:var(--l-text)}
-.accord-icon{
-  font-size:.75rem;
-  transition:transform .25s;
-  flex-shrink:0;
-  color:var(--l-subtle);
-}
-.accord-trigger[aria-expanded="true"] .accord-icon{transform:rotate(90deg)}
-.accord-body{
-  display:none;
-  padding:.25rem 1rem 1rem;
-}
-.accord-body.open{display:block}
-.accord-item{
-  display:grid;
-  grid-template-columns:1.5rem 1fr;
-  gap:0 .75rem;
-  padding-block:.75rem;
-  border-top:1px solid var(--l-border);
-  font-size:var(--sz-sm);
-  line-height:1.65;
-  color:var(--l-muted);
-  align-items:start;
-}
-.accord-item .feature-dot{opacity:.45}
 .app-ctas{
   display:flex;
   flex-wrap:wrap;
@@ -1487,6 +1440,114 @@ button{font-family:inherit;cursor:pointer}
 .reveal.in{opacity:1;transform:none}
 
 /* ─────────────────────────────────────────────
+   FULL TABLE OF CONTENTS — native <details> under
+   the 03 parts grid, closed by default
+───────────────────────────────────────────── */
+.toc{margin-top:2rem;border:1px solid var(--l-border);max-width:52rem}
+.toc-sum,.faq-q{
+  list-style:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:.75rem;
+}
+.toc-sum::-webkit-details-marker,.faq-q::-webkit-details-marker{display:none}
+.toc-sum:focus-visible,.faq-q:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.toc-sum{
+  padding:.875rem 1rem;
+  font-family:var(--font-mono);font-size:var(--sz-label);
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--l-muted);transition:color .15s;
+}
+.toc-sum:hover{color:var(--l-text)}
+.toc-icon{font-size:.75rem;color:var(--l-subtle);transition:transform .25s;flex-shrink:0}
+.toc[open] .toc-icon{transform:rotate(90deg)}
+.toc-body{padding:0 1rem 1rem}
+.toc-solo,.toc-part-t{
+  font-family:var(--font-display);font-weight:600;
+  font-size:1rem;line-height:1.3;color:var(--l-text);
+}
+.toc-solo{padding-block:.875rem;border-top:1px solid var(--l-border)}
+.toc-part{padding-block:.875rem;border-top:1px solid var(--l-border)}
+.toc-part-t{margin-bottom:.5rem}
+.toc-part-n{color:var(--acc)}
+.toc-ch,.toc-tail{list-style:none}
+.toc-ch li{
+  display:grid;grid-template-columns:1.75rem 1fr;gap:0 .5rem;
+  padding-block:.2rem;
+  font-size:var(--sz-sm);line-height:1.55;color:var(--l-muted);
+}
+.toc-ch-n{font-family:var(--font-mono);color:var(--l-subtle)}
+.toc-tail{padding-top:.75rem;border-top:1px solid var(--l-border)}
+.toc-tail li{padding-block:.2rem;font-size:var(--sz-sm);line-height:1.55;color:var(--l-muted)}
+
+/* App block — ПРО paragraph under "Что уже есть" */
+.pro-block{margin-bottom:2.5rem}
+.pro-p{
+  padding-block:.875rem;
+  border-block:1px solid var(--l-border);
+  font-size:var(--sz-sm);line-height:1.65;color:var(--l-muted);
+}
+
+/* ─────────────────────────────────────────────
+   06 АУДИО · ЧТО ТЫ ПОЛУЧАЕШЬ · ВОПРОСЫ
+───────────────────────────────────────────── */
+.audio-h2,.included-h2,.faq-h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  color:var(--l-text);
+  margin-bottom:clamp(1.5rem,3vw,2.5rem);
+}
+.audio-h2{margin-bottom:1.25rem}
+.audio-p{
+  font-size:var(--sz-body);line-height:1.75;color:var(--l-muted);
+  margin-bottom:2rem;
+}
+.audio-card{
+  max-width:36rem;
+  padding:1rem 1.15rem;
+  background:rgba(255,255,255,.5);
+  border:1px solid var(--l-border);
+  border-left:3px solid var(--acc);
+  border-radius:4px;
+}
+.audio-el{display:block;width:100%;height:44px;accent-color:var(--acc);color-scheme:light}
+
+.included-list{list-style:none}
+.included-list li{
+  display:grid;
+  grid-template-columns:1.5rem minmax(0,var(--measure));
+  gap:0 .75rem;
+  padding-block:1rem;
+  border-bottom:1px solid var(--l-border);
+  font-size:var(--sz-body);line-height:1.65;color:var(--l-muted);
+  align-items:start;
+}
+.included-list li:first-child{border-top:1px solid var(--l-border)}
+.included-list strong{color:var(--l-text);font-weight:600}
+.included-list .feature-dot{margin-top:.6rem}
+.included-note{margin-top:1.5rem;font-size:var(--sz-body);line-height:1.65;color:var(--l-text)}
+/* The free excerpt reads as the tail of "Что ты получаешь" */
+#fragment .s-inner{padding-top:0}
+
+.faq-list{max-width:52rem;border-top:1px solid var(--l-border)}
+.faq-item{border-bottom:1px solid var(--l-border)}
+.faq-q{
+  padding:1.1rem 0;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.0625rem,1.6vw,1.25rem);line-height:1.3;
+  color:var(--l-text);
+}
+.faq-icon{
+  font-family:var(--font-mono);font-size:1.25rem;line-height:1;
+  color:var(--acc);transition:transform .2s;flex-shrink:0;
+}
+.faq-item[open] .faq-icon{transform:rotate(45deg)}
+.faq-a{padding-bottom:1.25rem;font-size:var(--sz-body);line-height:1.7;color:var(--l-muted)}
+.faq-a a{color:var(--l-text);text-decoration-color:var(--acc);text-underline-offset:.2em}
+.faq-a a:hover{color:var(--acc)}
+
+/* ─────────────────────────────────────────────
    READING MEASURE — site-wide rule
    Prose is capped at --measure so no line runs past a
    comfortable length. Expressed in ch, so the cap tracks
@@ -1505,6 +1566,10 @@ button{font-family:inherit;cursor:pointer}
 .pub-note,
 .author-bio,
 .author-bio-em,
+.audio-p,
+.pro-p,
+.included-note,
+.faq-a,
 .editions-buy{
   max-width:var(--measure);
 }
@@ -1570,6 +1635,43 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ─────────────────────────────────────────────
+   STICKY BUY — phones only. Fixed, so it never shifts
+   layout; JS shows it once the hero is off screen and
+   hides it over the editions and while the cookie bar
+   is up. visibility:hidden keeps it out of the tab order.
+───────────────────────────────────────────── */
+.sticky-buy{display:none}
+@media(max-width:767px){
+  .sticky-buy{
+    display:block;
+    position:fixed;left:0;right:0;bottom:0;
+    z-index:60;
+    padding:0 16px calc(12px + env(safe-area-inset-bottom));
+    pointer-events:none;
+    transform:translateY(calc(100% + 12px));
+    opacity:0;
+    visibility:hidden;
+    transition:transform .25s ease,opacity .25s ease,visibility 0s linear .25s;
+  }
+  .sticky-buy.show{
+    transform:none;opacity:1;visibility:visible;
+    transition:transform .25s ease,opacity .25s ease,visibility 0s;
+  }
+  .sticky-buy .btn-primary{
+    pointer-events:auto;
+    display:block;width:100%;
+    text-align:center;
+    font-size:var(--sz-body);
+    padding:1rem .75rem;
+    line-height:1.3;
+    box-shadow:0 8px 24px rgba(20,21,28,.28);
+  }
+  .sticky-buy .btn-primary:focus-visible{outline:2px solid var(--l-text);outline-offset:3px}
+  /* Room under the footer so the bar never covers its last line */
+  .site-footer{padding-bottom:calc(1.75rem + 76px + env(safe-area-inset-bottom))}
+}
+
+/* ─────────────────────────────────────────────
    REDUCED MOTION
 ───────────────────────────────────────────── */
 @media(prefers-reduced-motion:reduce){
@@ -1614,7 +1716,7 @@ button{font-family:inherit;cursor:pointer}
       <div class="hero-cta"><a class="btn-primary" href="#editions" aria-label="Купить книгу — к изданиям и ценам">Купить книгу · от 770₽ →</a></div>
       <div class="form-bonus">
         <span class="form-bonus-label">Бонус · напрямую у автора</span>
-        <p class="form-bonus-p">Купи книгу напрямую тут у автора — получи <strong>от 2 месяцев бесплатного использования приложения «Каркас дня»</strong>, которое превращает теорию книги в практику. На других площадках этого не будет.</p>
+        <p class="form-bonus-p">Купи книгу напрямую у автора — получи <strong>от 2 месяцев бесплатного использования приложения «Каркас дня»</strong>, которое превращает теорию книги в практику. На других площадках этого не будет.</p>
         <div class="form-bonus-link"><a class="btn-ghost" href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Подробнее о приложении →</a></div>
       </div>
     </div>
@@ -1703,7 +1805,7 @@ button{font-family:inherit;cursor:pointer}
     <ul class="parts reveal" style="transition-delay:.15s" aria-label="Части книги">
       <li class="part">
         <span class="part-n">I</span>
-        <div><div class="part-t">Зачем тебе фриланс</div><div class="part-tags">старт · страхи · деньги</div></div>
+        <div><div class="part-t">Зачем тебе фриланс?</div><div class="part-tags">старт · страхи · деньги</div></div>
       </li>
       <li class="part">
         <span class="part-n">II</span>
@@ -1719,11 +1821,11 @@ button{font-family:inherit;cursor:pointer}
       </li>
       <li class="part">
         <span class="part-n">V</span>
-        <div><div class="part-t">Прыгаем во фриланс: клиенты</div><div class="part-tags">продажи</div></div>
+        <div><div class="part-t">Разбежавшись, прыгнем во фриланс</div><div class="part-tags">продажи</div></div>
       </li>
       <li class="part">
         <span class="part-n">VI</span>
-        <div><div class="part-t">Фрилансер, блогер, маркетолог</div><div class="part-tags">маркетинг · бренд</div></div>
+        <div><div class="part-t">Ну и кто ты? Фрилансер, блогер, маркетолог</div><div class="part-tags">маркетинг · бренд</div></div>
       </li>
       <li class="part">
         <span class="part-n">VII</span>
@@ -1731,6 +1833,85 @@ button{font-family:inherit;cursor:pointer}
       </li>
     </ul>
     <p class="structure-note reveal" style="transition-delay:.25s">Задания в каждой главе. Не для галочки — для изменений.</p>
+    <details class="toc reveal" style="transition-delay:.3s">
+      <summary class="toc-sum"><span>Полное оглавление</span><span class="toc-icon" aria-hidden="true">›</span></summary>
+      <div class="toc-body">
+        <p class="toc-solo">Предисловие</p>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть I.</span> Зачем тебе фриланс?</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">1</span><span>Фриланс — это хорошо (возможно)</span></li>
+          <li><span class="toc-ch-n">2</span><span>Привычки × Мотивация × Дисциплина</span></li>
+          <li><span class="toc-ch-n">3</span><span>Боишься? Я — да</span></li>
+          <li><span class="toc-ch-n">4</span><span>Голодные, но не бедные</span></li>
+          <li><span class="toc-ch-n">5</span><span>Ловушки на пути</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть II.</span> Учимся и умеем</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">6</span><span>Где деньги сегодня и завтра?</span></li>
+          <li><span class="toc-ch-n">7</span><span>Кем станешь, когда вырастешь?</span></li>
+          <li><span class="toc-ch-n">8</span><span>Учимся быстрее: сквозь воду и ветер</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть III.</span> Каркас дня</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">9</span><span>Изобретая велосипед</span></li>
+          <li><span class="toc-ch-n">10</span><span>Твой Каркас дня</span></li>
+          <li><span class="toc-ch-n">11</span><span>Продвинутый КД и приложение Каркас дня</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть IV.</span> Собираем свою систему</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">12</span><span>Инструменты высокого полета</span></li>
+          <li><span class="toc-ch-n">13</span><span>Тайм-менеджмент — это не про время</span></li>
+          <li><span class="toc-ch-n">14</span><span>Пространство фриланса</span></li>
+          <li><span class="toc-ch-n">15</span><span>Информационная среда</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть V.</span> Разбежавшись, прыгнем во фриланс</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">16</span><span>Где брать клиентов?</span></li>
+          <li><span class="toc-ch-n">17</span><span>Самопрезентация — ключ к продажам</span></li>
+          <li><span class="toc-ch-n">18</span><span>Прямо сквозь воронку продаж</span></li>
+          <li><span class="toc-ch-n">19</span><span>Технология продаж</span></li>
+          <li><span class="toc-ch-n">20</span><span>Тонкое искусство переписки</span></li>
+          <li><span class="toc-ch-n">21</span><span>Запасное колесо прямых продаж</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть VI.</span> Ну и кто ты? Фрилансер, блогер, маркетолог</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">22</span><span>Идеальный клиент, ау</span></li>
+          <li><span class="toc-ch-n">23</span><span>Делаем предложение</span></li>
+          <li><span class="toc-ch-n">24</span><span>Блогерство (не)бесплатное</span></li>
+          <li><span class="toc-ch-n">25</span><span>Трафик из соцсетей без пробок</span></li>
+          <li><span class="toc-ch-n">26</span><span>Продаем бесплатно или очень дешево</span></li>
+          </ol>
+        </div>
+        <div class="toc-part">
+          <p class="toc-part-t"><span class="toc-part-n">Часть VII.</span> Улетаем в стратосферу</p>
+          <ol class="toc-ch">
+          <li><span class="toc-ch-n">27</span><span>Платные методы продвижения</span></li>
+          <li><span class="toc-ch-n">28</span><span>Работа с клиентами</span></li>
+          <li><span class="toc-ch-n">29</span><span>Личный бренд</span></li>
+          <li><span class="toc-ch-n">30</span><span>Ядро проекта. Сайт</span></li>
+          <li><span class="toc-ch-n">31</span><span>Ускорение свободного взлета</span></li>
+          <li><span class="toc-ch-n">32</span><span>Хватит фриланса!</span></li>
+          <li><span class="toc-ch-n">33</span><span>Форсаж, перегрузка в 20G, катапультирование</span></li>
+          </ol>
+        </div>
+        <ul class="toc-tail">
+          <li>Заключение. Что делать после этой книги</li>
+          <li>Приложение 1. Специализации</li>
+          <li>Приложение 2. Источники</li>
+        </ul>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1783,10 +1964,10 @@ button{font-family:inherit;cursor:pointer}
         <h2 class="app-h2 reveal" id="app-h2">
           Каркас дня,<br><span>который работает каждый день</span>
         </h2>
-        <p class="app-intro reveal" style="transition-delay:.1s">Главный инструмент книги — «Каркас дня» (Регулярность × Маленькие действия) — как приложение: собираешь день, отмечаешь сделанное, система сама считает, держишь ли ты ритм.</p>
+        <p class="app-intro reveal" style="transition-delay:.1s">Главный инструмент книги — «Каркас дня» (Регулярность × Маленькие действия) — уже работает как приложение: собираешь день, отмечаешь сделанное, система сама считает, держишь ли ты ритм.</p>
 
         <div class="feature-block reveal" style="transition-delay:.15s">
-          <span class="feature-label">Базовая версия — почти готово, альфа скоро</span>
+          <span class="feature-label">Что уже есть</span>
           <ul class="feature-list">
             <li class="feature-item">
               <span class="feature-dot" aria-hidden="true"></span>
@@ -1807,27 +1988,9 @@ button{font-family:inherit;cursor:pointer}
           </ul>
         </div>
 
-        <div class="accord-wrap reveal" style="transition-delay:.2s">
-          <button class="accord-trigger" aria-expanded="false" aria-controls="accord-body" id="accord-btn">
-            <span>Полная версия — позже</span>
-            <span class="accord-icon" aria-hidden="true">›</span>
-          </button>
-          <div class="accord-body" id="accord-body" role="region" aria-labelledby="accord-btn">
-            <ul class="feature-list" style="padding-top:.25rem">
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Работа — клиенты → проекты → задачи, учёт времени, деньги.</span>
-              </li>
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Стратегия — интерактивная карта целей и ценностей.</span>
-              </li>
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Аналитика — выгрузка в Excel с ИИ-разбором, режимы фокуса.</span>
-              </li>
-            </ul>
-          </div>
+        <div class="feature-block pro-block reveal" style="transition-delay:.2s">
+          <span class="feature-label">ПРО — для тех, кто идёт дальше</span>
+          <p class="pro-p">Расширенный режим со страницами Стратегия, Тактика и Работа: цели цикла, Каркас недели и рабочие задачи по проектам. При покупке книги напрямую у автора — от 2 месяцев ПРО в подарок.</p>
         </div>
 
         <div class="app-ctas reveal" style="transition-delay:.25s">
@@ -1835,17 +1998,17 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </div>
 
-      <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Скриншоты приложения «Каркас дня»">
+      <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Скриншоты приложения «Каркас дня»">
         <div class="app-screen">
-          <img src="/images/app-today.webp" alt="«Каркас дня — сегодня»" loading="lazy" width="760" height="1484" onerror="this.style.display='none'">
+          <img src="/images/app-today.webp" alt="«Каркас дня — сегодня»" loading="lazy" width="760" height="1484" onerror="this.style.display='none'">
           <div class="app-screen-ph" aria-hidden="true">Сегодня</div>
         </div>
         <div class="app-screen">
-          <img src="/images/app-days.webp" alt="«Каркас дня — дни»" loading="lazy" width="760" height="1505" onerror="this.style.display='none'">
+          <img src="/images/app-days.webp" alt="«Каркас дня — дни»" loading="lazy" width="760" height="1505" onerror="this.style.display='none'">
           <div class="app-screen-ph" aria-hidden="true">Дни</div>
         </div>
         <div class="app-screen">
-          <img src="/images/app-analytics.webp" alt="«Каркас дня — аналитика»" loading="lazy" width="760" height="1412" onerror="this.style.display='none'">
+          <img src="/images/app-analytics.webp" alt="«Каркас дня — аналитика»" loading="lazy" width="760" height="1412" onerror="this.style.display='none'">
           <div class="app-screen-ph" aria-hidden="true">Аналитика</div>
         </div>
       </div>
@@ -1854,10 +2017,25 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     06 ГОЛОС
+     06 АУДИО
+════════════════════════════════════════════════════ -->
+<section id="audio" class="s" aria-labelledby="audio-h2">
+  <span class="leaf-num" aria-hidden="true">06</span>
+  <div class="s-inner wrap">
+    <span class="label reveal">06 · Аудио</span>
+    <h2 class="audio-h2 reveal" id="audio-h2">Послушай, как звучит книга</h2>
+    <p class="audio-p reveal" style="transition-delay:.1s">Начало главы 2 «Привычки × Мотивация × Дисциплина». Аудиоверсия — 36 глав, 8,5 часов.</p>
+    <div class="audio-card reveal" style="transition-delay:.15s">
+      <audio class="audio-el" controls preload="none" src="/media/ultimatum-ru-ch2-excerpt.mp3" aria-label="Фрагмент аудиокниги: начало главы 2"></audio>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     07 ГОЛОС
 ════════════════════════════════════════════════════ -->
 <section id="voice" class="s" aria-label="Голос книги">
-  <span class="leaf-num" aria-hidden="true">06</span>
+  <span class="leaf-num" aria-hidden="true">07</span>
   <div class="s-inner">
     <div class="marquee-band" aria-hidden="true">
       <div class="marquee-track">
@@ -1866,8 +2044,8 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </div>
     <div class="pullquote-wrap reveal">
-      <blockquote class="pullquote">Когда клиенты есть — есть фриланс. Нет — нет. Всё остальное — хобби, волонтёрство, как угодно.</blockquote>
-      <cite class="pullquote-src">Глава 16. Где брать клиентов</cite>
+      <blockquote class="pullquote">Когда клиенты есть — есть фриланс. Нет — нет. Все остальное — стартап, хобби, размышления.</blockquote>
+      <cite class="pullquote-src">Глава 16. Где брать клиентов?</cite>
     </div>
   </div>
 </section>
@@ -1880,23 +2058,22 @@ button{font-family:inherit;cursor:pointer}
   <div class="s-inner wrap">
     <span class="label reveal">Публикация</span>
     <div class="pub-card reveal" style="transition-delay:.1s">
-      <h2 class="pub-h" id="publication-h2">Введение и первые четыре главы — опубликованы</h2>
-      <p class="pub-p">Вошли в сборник издательства «Альпина» — «Мастера слова», сборник работ выпускников курса «Мастерская писателя».</p>
-      <p class="pub-note">Версия до финальной редактуры. Для доступа Альпина попросит номер телефона.</p>
+      <h2 class="pub-h" id="publication-h2">Как всё начиналось</h2>
+      <p class="pub-p">Введение и первые четыре главы ранней версии вошли в сборник издательства «Альпина» — «Мастера слова», сборник работ выпускников курса «Мастерская писателя». С тех пор книга прошла полную редактуру.</p>
       <div class="pub-link">
-        <a class="btn-ghost" href="https://plus.alpina.ru/product/14262/49220/" target="_blank" rel="noopener">Читать на Альпине →</a>
+        <a class="btn-ghost" href="https://plus.alpina.ru/product/14262/49220/" target="_blank" rel="noopener">Ранняя версия на Альпине →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     07 АВТОР
+     08 АВТОР
 ════════════════════════════════════════════════════ -->
 <section id="author" class="s" aria-labelledby="author-h2">
-  <span class="leaf-num" aria-hidden="true">07</span>
+  <span class="leaf-num" aria-hidden="true">08</span>
   <div class="s-inner wrap">
-    <span class="label reveal">07 · Автор</span>
+    <span class="label reveal">08 · Автор</span>
     <div class="author-layout">
       <div class="author-photo-wrap reveal">
         <img class="author-photo" src="/images/author.webp" alt="Константин Иванов" loading="lazy" width="800" height="884" onerror="this.style.display='none'">
@@ -1907,7 +2084,7 @@ button{font-family:inherit;cursor:pointer}
       </div>
       <div class="reveal" style="transition-delay:.15s">
         <h2 class="author-name" id="author-h2">Константин Иванов</h2>
-        <p class="author-bio">Больше 7 лет в продажах B2B и B2C, 8+ лет в маркетинге малого бизнеса и экспертов. Лично продвигал 78 проектов, накопил 2500 часов в соцсетях, прочитал и протестировал идеи из 80+ книг по саморазвитию и маркетингу. На фрилансе больше 7 лет — с командой и в одиночку.</p>
+        <p class="author-bio">Больше 10 лет в продажах B2B и B2C, 8+ лет в маркетинге малого бизнеса и экспертов. Лично продвигал 85 проектов, провёл больше 2500 часов в продвижении в соцсетях, проверил на практике идеи из 80 книг по саморазвитию, психологии и маркетингу. На фрилансе больше 7 лет — с командой и в одиночку.</p>
         <p class="author-bio-em">Я не самый умный и не гуру. Вероятно, я больше многих ошибался, обламывался, выгорал и собирал себя заново. Эта книга — во многом про мои собственные ошибки.</p>
         <div class="author-stats" role="list" aria-label="Опыт автора">
           <div role="listitem">
@@ -1915,7 +2092,7 @@ button{font-family:inherit;cursor:pointer}
             <div class="stat-lbl">лет на<br>фрилансе</div>
           </div>
           <div role="listitem">
-            <div class="stat-val">78</div>
+            <div class="stat-val">85</div>
             <div class="stat-lbl">проектов</div>
           </div>
           <div role="listitem">
@@ -1923,11 +2100,37 @@ button{font-family:inherit;cursor:pointer}
             <div class="stat-lbl">часов в<br>соцсетях</div>
           </div>
           <div role="listitem">
-            <div class="stat-val">80+</div>
+            <div class="stat-val">80</div>
             <div class="stat-lbl">книг<br>протестировано</div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     ЧТО ТЫ ПОЛУЧАЕШЬ + ФРАГМЕНТ — unnumbered, lead
+     into the editions
+════════════════════════════════════════════════════ -->
+<section id="included" class="s" aria-labelledby="included-h2">
+  <div class="s-inner wrap">
+    <h2 class="included-h2 reveal" id="included-h2">Что ты получаешь</h2>
+    <ul class="included-list reveal" style="transition-delay:.1s">
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Текст</strong> — EPUB для Apple Books, Google Play Книг и любых читалок, и PDF для компьютера и печати.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Аудио</strong> — MP3 по главам для любого плеера и M4B одним файлом с оглавлением для Apple Books и приложений аудиокниг. Плюс PDF с иллюстрациями из книги.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Приложение</strong> — код «Каркаса дня» ПРО на срок из выбранного издания.</span></li>
+    </ul>
+    <p class="included-note reveal" style="transition-delay:.15s">После оплаты пришлю файлы и код приложения в Telegram.</p>
+  </div>
+</section>
+
+<section id="fragment" class="s" aria-labelledby="fragment-h2">
+  <div class="s-inner wrap">
+    <div class="pub-card reveal">
+      <h2 class="pub-h" id="fragment-h2">Почитай бесплатно</h2>
+      <p class="pub-p">Предисловие и первая глава — PDF, без регистрации.</p>
+      <div class="pub-link"><a class="btn-outline" href="/media/ultimatum-fragment.pdf" download="Ультиматум — фрагмент.pdf">Скачать фрагмент →</a></div>
     </div>
   </div>
 </section>
@@ -1976,13 +2179,44 @@ button{font-family:inherit;cursor:pointer}
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     08 WAITLIST
+     ВОПРОСЫ — unnumbered, right after the editions
+════════════════════════════════════════════════════ -->
+<section id="faq" class="s" aria-labelledby="faq-h2">
+  <div class="s-inner wrap">
+    <h2 class="faq-h2 reveal" id="faq-h2">Вопросы</h2>
+    <div class="faq-list reveal" style="transition-delay:.1s">
+      <details class="faq-item">
+        <summary class="faq-q"><span>Как купить?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+        <p class="faq-a">Выбери издание и напиши мне в Telegram <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a> — пришлю способ оплаты.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q"><span>Как я получу книгу?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+        <p class="faq-a">После оплаты пришлю файлы и код приложения в Telegram.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q"><span>На чём читать?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+        <p class="faq-a">EPUB открывается в Apple Books, Google Play Книгах и любых читалках, PDF — на компьютере и для печати.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q"><span>Где слушать аудио?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+        <p class="faq-a">MP3 — в любом плеере. M4B — в Apple Books и приложениях для аудиокниг, с оглавлением по главам.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q"><span>Чем покупка у автора отличается от площадок?</span><span class="faq-icon" aria-hidden="true">+</span></summary>
+        <p class="faq-a">Только у автора к книге идёт приложение «Каркас дня» ПРО в подарок — от 2 месяцев. На других площадках этого не будет.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     09 WAITLIST
 ════════════════════════════════════════════════════ -->
 <section id="waitlist" class="s" aria-labelledby="waitlist-h2">
-  <span class="leaf-num" aria-hidden="true">08</span>
+  <span class="leaf-num" aria-hidden="true">09</span>
   <div class="s-inner wrap">
     <div class="waitlist-inner">
-      <span class="label reveal">08 · Старт</span>
+      <span class="label reveal">09 · Старт</span>
       <h2 class="waitlist-h2 reveal" id="waitlist-h2">Спецпредложения и контент от автора.</h2>
       <p class="waitlist-sub reveal" style="transition-delay:.1s">Подпишись на рассылку специальных предложений и полезной инфы.</p>
       <form class="subscribe-form reveal" id="subscribe-form" novalidate style="transition-delay:.15s">
@@ -2001,20 +2235,20 @@ button{font-family:inherit;cursor:pointer}
         >
         <button type="submit" class="sub-btn" id="sub-btn">Подписаться →</button>
         <div class="form-choices">
-          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta" checked><span>Хочу в бета-тест приложения «Каркас дня»</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta" checked><span>Хочу новости приложения «Каркас дня»</span></label>
         </div>
       </form>
-      <div class="form-bonus">
-        <span class="form-bonus-label">Бонус · напрямую у автора</span>
-        <p class="form-bonus-p">Купи книгу напрямую тут у автора — получи <strong>от 2 месяцев бесплатного использования приложения «Каркас дня»</strong>, которое превращает теорию книги в практику. На других площадках этого не будет.</p>
-        <div class="form-bonus-link"><a class="btn-ghost" href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Подробнее о приложении →</a></div>
-      </div>
       <p class="form-fine">Адрес — только для этой рассылки.</p>
       <div class="form-msg msg-ok" id="msg-ok" role="alert" aria-live="polite">Ты в списке. На связи.</div>
       <div class="form-msg msg-err" id="msg-err" role="alert" aria-live="polite"></div>
     </div>
   </div>
 </section>
+
+<!-- ══ STICKY BUY (mobile) ══════════════════════════ -->
+<div class="sticky-buy" id="sticky-buy">
+  <a class="btn-primary" href="#editions" aria-label="Купить книгу — к изданиям и ценам">Купить книгу · от 770₽</a>
+</div>
 
 <!-- ══ FOOTER ════════════════════════════════════════ -->
 <footer class="site-footer" role="contentinfo">
@@ -2145,20 +2379,11 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 }();
 
-/* ── Accordion ── */
-!function(){
-  var btn=document.getElementById('accord-btn');
-  var body=document.getElementById('accord-body');
-  if(!btn||!body)return;
-  btn.addEventListener('click',function(){
-    var open=btn.getAttribute('aria-expanded')==='true';
-    btn.setAttribute('aria-expanded',String(!open));
-    body.classList.toggle('open',!open);
-    /* Height changed — rebuild the leaf so the torn edge/words still
-       span the full document. */
-    if(window.__rebuildLeaf)window.__rebuildLeaf();
-  });
-}();
+/* ── <details> (TOC, FAQ): height changes — rebuild the leaf so the torn
+   edge/words still span the full document ── */
+document.querySelectorAll('details').forEach(function(d){
+  d.addEventListener('toggle',function(){if(window.__rebuildLeaf)window.__rebuildLeaf();});
+});
 
 /* ── Subscribe form (section 08; handler supports any .subscribe-form) ──
    Each form scopes its own success/error messages to its parent,
@@ -2234,6 +2459,32 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     },{threshold:0.25});
     io.observe(sec);
   }
+}();
+/* ── Sticky mobile buy button: hidden while the hero or the editions are
+   on screen, or while the cookie bar is up. The link itself is a plain
+   #editions anchor, so html{scroll-behavior:smooth} does the scrolling. ── */
+!function(){
+  var bar=document.getElementById('sticky-buy');
+  var hero=document.getElementById('hero');
+  var ed=document.getElementById('editions');
+  if(!bar||!hero||!ed||!('IntersectionObserver' in window))return;
+  var heroIn=true,edIn=false;
+  function sync(){
+    var cookie=!!document.querySelector('.cookie-bar.show');
+    bar.classList.toggle('show',!heroIn&&!edIn&&!cookie);
+  }
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.target===hero)heroIn=e.isIntersecting;else edIn=e.isIntersecting;
+    });
+    sync();
+  }).observe(hero);
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){edIn=e.isIntersecting});
+    sync();
+  }).observe(ed);
+  /* The cookie bar is injected and toggled by the consent script */
+  new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 }();
 </script>
 </body>

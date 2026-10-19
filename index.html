@@ -534,7 +534,7 @@ button{font-family:inherit;cursor:pointer}
 }
 .book-cover-img[src=""],.book-cover-img:not([src]){display:none}
 /* Once the real cover loads it carries its own title — hide the
-   text placeholder, keep the СКОРО badge + author overlay */
+   text placeholder, keep the author overlay */
 .book.has-cover .book-top,
 .book.has-cover .book-t,
 .book.has-cover .book-st{display:none}
@@ -877,53 +877,13 @@ button{font-family:inherit;cursor:pointer}
   background:var(--acc);
   margin-top:.45rem;
 }
-/* Full version — accordion */
-.accord-wrap{
-  border:1px solid var(--l-border);
+/* App block — Pro paragraph under "What’s already there" */
+.pro-block{margin-bottom:2.5rem}
+.pro-p{
+  padding-block:.875rem;
+  border-block:1px solid var(--l-border);
+  font-size:var(--sz-sm);line-height:1.65;color:var(--l-muted);
 }
-.accord-trigger{
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.875rem 1rem;
-  background:none;
-  border:none;
-  color:var(--l-muted);
-  font-family:var(--font-mono);
-  font-size:var(--sz-label);
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:color .15s;
-  gap:.5rem;
-  text-align:left;
-}
-.accord-trigger:hover{color:var(--l-text)}
-.accord-icon{
-  font-size:.75rem;
-  transition:transform .25s;
-  flex-shrink:0;
-  color:var(--l-subtle);
-}
-.accord-trigger[aria-expanded="true"] .accord-icon{transform:rotate(90deg)}
-.accord-body{
-  display:none;
-  padding:.25rem 1rem 1rem;
-}
-.accord-body.open{display:block}
-.accord-item{
-  display:grid;
-  grid-template-columns:1.5rem 1fr;
-  gap:0 .75rem;
-  padding-block:.75rem;
-  border-top:1px solid var(--l-border);
-  font-size:var(--sz-sm);
-  line-height:1.65;
-  color:var(--l-muted);
-  align-items:start;
-}
-.accord-item .feature-dot{opacity:.45}
 .app-ctas{
   display:flex;
   flex-wrap:wrap;
@@ -1830,10 +1790,10 @@ button{font-family:inherit;cursor:pointer}
         <h2 class="app-h2 reveal" id="app-h2">
           Daily Frame —<br><span>the structure for your day that works every single day</span>
         </h2>
-        <p class="app-intro reveal" style="transition-delay:.1s">The book’s core tool — the Daily Frame (Consistency × Small actions) — as an app: you assemble the day, check off what’s done, and the system tracks whether you’re holding the rhythm.</p>
+        <p class="app-intro reveal" style="transition-delay:.1s">The book’s core tool — the Daily Frame (Consistency × Small actions) — already works as an app: you assemble the day, check off what’s done, and the system tracks whether you’re holding the rhythm.</p>
 
         <div class="feature-block reveal" style="transition-delay:.15s">
-          <span class="feature-label">Basic version — almost ready, alpha soon</span>
+          <span class="feature-label">What’s already there</span>
           <ul class="feature-list">
             <li class="feature-item">
               <span class="feature-dot" aria-hidden="true"></span>
@@ -1854,27 +1814,9 @@ button{font-family:inherit;cursor:pointer}
           </ul>
         </div>
 
-        <div class="accord-wrap reveal" style="transition-delay:.2s">
-          <button class="accord-trigger" aria-expanded="false" aria-controls="accord-body" id="accord-btn">
-            <span>Full version — later</span>
-            <span class="accord-icon" aria-hidden="true">›</span>
-          </button>
-          <div class="accord-body" id="accord-body" role="region" aria-labelledby="accord-btn">
-            <ul class="feature-list" style="padding-top:.25rem">
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Work — clients → projects → tasks, time tracking, money.</span>
-              </li>
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Strategy — an interactive map of goals and values.</span>
-              </li>
-              <li class="accord-item">
-                <span class="feature-dot" aria-hidden="true"></span>
-                <span>Analytics — Excel export with AI breakdown, focus modes.</span>
-              </li>
-            </ul>
-          </div>
+        <div class="feature-block pro-block reveal" style="transition-delay:.2s">
+          <span class="feature-label">Pro — for those going further</span>
+          <p class="pro-p">An extended mode with Strategy, Tactics and Work pages: cycle goals, the Weekly Frame and work tasks by project. Buy the book directly from the author and get at least 2 months of Pro free.</p>
         </div>
 
         <div class="app-ctas reveal" style="transition-delay:.25s">
@@ -1884,16 +1826,16 @@ button{font-family:inherit;cursor:pointer}
 
       <div class="app-screens reveal" style="transition-delay:.2s" aria-label="Daily Frame app screenshots">
         <div class="app-screen">
-          <img src="images/app-1.png" alt="Daily Frame — Today screen" loading="lazy" onerror="this.style.display='none'">
+          <img src="/images/app-today.webp" alt="Daily Frame — Today screen" loading="lazy" width="760" height="1484" onerror="this.style.display='none'">
           <div class="app-screen-ph" aria-hidden="true">Today</div>
         </div>
         <div class="app-screen">
-          <img src="images/app-2.png" alt="Daily Frame — History screen" loading="lazy" onerror="this.style.display='none'">
-          <div class="app-screen-ph" aria-hidden="true">History</div>
+          <img src="/images/app-days.webp" alt="Daily Frame — Days screen" loading="lazy" width="760" height="1505" onerror="this.style.display='none'">
+          <div class="app-screen-ph" aria-hidden="true">Days</div>
         </div>
         <div class="app-screen">
-          <img src="images/app-3.png" alt="Daily Frame — Goals screen" loading="lazy" onerror="this.style.display='none'">
-          <div class="app-screen-ph" aria-hidden="true">Goals</div>
+          <img src="/images/app-analytics.webp" alt="Daily Frame — Analytics screen" loading="lazy" width="760" height="1412" onerror="this.style.display='none'">
+          <div class="app-screen-ph" aria-hidden="true">Analytics</div>
         </div>
       </div>
     </div>
@@ -2030,7 +1972,7 @@ button{font-family:inherit;cursor:pointer}
         >
         <button type="submit" class="sub-btn" id="sub-btn">Subscribe →</button>
         <div class="form-choices">
-          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta" checked><span>I want beta access to the Daily Frame app</span></label>
+          <label class="form-check"><input type="checkbox" class="chk-beta" id="chk-beta" checked><span>Send me Daily Frame app news</span></label>
         </div>
       </form>
       <div class="form-bonus">
@@ -2177,20 +2119,6 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 }();
 
-/* ── Accordion ── */
-!function(){
-  var btn=document.getElementById('accord-btn');
-  var body=document.getElementById('accord-body');
-  if(!btn||!body)return;
-  btn.addEventListener('click',function(){
-    var open=btn.getAttribute('aria-expanded')==='true';
-    btn.setAttribute('aria-expanded',String(!open));
-    body.classList.toggle('open',!open);
-    /* Height changed — rebuild the leaf so the torn edge/words still
-       span the full document. */
-    if(window.__rebuildLeaf)window.__rebuildLeaf();
-  });
-}();
 
 /* ── Subscribe form (section 08; handler supports any .subscribe-form) ──
    Each form scopes its own success/error messages to its parent,

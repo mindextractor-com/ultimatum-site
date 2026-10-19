@@ -1423,9 +1423,12 @@ button{font-family:inherit;cursor:pointer}
    FOOTER
 ───────────────────────────────────────────── */
 .site-footer{
+  /* Above the dark leaf (z 8): the leaf runs to the very bottom of the
+     document and would otherwise cover the footer's left edge */
+  position:relative;z-index:9;
   background:var(--d-bg);
   border-top:1px solid var(--d-border);
-  padding:1.75rem var(--px);
+  padding:1.75rem var(--px) calc(1.75rem + env(safe-area-inset-bottom));
 }
 .footer-inner{
   max-width:var(--mw);
@@ -1670,7 +1673,7 @@ button{font-family:inherit;cursor:pointer}
 /* ─────────────────────────────────────────────
    STICKY BUY — a fixed bar at the bottom, so it never
    shifts layout; JS shows it once the hero is off screen
-   and hides it over the editions and while the cookie bar
+   and hides it over the editions, the footer and while the cookie bar
    is up. visibility:hidden keeps it out of the tab order.
    Desktop: the hero CTA centered; phones: full width.
 ───────────────────────────────────────────── */
@@ -1697,8 +1700,6 @@ button{font-family:inherit;cursor:pointer}
   box-shadow:0 8px 24px rgba(20,21,28,.28);
 }
 .sticky-buy .btn-primary:focus-visible{outline:2px solid var(--l-text);outline-offset:3px}
-/* Room under the footer so the bar never covers its last line */
-.site-footer{padding-bottom:calc(1.75rem + 80px + env(safe-area-inset-bottom))}
 @media(max-width:767px){
   .sticky-buy{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
   .sticky-buy .btn-primary{
@@ -2500,18 +2501,19 @@ document.querySelectorAll('details').forEach(function(d){
     io.observe(sec);
   }
 }();
-/* ── Sticky buy button: hidden while the hero or the editions are
+/* ── Sticky buy button: hidden while the hero, the editions or the footer are
    on screen, or while the cookie bar is up. The link itself is a plain
    #editions anchor, so html{scroll-behavior:smooth} does the scrolling. ── */
 !function(){
   var bar=document.getElementById('sticky-buy');
   var hero=document.getElementById('hero');
   var ed=document.getElementById('editions');
-  if(!bar||!hero||!ed||!('IntersectionObserver' in window))return;
-  var heroIn=true,edIn=false;
+  var foot=document.querySelector('.site-footer');
+  if(!bar||!hero||!ed||!foot||!('IntersectionObserver' in window))return;
+  var heroIn=true,edIn=false,footIn=false;
   function sync(){
     var cookie=!!document.querySelector('.cookie-bar.show');
-    bar.classList.toggle('show',!heroIn&&!edIn&&!cookie);
+    bar.classList.toggle('show',!heroIn&&!edIn&&!footIn&&!cookie);
   }
   new IntersectionObserver(function(es){
     es.forEach(function(e){
@@ -2523,6 +2525,10 @@ document.querySelectorAll('details').forEach(function(d){
     es.forEach(function(e){edIn=e.isIntersecting});
     sync();
   }).observe(ed);
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){footIn=e.isIntersecting});
+    sync();
+  }).observe(foot);
   /* The cookie bar is injected and toggled by the consent script */
   new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 }();

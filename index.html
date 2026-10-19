@@ -1173,6 +1173,17 @@ button{font-family:inherit;cursor:pointer}
   white-space:nowrap;
   margin-bottom:.875rem;
 }
+/* Launch price: the regular one struck through, smaller, on its own
+   line above — inline it would widen the nowrap price past the column */
+.edition-was{
+  display:block;
+  width:max-content;
+  font-size:.5em;
+  font-weight:400;
+  letter-spacing:0;
+  color:var(--d-muted);
+  margin-bottom:.4em;
+}
 .edition-gift{
   font-size:var(--sz-sm);
   line-height:1.6;
@@ -1187,6 +1198,16 @@ button{font-family:inherit;cursor:pointer}
   text-align:center;
   white-space:nowrap;
 }
+.editions-promo{
+  margin-top:1.75rem;
+  padding-left:.875rem;
+  border-left:2px solid var(--acc);
+  font-size:var(--sz-body);
+  line-height:1.65;
+  color:var(--l-muted);
+}
+.editions-promo b{color:var(--l-text);font-weight:600}
+.editions-promo+.editions-buy{margin-top:1rem}
 .editions-buy{
   margin-top:1.75rem;
   font-size:var(--sz-body);
@@ -1466,6 +1487,7 @@ button{font-family:inherit;cursor:pointer}
 .route-p,
 .author-bio,
 .author-bio-em,
+.editions-promo,
 .editions-buy{
   max-width:var(--measure);
 }
@@ -1915,33 +1937,34 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">E-book</h3>
-        <p class="edition-price">$9.7</p>
+        <p class="edition-price"><s class="edition-was" aria-label="was $12.7">$12.7</s>$9.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20edition%20%28%249.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book edition — message on WhatsApp">Buy →</a>
       </li>
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Audiobook</h3>
-        <p class="edition-price">$12.7</p>
+        <p class="edition-price"><s class="edition-was" aria-label="was $18.7">$18.7</s>$12.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20Audiobook%20edition%20%28%2412.7%29" target="_blank" rel="noopener" aria-label="Buy the Audiobook edition — message on WhatsApp">Buy →</a>
       </li>
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">E-book + Audiobook</h3>
-        <p class="edition-price">$15.7</p>
+        <p class="edition-price"><s class="edition-was" aria-label="was $23.7">$23.7</s>$15.7</p>
         <p class="edition-gift">3 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20edition%20%28%2415.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook edition — message on WhatsApp">Buy →</a>
       </li>
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">E-book + Audiobook + 1&nbsp;year&nbsp;Pro</h3>
-        <p class="edition-price">$45.7</p>
+        <p class="edition-price"><s class="edition-was" aria-label="was $61.7">$61.7</s>$45.7</p>
         <p class="edition-gift">A year of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20%2B%201%20year%20Pro%20edition%20%28%2445.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook + 1 year Pro edition — message on WhatsApp">Buy →</a>
       </li>
     </ul>
-    <p class="editions-buy reveal" style="transition-delay:.15s">To buy the book, message me on <a href="https://wa.me/6287777259296?text=Hi%2C%20I%20would%20like%20to%20buy%20Ultimatum" target="_blank" rel="noopener">WhatsApp</a>.</p>
+    <p class="editions-promo reveal" style="transition-delay:.15s"><b>Launch prices for the first two weeks — and only here, direct from the author.</b> Other stores will have different terms, with no Daily Frame Pro subscription.</p>
+    <p class="editions-buy reveal" style="transition-delay:.15s">To buy the book, message me on <a href="https://wa.me/6287777259296?text=Hi%2C%20I%20would%20like%20to%20buy%20Ultimatum" target="_blank" rel="noopener">WhatsApp</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Daily Frame app Pro on its own: 3&nbsp;months&nbsp;—&nbsp;<s>$18</s>&nbsp;$12, 1&nbsp;year&nbsp;—&nbsp;<s>$59</s>&nbsp;$37. <a href="https://daily-frame.com/" target="_blank" rel="noopener">App site</a></p>
   </div>
 </section>

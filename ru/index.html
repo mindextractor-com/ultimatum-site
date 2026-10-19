@@ -1193,6 +1193,17 @@ button{font-family:inherit;cursor:pointer}
   white-space:nowrap;
   margin-bottom:.875rem;
 }
+/* Launch price: the regular one struck through, smaller, on its own
+   line above — inline it would widen the nowrap price past the column */
+.edition-was{
+  display:block;
+  width:max-content;
+  font-size:.5em;
+  font-weight:400;
+  letter-spacing:0;
+  color:var(--d-muted);
+  margin-bottom:.4em;
+}
 .edition-gift{
   font-size:var(--sz-sm);
   line-height:1.6;
@@ -1207,6 +1218,16 @@ button{font-family:inherit;cursor:pointer}
   text-align:center;
   white-space:nowrap;
 }
+.editions-promo{
+  margin-top:1.75rem;
+  padding-left:.875rem;
+  border-left:2px solid var(--acc);
+  font-size:var(--sz-body);
+  line-height:1.65;
+  color:var(--l-muted);
+}
+.editions-promo b{color:var(--l-text);font-weight:600}
+.editions-promo+.editions-buy{margin-top:1rem}
 .editions-buy{
   margin-top:1.75rem;
   font-size:var(--sz-body);
@@ -1568,6 +1589,7 @@ button{font-family:inherit;cursor:pointer}
 .author-bio-em,
 .audio-p,
 .pro-p,
+.editions-promo,
 .included-note,
 .faq-a,
 .editions-buy{
@@ -2153,32 +2175,33 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">Электронная книга</h3>
-        <p class="edition-price">770₽</p>
+        <p class="edition-price"><s class="edition-was" aria-label="было 970₽">970₽</s>770₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга» — написать в Telegram">Купить →</a>
       </li>
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Аудиокнига</h3>
-        <p class="edition-price">870₽</p>
+        <p class="edition-price"><s class="edition-was" aria-label="было 1270₽">1270₽</s>870₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Аудиокнига» — написать в Telegram">Купить →</a>
       </li>
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">Электронная книга + аудиокнига</h3>
-        <p class="edition-price">970₽</p>
+        <p class="edition-price"><s class="edition-was" aria-label="было 1470₽">1470₽</s>970₽</p>
         <p class="edition-gift">3 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига» — написать в Telegram">Купить →</a>
       </li>
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">Электронная книга + аудиокнига + год&nbsp;Pro</h3>
-        <p class="edition-price">2970₽</p>
+        <p class="edition-price"><s class="edition-was" aria-label="было 3970₽">3970₽</s>2970₽</p>
         <p class="edition-gift">Годовая подписка приложения «Каркас дня» Pro включена</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига + год Pro» — написать в Telegram">Купить →</a>
       </li>
     </ul>
+    <p class="editions-promo reveal" style="transition-delay:.15s"><b>Цены первых двух недель после выхода — и только здесь, у автора.</b> На книжных площадках будут другие условия, без подписки «Каркас дня» Pro.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Чтобы купить книгу, напиши мне в <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Pro отдельно: 3&nbsp;месяца&nbsp;—&nbsp;<s>1470₽</s>&nbsp;870₽, год&nbsp;—&nbsp;<s>3970₽</s>&nbsp;2770₽. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>
   </div>

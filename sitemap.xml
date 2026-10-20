@@ -51,4 +51,20 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://ultimatumbook.com/delivery"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/delivery"/>
   </url>
+  <url>
+    <loc>https://ultimatumbook.com/privacy</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ultimatumbook.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/privacy"/>
+  </url>
+  <url>
+    <loc>https://ultimatumbook.com/ru/privacy</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ultimatumbook.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ultimatumbook.com/ru/privacy"/>
+  </url>
 </urlset>

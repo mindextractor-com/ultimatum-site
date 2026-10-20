@@ -1171,7 +1171,7 @@ button{font-family:inherit;cursor:pointer}
   /* Subgrid lines up number, name, price and gift across the row,
      whatever the name or gift length */
   display:grid;
-  grid-row:span 5;
+  grid-row:span 6;
   grid-template-rows:subgrid;
   row-gap:0;
 }
@@ -1190,6 +1190,14 @@ button{font-family:inherit;cursor:pointer}
   line-height:1.18;
   letter-spacing:-.005em;
   color:var(--d-text);
+  margin-bottom:1.25rem;
+}
+.edition-what{
+  font-family:var(--font-mono);
+  font-size:var(--sz-sm);
+  letter-spacing:.04em;
+  line-height:1.5;
+  color:var(--d-muted);
   margin-bottom:1.25rem;
 }
 .edition-price{
@@ -1447,6 +1455,9 @@ button{font-family:inherit;cursor:pointer}
 }
 .footer-link{color:var(--d-muted);text-decoration:underline;text-underline-offset:2px;transition:color .15s}
 .footer-link:hover{color:var(--d-text)}
+.footer-legal{flex-basis:100%;display:flex;flex-direction:column;gap:.35rem;padding-bottom:1rem;border-bottom:1px solid rgba(229,230,233,.08);font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.04em;line-height:1.5;color:rgba(229,230,233,.5)}
+.footer-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px;transition:color .15s}
+.footer-legal a:hover{color:var(--d-text)}
 .lang-sw{display:flex;gap:.375rem}
 .lang-btn{
   font-family:var(--font-mono);
@@ -2187,6 +2198,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">Электронная книга</h3>
+        <p class="edition-what">Файлы EPUB и PDF</p>
         <p class="edition-price"><s class="edition-was" aria-label="было 970₽">970₽</s>770₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга» — написать в Telegram">Купить →</a>
@@ -2194,6 +2206,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Аудиокнига</h3>
+        <p class="edition-what">Файлы MP3 и M4B</p>
         <p class="edition-price"><s class="edition-was" aria-label="было 1270₽">1270₽</s>870₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Аудиокнига» — написать в Telegram">Купить →</a>
@@ -2201,6 +2214,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">Электронная книга + аудиокнига</h3>
+        <p class="edition-what">Файлы EPUB, PDF, MP3 и M4B</p>
         <p class="edition-price"><s class="edition-was" aria-label="было 1470₽">1470₽</s>970₽</p>
         <p class="edition-gift">3 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига» — написать в Telegram">Купить →</a>
@@ -2208,13 +2222,15 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">Электронная книга + аудиокнига + год&nbsp;Pro</h3>
+        <p class="edition-what">Файлы EPUB, PDF, MP3 и M4B</p>
         <p class="edition-price"><s class="edition-was" aria-label="было 3970₽">3970₽</s>2970₽</p>
-        <p class="edition-gift">Годовая подписка приложения «Каркас дня» Pro включена</p>
+        <p class="edition-gift">12 месяцев приложения «Каркас дня» Pro включены</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига + год Pro» — написать в Telegram">Купить →</a>
       </li>
     </ul>
     <p class="editions-promo reveal" style="transition-delay:.15s"><b>Цены первых двух недель после выхода — и только здесь, у автора.</b> На книжных площадках будут другие условия, без подписки «Каркас дня» Pro.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Чтобы купить книгу, напиши мне в <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>.</p>
+    <p class="editions-buy reveal" style="transition-delay:.15s">Вопросы о покупке: <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Условия: <a href="/ru/oferta">оферта</a>, <a href="/ru/delivery">доставка и возврат</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Pro отдельно: 3&nbsp;месяца&nbsp;—&nbsp;<s>1470₽</s>&nbsp;870₽, год&nbsp;—&nbsp;<s>3970₽</s>&nbsp;2770₽. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>
   </div>
 </section>
@@ -2294,6 +2310,11 @@ button{font-family:inherit;cursor:pointer}
 <!-- ══ FOOTER ════════════════════════════════════════ -->
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
+    <div class="footer-legal">
+      <p>Самозанятый (плательщик налога на профессиональный доход) Иванов Константин Анатольевич, ИНН&nbsp;540302212530</p>
+      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <nav aria-label="Документы"><a href="/ru/oferta">Оферта</a> · <a href="/ru/delivery">Доставка и возврат</a> · <a href="/ru/privacy">Политика обработки персональных данных</a></nav>
+    </div>
     <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" class="footer-link" target="_blank" rel="noopener">маркетинг.dark</a> · <a href="https://mindextractor.com" class="footer-link" target="_blank" rel="noopener">MindExtractor</a> · Ультиматум</span>
     <span class="footer-copy">Используем cookie и аналитику. Оставляя e-mail, вы соглашаетесь с <a href="/ru/privacy" class="footer-link">политикой обработки данных</a>.</span>
     <nav class="lang-sw" aria-label="Язык">

@@ -12,3 +12,9 @@ assets/fonts-src/*.otf
 # app-*.png stays allowed: index.html references images/app-1..3.png.
 images/*.png
 !images/app-*.png
+
+# local secrets for wrangler pages dev
+.dev.vars
+
+# seller details (ФИО, ИНН, phone) — data lives in the pages, not in git
+seller-details.txt

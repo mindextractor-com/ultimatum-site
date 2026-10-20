@@ -1151,7 +1151,7 @@ button{font-family:inherit;cursor:pointer}
   /* Subgrid lines up number, name, price and gift across the row,
      whatever the name or gift length */
   display:grid;
-  grid-row:span 5;
+  grid-row:span 6;
   grid-template-rows:subgrid;
   row-gap:0;
 }
@@ -1170,6 +1170,14 @@ button{font-family:inherit;cursor:pointer}
   line-height:1.18;
   letter-spacing:-.005em;
   color:var(--d-text);
+  margin-bottom:1.25rem;
+}
+.edition-what{
+  font-family:var(--font-mono);
+  font-size:var(--sz-sm);
+  letter-spacing:.04em;
+  line-height:1.5;
+  color:var(--d-muted);
   margin-bottom:1.25rem;
 }
 .edition-price{
@@ -1457,6 +1465,9 @@ button{font-family:inherit;cursor:pointer}
   .cookie-bar{flex-direction:column;align-items:stretch;text-align:center}
   .cookie-btns{justify-content:center}
 }
+.footer-legal{flex-basis:100%;display:flex;flex-direction:column;gap:.35rem;padding-bottom:1rem;border-bottom:1px solid rgba(229,230,233,.08);font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.04em;line-height:1.5;color:rgba(229,230,233,.5)}
+.footer-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px;transition:color .15s}
+.footer-legal a:hover{color:var(--d-text)}
 .lang-sw{display:flex;gap:.375rem}
 .lang-btn{
   font-family:var(--font-mono);
@@ -1948,6 +1959,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">E-book</h3>
+        <p class="edition-what">EPUB and PDF files</p>
         <p class="edition-price"><s class="edition-was" aria-label="was $13.7">$13.7</s>$9.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20edition%20%28%249.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book edition — message on WhatsApp">Buy →</a>
@@ -1955,6 +1967,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Audiobook</h3>
+        <p class="edition-what">MP3 and M4B files</p>
         <p class="edition-price"><s class="edition-was" aria-label="was $18.7">$18.7</s>$12.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20Audiobook%20edition%20%28%2412.7%29" target="_blank" rel="noopener" aria-label="Buy the Audiobook edition — message on WhatsApp">Buy →</a>
@@ -1962,6 +1975,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">E-book + Audiobook</h3>
+        <p class="edition-what">EPUB, PDF, MP3 and M4B files</p>
         <p class="edition-price"><s class="edition-was" aria-label="was $23.7">$23.7</s>$15.7</p>
         <p class="edition-gift">3 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20edition%20%28%2415.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook edition — message on WhatsApp">Buy →</a>
@@ -1969,13 +1983,15 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">E-book + Audiobook + 1&nbsp;year&nbsp;Pro</h3>
+        <p class="edition-what">EPUB, PDF, MP3 and M4B files</p>
         <p class="edition-price"><s class="edition-was" aria-label="was $59.7">$59.7</s>$45.7</p>
-        <p class="edition-gift">A year of Daily Frame app Pro included</p>
+        <p class="edition-gift">12 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20%2B%201%20year%20Pro%20edition%20%28%2445.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook + 1 year Pro edition — message on WhatsApp">Buy →</a>
       </li>
     </ul>
     <p class="editions-promo reveal" style="transition-delay:.15s"><b>Launch prices for the first two weeks — and only here, direct from the author.</b> Other stores will have different terms, with no Daily Frame Pro subscription.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">To buy the book, message me on <a href="https://wa.me/6287777259296?text=Hi%2C%20I%20would%20like%20to%20buy%20Ultimatum" target="_blank" rel="noopener">WhatsApp</a>.</p>
+    <p class="editions-buy reveal" style="transition-delay:.15s">Questions about your purchase: <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Terms: <a href="/offer">offer</a>, <a href="/delivery">delivery and returns</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Daily Frame app Pro on its own: 3&nbsp;months&nbsp;—&nbsp;<s>$18</s>&nbsp;$12, 1&nbsp;year&nbsp;—&nbsp;<s>$59</s>&nbsp;$37. <a href="https://daily-frame.com/" target="_blank" rel="noopener">App site</a></p>
   </div>
 </section>
@@ -2029,6 +2045,11 @@ button{font-family:inherit;cursor:pointer}
 <!-- ══ FOOTER ════════════════════════════════════════ -->
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
+    <div class="footer-legal">
+      <p>Self-employed Konstantin Ivanov, Russian taxpayer ID&nbsp;540302212530</p>
+      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <nav aria-label="Legal"><a href="/offer">Offer</a> · <a href="/delivery">Delivery and returns</a> · <a href="/privacy">Privacy policy</a></nav>
+    </div>
     <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" class="footer-link" target="_blank" rel="noopener">marketing.dark</a> · <a href="https://mindextractor.com" class="footer-link" target="_blank" rel="noopener">MindExtractor</a> · Ultimatum</span>
     <nav class="lang-sw" aria-label="Language">
       <a href="/ru/" class="lang-btn" hreflang="ru" lang="ru">RU</a>

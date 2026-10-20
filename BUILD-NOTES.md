@@ -101,8 +101,6 @@ POST `/api/subscribe` → `{ email, source: 'book-ru' }` → Supabase `book_wait
 ```
 ultimatum-site/
 ├── index.html              ← единственный файл сайта (РУ, main)
-├── hero-alt-1.html         ← альтернатива: центровка + слово-фон
-├── hero-alt-2.html         ← альтернатива: стена-заголовок + сайдбар
 ├── fonts/
 │   ├── albertus-nova-regular.woff2
 │   ├── albertus-nova-bold.woff2
@@ -118,7 +116,5 @@ ultimatum-site/
 │       └── subscribe.js    ← Cloudflare Pages Function, готов
 ├── images/
 │   └── .keep
-├── lab-fonts/              ← 154 woff2 из аудита шрифтов (Фаза 0)
-├── font-lab.html           ← примерочная (живая, Фаза 0)
 └── BUILD-NOTES.md          ← этот файл
 ```

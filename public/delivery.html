@@ -38,13 +38,15 @@ a{color:inherit}
 .nav{position:fixed;inset:0 0 auto 0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding-inline:var(--px);background:rgba(236,239,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--l-border)}
 .nav-brand{font-family:var(--font-display);font-weight:700;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.01em;color:var(--l-text);text-decoration:none}
 .nav-meta{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--l-muted)}
+.nav-ru{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;padding:.3rem .6rem;border:1px solid var(--acc);border-radius:2px;color:var(--l-text);text-decoration:none}
+.nav-ru:hover{background:var(--acc);color:#fff}
 main{max-width:720px;margin-inline:auto;padding:calc(52px + 4rem) var(--px) 5rem}
 .eyebrow{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
 h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:0;margin-bottom:.5rem}
 .updated{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;color:var(--l-muted);margin-bottom:2.5rem}
 h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.25rem,2.4vw,1.5rem);margin:2.25rem 0 .65rem}
 p{margin-bottom:1rem;color:var(--l-text)}
-ul{margin:0 0 1rem 1.25rem}
+ul,ol{margin:0 0 1rem 1.25rem}
 li{margin-bottom:.4rem}
 a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 .lead{font-size:clamp(1.0625rem,1.6vw,1.25rem);color:var(--l-muted);margin-bottom:2rem}
@@ -66,23 +68,47 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 <nav class="nav" aria-label="Navigation">
   <a href="/" class="nav-brand">ULTIMATUM</a>
   <span class="nav-meta">Delivery</span>
+  <a class="nav-ru" href="/ru/delivery" hreflang="ru" lang="ru">Русская версия →</a>
 </nav>
 
 <main>
   <p class="eyebrow">Legal</p>
   <h1>Delivery and returns</h1>
-  <p class="updated">Published · 20 October 2026</p>
+  <p class="updated">Updated · 21 October 2026</p>
 
   <p class="lead">The book is electronic: the files arrive by email after payment. Here is how and when, and what to do if something goes wrong.</p>
 
+  <h2>How to order</h2>
+  <ol>
+    <li>Choose an edition in <a class="lnk" href="/#editions">Editions</a> on the home page.</li>
+    <li>Enter your email — the files, the Daily Frame Pro code and the receipt go there.</li>
+    <li>Pay by bank card or SBP (Russia’s Faster Payments System) on the Robokassa page.</li>
+    <li>Get the email with download links and your Daily Frame Pro code — within 15 minutes of payment.</li>
+  </ol>
+
+  <h2>Payment</h2>
+  <ul>
+    <li>Bank cards and SBP through the Robokassa payment service.</li>
+    <li>Payment is in rubles, at the prices in the Editions section of the <a class="lnk" href="/ru/#editions" hreflang="ru">Russian version of the site</a>.</li>
+    <li>An electronic receipt is sent to the email you gave at checkout.</li>
+  </ul>
+
   <h2>How the files arrive</h2>
-  <p>Right after payment, an email with download links for your edition’s files and your Daily Frame Pro code is sent to the address you gave at checkout. If it is not in your inbox, check the spam and promotions folders.</p>
+  <p>Within 15 minutes of payment, an email with download links for your edition’s files and your Daily Frame Pro code is sent to the address you gave at checkout. If it is not in your inbox, check the spam and promotions folders.</p>
 
   <h2>How long the links work</h2>
   <p>The links are valid for 7 days from the moment the email is sent. Download the files and keep them on your device.</p>
 
-  <h2>Requesting new links</h2>
-  <p>If the links have expired or the email did not arrive, write to <a class="lnk" href="mailto:md@marketingdark.com?subject=New%20download%20links">md@marketingdark.com</a> from the address you gave at checkout, and we will send new links.</p>
+  <h2>If the email did not arrive</h2>
+  <p>If 15 minutes after payment the email is not in your inbox, spam or promotions folder, or the links have expired, write to <a class="lnk" href="mailto:md@marketingdark.com?subject=New%20download%20links">md@marketingdark.com</a> from the address you gave at checkout, and we will send new links.</p>
+
+  <h2>What each edition includes</h2>
+  <ul>
+    <li><strong>E-book</strong> — EPUB and PDF, 337 pages; 2 months of Daily Frame Pro.</li>
+    <li><strong>Audiobook</strong> — MP3 files by chapter and a single M4B file with chapters; a PDF with the book’s illustrations; 2 months of Daily Frame Pro.</li>
+    <li><strong>E-book + Audiobook</strong> — everything in both editions above; 3 months of Daily Frame Pro.</li>
+    <li><strong>E-book + Audiobook + 1 year Pro</strong> — everything in both editions above; 12 months of Daily Frame Pro.</li>
+  </ul>
 
   <h2>Formats and devices</h2>
   <ul>
@@ -91,12 +117,21 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
     <li><strong>Daily Frame Pro code</strong> — activated at <a class="lnk" href="https://daily-frame.app" target="_blank" rel="noopener">daily-frame.app</a>.</li>
   </ul>
 
-  <h2>Refunds</h2>
-  <p>Full refund — if the files were not delivered or do not open and the problem is not solved within 7 days of your request.</p>
-  <p>In all other cases, no refund is given once the files have been downloaded successfully.</p>
+  <h2 id="refund">Refunds</h2>
+  <p>When you get your money back:</p>
+  <ul>
+    <li>in full — if the files were not delivered or do not open and the problem is not solved within 7 days of your request;</li>
+    <li>in full — if you cancel the order before you receive the files;</li>
+    <li>in all other cases, no refund is given once the files have been downloaded successfully.</li>
+  </ul>
 
-  <h2>How to request a refund</h2>
-  <p>Write to <a class="lnk" href="mailto:md@marketingdark.com?subject=Refund">md@marketingdark.com</a> with the email you paid with, the date of payment and what exactly is wrong. The money is returned by the same method that was used to pay.</p>
+  <h2>How to cancel or get a refund</h2>
+  <ol>
+    <li><strong>Cancel before you get the files.</strong> If the email with the links has not arrived yet, write to <a class="lnk" href="mailto:md@marketingdark.com?subject=Cancel%20order">md@marketingdark.com</a> that you cancel the order. The links will not be sent.</li>
+    <li><strong>Refund request.</strong> Write to <a class="lnk" href="mailto:md@marketingdark.com?subject=Refund">md@marketingdark.com</a> with the email you ordered with, the date of payment and the reason for the refund.</li>
+    <li><strong>Review.</strong> The request is reviewed within 3 working days, and the answer goes to the same email.</li>
+    <li><strong>Refund.</strong> The money goes back to the same card or account you paid from within 10 calendar days of approval — in full, with no payment system or bank fees deducted.</li>
+  </ol>
 
   <h2>Contacts</h2>
   <p><a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a class="lnk" href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Full terms: <a class="lnk" href="/offer">public offer</a>.</p>
@@ -105,7 +140,7 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-legal">
-      <p>Self-employed Konstantin Ivanov, Russian taxpayer ID&nbsp;540302212530</p>
+      <p>Self-employed Konstantin Anatolyevich Ivanov (Иванов Константин Анатольевич), Russian taxpayer ID (INN)&nbsp;540302212530</p>
       <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
       <nav aria-label="Legal"><a href="/offer">Offer</a> · <a href="/delivery">Delivery and returns</a> · <a href="/privacy">Privacy policy</a></nav>
     </div>

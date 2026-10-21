@@ -1340,6 +1340,14 @@ button{font-family:inherit;cursor:pointer}
 .editions-buy a:hover{color:var(--acc)}
 .editions-buy+.editions-buy{margin-top:.5rem}
 .editions-buy s{color:var(--l-subtle)}
+/* Edition specs: files, length, devices — one subgrid row */
+ul.edition-what{list-style:none}
+ul.edition-what li+li{margin-top:.4rem}
+/* How to order / Payment: numbered steps in the "included" list style */
+.order-n{font-family:var(--font-mono);font-size:var(--sz-sm);line-height:1.65;color:var(--acc)}
+.order-list a{color:var(--l-text);text-decoration-color:var(--acc);text-underline-offset:.2em}
+.order-list a:hover{color:var(--acc)}
+#payment .s-inner{padding-top:0}
 
 /* ─────────────────────────────────────────────
    SECTION 08 — WAITLIST — light (dark only in leaf)
@@ -2278,7 +2286,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">Электронная книга</h3>
-        <p class="edition-what">Файлы EPUB и PDF</p>
+        <ul class="edition-what"><li>Файлы EPUB и PDF, 346 страниц</li><li>Телефон, планшет, компьютер, электронная читалка</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="было 970₽">970₽</s>770₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга» — написать в Telegram">Купить →</a>
@@ -2286,7 +2294,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Аудиокнига</h3>
-        <p class="edition-what">Файлы MP3 и M4B</p>
+        <ul class="edition-what"><li>Файлы MP3 по главам и M4B одним файлом, 8&nbsp;ч 31&nbsp;мин; PDF с иллюстрациями, 17 страниц</li><li>Телефон, компьютер, любой плеер</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="было 1270₽">1270₽</s>870₽</p>
         <p class="edition-gift">2 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Аудиокнига» — написать в Telegram">Купить →</a>
@@ -2294,7 +2302,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">Электронная книга + аудиокнига</h3>
-        <p class="edition-what">Файлы EPUB, PDF, MP3 и M4B</p>
+        <ul class="edition-what"><li>Файлы EPUB и PDF, 346 страниц</li><li>MP3 и M4B, 8&nbsp;ч 31&nbsp;мин; PDF с иллюстрациями</li><li>Телефон, планшет, компьютер, читалка, любой плеер</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="было 1470₽">1470₽</s>970₽</p>
         <p class="edition-gift">3 месяца приложения «Каркас дня» Pro в подарок</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига» — написать в Telegram">Купить →</a>
@@ -2302,7 +2310,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">Электронная книга + аудиокнига + год&nbsp;Pro</h3>
-        <p class="edition-what">Файлы EPUB, PDF, MP3 и M4B</p>
+        <ul class="edition-what"><li>Файлы EPUB и PDF, 346 страниц</li><li>MP3 и M4B, 8&nbsp;ч 31&nbsp;мин; PDF с иллюстрациями</li><li>Телефон, планшет, компьютер, читалка, любой плеер</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="было 3970₽">3970₽</s>2970₽</p>
         <p class="edition-gift">12 месяцев приложения «Каркас дня» Pro включены</p>
         <a class="btn-primary edition-btn" href="https://t.me/marketing_dark" target="_blank" rel="noopener" aria-label="Купить «Электронная книга + аудиокнига + год Pro» — написать в Telegram">Купить →</a>
@@ -2312,6 +2320,34 @@ button{font-family:inherit;cursor:pointer}
     <p class="editions-buy reveal" style="transition-delay:.15s">Чтобы купить книгу, напиши мне в <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Вопросы о покупке: <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Условия: <a href="/ru/oferta">оферта</a>, <a href="/ru/delivery">доставка и возврат</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Pro отдельно: 3&nbsp;месяца&nbsp;—&nbsp;<s>1470₽</s>&nbsp;870₽, год&nbsp;—&nbsp;<s>3970₽</s>&nbsp;2770₽. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     КАК ОФОРМИТЬ ЗАКАЗ + ОПЛАТА — right after the editions
+════════════════════════════════════════════════════ -->
+<section id="order" class="s" aria-labelledby="order-h2">
+  <div class="s-inner wrap">
+    <h2 class="included-h2 reveal" id="order-h2">Как оформить заказ</h2>
+    <ol class="included-list order-list reveal" style="transition-delay:.1s">
+      <li><span class="order-n" aria-hidden="true">01</span><span><strong>Выбери издание</strong> в блоке <a href="#editions">«Издания»</a> выше.</span></li>
+      <li><span class="order-n" aria-hidden="true">02</span><span><strong>Укажи e-mail</strong> — на него придут файлы, код приложения и чек.</span></li>
+      <li><span class="order-n" aria-hidden="true">03</span><span><strong>Оплати</strong> банковской картой или через СБП на странице Robokassa.</span></li>
+      <li><span class="order-n" aria-hidden="true">04</span><span><strong>Получи письмо</strong> со ссылками на скачивание файлов и кодом «Каркас дня» Pro — в течение 15 минут после оплаты. Ссылки действуют 7 дней.</span></li>
+      <li><span class="order-n" aria-hidden="true">05</span><span><strong>Письмо не пришло?</strong> Проверь папки «Спам» и «Промоакции». Если его нет и там, напиши на <a href="mailto:md@marketingdark.com?subject=Письмо%20не%20пришло">md@marketingdark.com</a> с адреса, указанного при оплате, — пришлю ссылки заново.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="payment" class="s" aria-labelledby="payment-h2">
+  <div class="s-inner wrap">
+    <h2 class="included-h2 reveal" id="payment-h2">Оплата</h2>
+    <ul class="included-list order-list reveal" style="transition-delay:.1s">
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Способы</strong> — банковские карты и СБП через платёжный сервис Robokassa.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Валюта</strong> — оплата в рублях, по ценам из блока «Издания».</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Чек</strong> — электронный чек приходит на e-mail, указанный при оплате.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Возврат</strong> — условия и порядок на странице <a href="/ru/delivery#refund">«Доставка и возврат»</a>.</span></li>
+    </ul>
   </div>
 </section>
 

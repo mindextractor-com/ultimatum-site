@@ -1330,6 +1330,17 @@ button{font-family:inherit;cursor:pointer}
 .editions-buy a:hover{color:var(--acc)}
 .editions-buy+.editions-buy{margin-top:.5rem}
 .editions-buy s{color:var(--l-subtle)}
+/* Edition specs: files, length, devices — one subgrid row */
+ul.edition-what{list-style:none}
+ul.edition-what li+li{margin-top:.4rem}
+/* How to order / Payment: numbered steps in the "included" list style */
+.order-n{font-family:var(--font-mono);font-size:var(--sz-sm);line-height:1.65;color:var(--acc)}
+.order-list a{color:var(--l-text);text-decoration-color:var(--acc);text-underline-offset:.2em}
+.order-list a:hover{color:var(--acc)}
+#payment .s-inner{padding-top:0}
+/* Russian version link, top right of the hero */
+.ru-top{position:absolute;top:1rem;right:var(--px);z-index:3;font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;padding:.45rem .7rem;border:1px solid var(--acc);border-radius:2px;background:rgba(236,239,242,.92);color:var(--l-text);text-decoration:none}
+.ru-top:hover{background:var(--acc);color:#fff}
 
 /* ─────────────────────────────────────────────
    SECTION 08 — WAITLIST — light (dark only in leaf)
@@ -1742,6 +1753,7 @@ button{font-family:inherit;cursor:pointer}
 ════════════════════════════════════════════════════ -->
 <section id="hero" class="s" aria-labelledby="hero-h1">
   <span class="leaf-num" aria-hidden="true">00</span>
+  <a class="ru-top" href="/ru/" hreflang="ru" lang="ru">Русская версия →</a>
   <div class="hero-layout">
     <span class="hero-kicker">Nonfiction on freelancing</span>
     <h1 class="hero-h1" id="hero-h1">ULTIMATUM</h1>
@@ -2049,7 +2061,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">01</span>
         <h3 class="edition-t">E-book</h3>
-        <p class="edition-what">EPUB and PDF files</p>
+        <ul class="edition-what"><li>EPUB and PDF files, 337 pages</li><li>Phone, tablet, computer, e-reader</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $13.7">$13.7</s>$9.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20edition%20%28%249.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book edition — message on WhatsApp">Buy →</a>
@@ -2057,7 +2069,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">02</span>
         <h3 class="edition-t">Audiobook</h3>
-        <p class="edition-what">MP3 and M4B files</p>
+        <ul class="edition-what"><li>MP3 files by chapter and a single M4B file with chapters</li><li>Phone, computer, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $18.7">$18.7</s>$12.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20Audiobook%20edition%20%28%2412.7%29" target="_blank" rel="noopener" aria-label="Buy the Audiobook edition — message on WhatsApp">Buy →</a>
@@ -2065,7 +2077,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">03</span>
         <h3 class="edition-t">E-book + Audiobook</h3>
-        <p class="edition-what">EPUB, PDF, MP3 and M4B files</p>
+        <ul class="edition-what"><li>EPUB and PDF files, 337 pages</li><li>MP3 and M4B audio files</li><li>Phone, tablet, computer, e-reader, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $23.7">$23.7</s>$15.7</p>
         <p class="edition-gift">3 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20edition%20%28%2415.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook edition — message on WhatsApp">Buy →</a>
@@ -2073,7 +2085,7 @@ button{font-family:inherit;cursor:pointer}
       <li class="edition">
         <span class="edition-n">04</span>
         <h3 class="edition-t">E-book + Audiobook + 1&nbsp;year&nbsp;Pro</h3>
-        <p class="edition-what">EPUB, PDF, MP3 and M4B files</p>
+        <ul class="edition-what"><li>EPUB and PDF files, 337 pages</li><li>MP3 and M4B audio files</li><li>Phone, tablet, computer, e-reader, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $59.7">$59.7</s>$45.7</p>
         <p class="edition-gift">12 months of Daily Frame app Pro included</p>
         <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20%2B%201%20year%20Pro%20edition%20%28%2445.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook + 1 year Pro edition — message on WhatsApp">Buy →</a>
@@ -2083,6 +2095,34 @@ button{font-family:inherit;cursor:pointer}
     <p class="editions-buy reveal" style="transition-delay:.15s">To buy the book, message me on <a href="https://wa.me/6287777259296?text=Hi%2C%20I%20would%20like%20to%20buy%20Ultimatum" target="_blank" rel="noopener">WhatsApp</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Questions about your purchase: <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Terms: <a href="/offer">offer</a>, <a href="/delivery">delivery and returns</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Daily Frame app Pro on its own: 3&nbsp;months&nbsp;—&nbsp;<s>$18</s>&nbsp;$12, 1&nbsp;year&nbsp;—&nbsp;<s>$59</s>&nbsp;$37. <a href="https://daily-frame.com/" target="_blank" rel="noopener">App site</a></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     HOW TO ORDER + PAYMENT — right after the editions
+════════════════════════════════════════════════════ -->
+<section id="order" class="s" aria-labelledby="order-h2">
+  <div class="s-inner wrap">
+    <h2 class="included-h2 reveal" id="order-h2">How to order</h2>
+    <ol class="included-list order-list reveal" style="transition-delay:.1s">
+      <li><span class="order-n" aria-hidden="true">01</span><span><strong>Choose your edition</strong> in <a href="#editions">Editions</a> above.</span></li>
+      <li><span class="order-n" aria-hidden="true">02</span><span><strong>Enter your email</strong> — the files, the app code and the receipt go there.</span></li>
+      <li><span class="order-n" aria-hidden="true">03</span><span><strong>Pay</strong> by bank card or SBP on the Robokassa page.</span></li>
+      <li><span class="order-n" aria-hidden="true">04</span><span><strong>Get the email</strong> with download links for the files and your Daily Frame Pro code — within 15 minutes of payment. The links work for 7 days.</span></li>
+      <li><span class="order-n" aria-hidden="true">05</span><span><strong>No email?</strong> Check the spam and promotions folders. If it is not there either, write to <a href="mailto:md@marketingdark.com?subject=Email%20did%20not%20arrive">md@marketingdark.com</a> from the address you paid with, and I will send the links again.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="payment" class="s" aria-labelledby="payment-h2">
+  <div class="s-inner wrap">
+    <h2 class="included-h2 reveal" id="payment-h2">Payment</h2>
+    <ul class="included-list order-list reveal" style="transition-delay:.1s">
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Methods</strong> — bank cards and SBP (Russia’s Faster Payments System) through the Robokassa payment service.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Currency</strong> — payment through Robokassa is in rubles, at the prices on the <a href="/ru/#editions" hreflang="ru">Russian version of the site</a>.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Receipt</strong> — an electronic receipt is sent to the email you gave at checkout.</span></li>
+      <li><span class="feature-dot" aria-hidden="true"></span><span><strong>Refunds</strong> — terms and steps on the <a href="/delivery#refund">Delivery and returns</a> page.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -2136,7 +2176,7 @@ button{font-family:inherit;cursor:pointer}
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-legal">
-      <p>Self-employed Konstantin Ivanov, Russian taxpayer ID&nbsp;540302212530</p>
+      <p>Self-employed Konstantin Anatolyevich Ivanov (Иванов Константин Анатольевич), Russian taxpayer ID (INN)&nbsp;540302212530</p>
       <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
       <nav aria-label="Legal"><a href="/offer">Offer</a> · <a href="/delivery">Delivery and returns</a> · <a href="/privacy">Privacy policy</a></nav>
     </div>

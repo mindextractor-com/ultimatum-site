@@ -38,6 +38,8 @@ a{color:inherit}
 .nav{position:fixed;inset:0 0 auto 0;z-index:500;height:52px;display:flex;align-items:center;justify-content:space-between;padding-inline:var(--px);background:rgba(236,239,242,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--l-border)}
 .nav-brand{font-family:var(--font-display);font-weight:700;font-size:clamp(.875rem,1.1vw,1.0625rem);letter-spacing:-.01em;color:var(--l-text);text-decoration:none}
 .nav-meta{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--l-muted)}
+.nav-ru{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.12em;text-transform:uppercase;padding:.3rem .6rem;border:1px solid var(--acc);border-radius:2px;color:var(--l-text);text-decoration:none}
+.nav-ru:hover{background:var(--acc);color:#fff}
 main{max-width:720px;margin-inline:auto;padding:calc(52px + 4rem) var(--px) 5rem}
 .eyebrow{font-family:var(--font-mono);font-size:var(--sz-label);letter-spacing:.22em;text-transform:uppercase;color:var(--acc);margin-bottom:1rem}
 h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:0;margin-bottom:.5rem}
@@ -64,6 +66,7 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 <nav class="nav" aria-label="Navigation">
   <a href="/" class="nav-brand">ULTIMATUM</a>
   <span class="nav-meta">Privacy</span>
+  <a class="nav-ru" href="/ru/privacy" hreflang="ru" lang="ru">Русская версия →</a>
 </nav>
 
 <main>
@@ -115,7 +118,7 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-legal">
-      <p>Self-employed Konstantin Ivanov, Russian taxpayer ID&nbsp;540302212530</p>
+      <p>Self-employed Konstantin Anatolyevich Ivanov (Иванов Константин Анатольевич), Russian taxpayer ID (INN)&nbsp;540302212530</p>
       <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
       <nav aria-label="Legal"><a href="/offer">Offer</a> · <a href="/delivery">Delivery and returns</a> · <a href="/privacy">Privacy policy</a></nav>
     </div>

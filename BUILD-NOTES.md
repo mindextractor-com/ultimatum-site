@@ -4,7 +4,7 @@
 ```
 http://127.0.0.1:8080/
 ```
-Запуск: `python3 -m http.server 8080 --bind 127.0.0.1` из корня проекта.
+Запуск: `python3 -m http.server 8080 --bind 127.0.0.1 --directory public` из корня проекта (функции — через `npx wrangler pages dev`).
 
 ---
 
@@ -100,21 +100,14 @@ POST `/api/subscribe` → `{ email, source: 'book-ru' }` → Supabase `book_wait
 ## Структура файлов
 ```
 ultimatum-site/
-├── index.html              ← единственный файл сайта (РУ, main)
-├── fonts/
-│   ├── albertus-nova-regular.woff2
-│   ├── albertus-nova-bold.woff2
-│   ├── albertus-nova-black.woff2
-│   ├── jost-variable.woff2
-│   ├── jost-italic-variable.woff2
-│   ├── ubuntu-mono-regular.woff2
-│   ├── ubuntu-mono-italic.woff2
-│   ├── ubuntu-mono-bold.woff2
-│   └── ubuntu-mono-bold-italic.woff2
+├── public/                 ← публикуется только эта папка (wrangler.toml → pages_build_output_dir)
+│   ├── index.html, 404.html, confirmed.html, privacy.html, offer.html, delivery.html
+│   ├── ru/                 ← русская версия: index, privacy, oferta, delivery, confirmed
+│   ├── fonts/  images/  media/
+│   └── robots.txt, sitemap.xml
 ├── functions/
-│   └── api/
-│       └── subscribe.js    ← Cloudflare Pages Function, готов
-├── images/
-│   └── .keep
+│   └── api/                ← Cloudflare Pages Functions (должны лежать в корне, не в public/)
+├── wrangler.toml           ← конфиг Pages: источник истины, секреты — в дашборде
+├── db/  docs/  assets/     ← внутреннее, не публикуется
 └── BUILD-NOTES.md          ← этот файл
 ```

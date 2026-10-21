@@ -1,0 +1,13 @@
+# Cloudflare Pages config — the source of truth for this project's settings.
+# Only public/ is deployed; notes, db/, screenshots and other internal files
+# stay in the repo but are never served. functions/ must stay at the root.
+# Secrets (BREVO_API_KEY, SUPABASE_*_KEY) live in the dashboard, not here.
+name = "ultimatum-site"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-06-22"
+
+[vars]
+SUPABASE_URL = "https://ukhpkultogkaxivakprb.supabase.co"
+
+[env.production.vars]
+SUPABASE_URL = "https://ukhpkultogkaxivakprb.supabase.co"

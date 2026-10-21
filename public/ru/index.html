@@ -32,39 +32,119 @@
   "@graph": [
     {
       "@type": "Book",
-      "name": "Ультиматум — Уйти на фриланс и не вернуться",
-      "inLanguage": "ru",
-      "url": "https://ultimatumbook.com/ru/",
-      "bookFormat": "https://schema.org/EBook",
+      "@id": "https://ultimatumbook.com/ru/#book",
+      "name": "Ультиматум. Уйти на фриланс и не вернуться",
       "image": "https://ultimatumbook.com/images/cover-ru.jpg",
-      "about": "фриланс, саморазвитие",
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "RUB",
-        "lowPrice": "770",
-        "highPrice": "2970",
-        "offerCount": 4,
-        "availability": "https://schema.org/InStock",
-        "url": "https://ultimatumbook.com/ru/#editions"
-      },
+      "url": "https://ultimatumbook.com/ru/",
+      "inLanguage": "ru",
       "author": {
-        "@type": "Person",
-        "name": "Константин Иванов",
-        "url": "https://mindextractor.com",
-        "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
-      }
+        "@id": "https://mindextractor.com/#person"
+      },
+      "workExample": [
+        {
+          "@type": "Book",
+          "name": "Электронная книга",
+          "bookFormat": "https://schema.org/EBook",
+          "inLanguage": "ru",
+          "offers": {
+            "@type": "Offer",
+            "name": "Электронная книга",
+            "price": 770,
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/ru/#editions",
+            "description": "2 месяца приложения «Каркас дня» Pro в подарок",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 970,
+              "priceCurrency": "RUB"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "Аудиокнига",
+          "bookFormat": "https://schema.org/AudiobookFormat",
+          "inLanguage": "ru",
+          "offers": {
+            "@type": "Offer",
+            "name": "Аудиокнига",
+            "price": 870,
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/ru/#editions",
+            "description": "2 месяца приложения «Каркас дня» Pro в подарок",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 1270,
+              "priceCurrency": "RUB"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "Электронная книга + аудиокнига",
+          "bookFormat": [
+            "https://schema.org/EBook",
+            "https://schema.org/AudiobookFormat"
+          ],
+          "inLanguage": "ru",
+          "offers": {
+            "@type": "Offer",
+            "name": "Электронная книга + аудиокнига",
+            "price": 970,
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/ru/#editions",
+            "description": "3 месяца приложения «Каркас дня» Pro в подарок",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 1470,
+              "priceCurrency": "RUB"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "Электронная книга + аудиокнига + год Pro",
+          "bookFormat": [
+            "https://schema.org/EBook",
+            "https://schema.org/AudiobookFormat"
+          ],
+          "inLanguage": "ru",
+          "offers": {
+            "@type": "Offer",
+            "name": "Электронная книга + аудиокнига + год Pro",
+            "price": 2970,
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/ru/#editions",
+            "description": "12 месяцев приложения «Каркас дня» Pro включены",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 3970,
+              "priceCurrency": "RUB"
+            }
+          }
+        }
+      ]
     },
     {
       "@type": "Person",
+      "@id": "https://mindextractor.com/#person",
       "name": "Константин Иванов",
-      "url": "https://mindextractor.com",
-      "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
-    },
-    {
-      "@type": "WebSite",
-      "name": "Ultimatum",
-      "url": "https://ultimatumbook.com/ru/",
-      "inLanguage": "ru"
+      "url": "https://marketingdark.com/",
+      "image": "https://ultimatumbook.com/images/author.webp",
+      "description": "Больше 10 лет в продажах B2B и B2C, 8+ лет в маркетинге малого бизнеса и экспертов.",
+      "sameAs": [
+        "https://marketingdark.com/",
+        "https://mindextractor.com/",
+        "https://t.me/marketing_dark"
+      ]
     }
   ]
 }

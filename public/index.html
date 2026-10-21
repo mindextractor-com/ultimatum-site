@@ -33,39 +33,129 @@
   "@graph": [
     {
       "@type": "Book",
-      "name": "Ultimatum — Go Freelance. Never Return",
-      "inLanguage": "en",
-      "url": "https://ultimatumbook.com/",
-      "bookFormat": "https://schema.org/EBook",
+      "@id": "https://ultimatumbook.com/#book",
+      "name": "Ultimatum — Go Freelance. Never Return.",
       "image": "https://ultimatumbook.com/images/cover-better-eng.jpg",
-      "about": "freelancing, self-development",
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "USD",
-        "lowPrice": "9.7",
-        "highPrice": "45.7",
-        "offerCount": 4,
-        "availability": "https://schema.org/InStock",
-        "url": "https://ultimatumbook.com/#editions"
-      },
+      "url": "https://ultimatumbook.com/",
+      "inLanguage": "en",
       "author": {
-        "@type": "Person",
-        "name": "Konstantin Ivanov",
-        "url": "https://mindextractor.com",
-        "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
-      }
+        "@id": "https://mindextractor.com/#person"
+      },
+      "workExample": [
+        {
+          "@type": "Book",
+          "name": "E-book",
+          "bookFormat": "https://schema.org/EBook",
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "name": "E-book",
+            "price": 9.7,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/#editions",
+            "description": "2 months of Daily Frame app Pro included",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 13.7,
+              "priceCurrency": "USD"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "Audiobook",
+          "bookFormat": "https://schema.org/AudiobookFormat",
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "name": "Audiobook",
+            "price": 12.7,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/#editions",
+            "description": "2 months of Daily Frame app Pro included",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 18.7,
+              "priceCurrency": "USD"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "E-book + Audiobook",
+          "bookFormat": [
+            "https://schema.org/EBook",
+            "https://schema.org/AudiobookFormat"
+          ],
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "name": "E-book + Audiobook",
+            "price": 15.7,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/#editions",
+            "description": "3 months of Daily Frame app Pro included",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 23.7,
+              "priceCurrency": "USD"
+            }
+          }
+        },
+        {
+          "@type": "Book",
+          "name": "E-book + Audiobook + 1 year Pro",
+          "bookFormat": [
+            "https://schema.org/EBook",
+            "https://schema.org/AudiobookFormat"
+          ],
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "name": "E-book + Audiobook + 1 year Pro",
+            "price": 45.7,
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ultimatumbook.com/#editions",
+            "description": "12 months of Daily Frame app Pro included",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "priceType": "https://schema.org/StrikethroughPrice",
+              "price": 59.7,
+              "priceCurrency": "USD"
+            }
+          }
+        }
+      ]
     },
     {
       "@type": "Person",
+      "@id": "https://mindextractor.com/#person",
       "name": "Konstantin Ivanov",
-      "url": "https://mindextractor.com",
-      "sameAs": ["https://mindextractor.com", "https://marketingdark.ru"]
+      "url": "https://mindextractor.com/",
+      "image": "https://ultimatumbook.com/images/author.webp",
+      "description": "7+ years in B2B and B2C sales, 8+ years marketing small businesses and experts.",
+      "sameAs": [
+        "https://mindextractor.com/",
+        "https://marketingdark.com/",
+        "https://t.me/marketing_dark"
+      ]
     },
     {
       "@type": "WebSite",
+      "@id": "https://ultimatumbook.com/#website",
       "name": "Ultimatum",
       "url": "https://ultimatumbook.com/",
-      "inLanguage": "en"
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://mindextractor.com/#person"
+      }
     }
   ]
 }

@@ -106,3 +106,5 @@ h1 + .status{margin-top:1.75rem}
 .ed-b{color:var(--l-text);margin-top:.15rem}
 .ed-b:empty{display:none}
 .price-note{margin:-.25rem 0 .875rem}
+#pro-group{scroll-margin-top:72px}
+.ed-p s:empty{display:none}

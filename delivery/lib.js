@@ -81,12 +81,20 @@ export const formatDate = (iso) => new Date(iso).toLocaleDateString('ru-RU', {
 export function buildEmail({ edition, links, code, proMonths, expiresAt, invId, reissue }) {
   const until = formatDate(expiresAt);
   const months = monthsLabel(proMonths);
-  const subject = reissue
-    ? 'Ультиматум — новые ссылки на твои файлы'
-    : 'Ультиматум — твои файлы и код «Каркас дня» Про';
-  const intro = reissue
-    ? 'Держи свежие ссылки на файлы «Ультиматума». Старые больше не работают.'
-    : 'Спасибо за покупку «Ультиматума» напрямую у меня. Ниже — ссылки на файлы и код приложения.';
+  // pro_3m / pro_12m: no files — only the code, the months and the steps.
+  const proOnly = links.length === 0;
+  const subject = proOnly
+    ? (reissue ? '«Каркас дня» Про — твой код ещё раз' : `«Каркас дня» Про — твой код на ${months}`)
+    : reissue
+      ? 'Ультиматум — новые ссылки на твои файлы'
+      : 'Ультиматум — твои файлы и код «Каркас дня» Про';
+  const intro = proOnly
+    ? (reissue ? 'Держи код «Каркас дня» Про ещё раз.' : 'Спасибо за покупку «Каркас дня» Про. Ниже — код и как его активировать.')
+    : reissue
+      ? 'Держи свежие ссылки на файлы «Ультиматума». Старые больше не работают.'
+      : 'Спасибо за покупку «Ультиматума» напрямую у меня. Ниже — ссылки на файлы и код приложения.';
+  const bookLine = 'P.S. У меня вышла книга «Ультиматум. Уйти на фриланс и не вернуться» — о том, как уйти на фриланс и выстроить свою систему. Подробнее: ultimatumbook.com/ru';
+  const helpText = 'Если код не активируется или что-то непонятно — просто ответь на это письмо.';
   // One wording for every edition, in both the HTML and the text version.
   const validity = `Ссылки работают 7 дней — до ${until} включительно. Скачай файлы и сохрани у себя.`;
   const steps = [
@@ -109,7 +117,8 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, invId, 
     </td></tr>`).join('');
   const linkify = (s) => esc(s)
     .replace('daily-frame.app', `<a href="https://daily-frame.app" style="${A}">daily-frame.app</a>`)
-    .replace('ultimatumbook.com/ru/links', `<a href="https://ultimatumbook.com/ru/links" style="${A}">ultimatumbook.com/ru/links</a>`);
+    .replace('ultimatumbook.com/ru/links', `<a href="https://ultimatumbook.com/ru/links" style="${A}">ultimatumbook.com/ru/links</a>`)
+    .replace(/ultimatumbook\.com\/ru$/, `<a href="https://ultimatumbook.com/ru/" style="${A}">ultimatumbook.com/ru</a>`);
 
   const proHtml = code ? `
     <h2 style="${H}">Код «Каркас дня» Про — ${esc(months)}</h2>
@@ -126,30 +135,36 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, invId, 
       <p style="margin:0 0 24px;font-size:13px;letter-spacing:2px;color:#6b6560">УЛЬТИМАТУМ</p>
       <p style="${P}">Привет!</p>
       <p style="${P}">${esc(intro)}</p>
-      <h2 style="${H}">Файлы — ${esc(edition.title)}</h2>
+      ${proOnly ? '' : `<h2 style="${H}">Файлы — ${esc(edition.title)}</h2>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${linkRows}</table>
-      <p style="margin:16px 0 0;font-size:14px;line-height:1.5;color:#6b6560">${esc(validity)}</p>
+      <p style="margin:16px 0 0;font-size:14px;line-height:1.5;color:#6b6560">${esc(validity)}</p>`}
       ${proHtml}
-      <h2 style="${H}">${esc(expiredH)}</h2>
+      ${proOnly
+        ? `<p style="${P}">${esc(helpText)}${orderLine ? ' ' + esc(orderLine) : ''}</p>
+      <p style="${P}">Хороших дней с «Каркасом»!<br>Константин</p>
+      <p style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e6e2dc;font-size:14px;line-height:1.5;color:#6b6560">${linkify(bookLine)}</p>`
+        : `<h2 style="${H}">${esc(expiredH)}</h2>
       <p style="${P}">${linkify(expiredText)}${orderLine ? ' ' + esc(orderLine) : ''}</p>
-      <p style="${P}">Приятного чтения!<br>Константин</p>
+      <p style="${P}">Приятного чтения!<br>Константин</p>`}
     </td></tr></table>
   </td></tr></table>
 </body></html>`;
 
   const text = [
     'Привет!', '', intro, '',
-    `Файлы — ${edition.title}:`, '',
-    ...links.map((l) => `${l.title} (${formatSize(l.size)}):\n${l.url}\n`),
-    validity, '',
+    ...(proOnly ? [] : [
+      `Файлы — ${edition.title}:`, '',
+      ...links.map((l) => `${l.title} (${formatSize(l.size)}):\n${l.url}\n`),
+      validity, ''
+    ]),
     ...(code ? [
       `Код «Каркас дня» Про — ${months}: ${code}`,
       ...steps.map((s, i) => `${i + 1}. ${s}`),
       proNote, ''
     ] : []),
-    `${expiredH}:`, expiredText,
-    ...(orderLine ? [orderLine] : []), '',
-    'Приятного чтения!', 'Константин'
+    ...(proOnly
+      ? [helpText, ...(orderLine ? [orderLine] : []), '', 'Хороших дней с «Каркасом»!', 'Константин', '', bookLine]
+      : [`${expiredH}:`, expiredText, ...(orderLine ? [orderLine] : []), '', 'Приятного чтения!', 'Константин'])
   ].join('\n');
 
   return { subject, html, text };

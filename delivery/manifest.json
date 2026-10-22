@@ -41,19 +41,49 @@
   "editions": {
     "text": {
       "title": "Электронная книга",
-      "files": ["epub", "pdf"]
+      "files": [
+        "epub",
+        "pdf"
+      ]
     },
     "audio": {
       "title": "Аудиокнига",
-      "files": ["m4b", "mp3", "mp3_chapters", "illustrations"]
+      "files": [
+        "m4b",
+        "mp3",
+        "mp3_chapters",
+        "illustrations"
+      ]
     },
     "text_audio": {
       "title": "Электронная книга + аудиокнига",
-      "files": ["epub", "pdf", "m4b", "mp3", "mp3_chapters", "illustrations"]
+      "files": [
+        "epub",
+        "pdf",
+        "m4b",
+        "mp3",
+        "mp3_chapters",
+        "illustrations"
+      ]
     },
     "text_audio_pro": {
       "title": "Электронная книга + аудиокнига + год Про",
-      "files": ["epub", "pdf", "m4b", "mp3", "mp3_chapters", "illustrations"]
+      "files": [
+        "epub",
+        "pdf",
+        "m4b",
+        "mp3",
+        "mp3_chapters",
+        "illustrations"
+      ]
+    },
+    "pro_3m": {
+      "title": "«Каркас дня» Про — 3 месяца",
+      "files": []
+    },
+    "pro_12m": {
+      "title": "«Каркас дня» Про — 12 месяцев",
+      "files": []
     }
   }
 }

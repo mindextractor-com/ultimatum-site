@@ -1,9 +1,11 @@
 // Cloudflare Pages Function — GET /api/editions
 // Price and «Каркас дня» Про months of all four editions, from the app's price
 // preview (book-order GET ?edition=), so the site never hardcodes the bonus.
-// One call for the page instead of four to the app; cached at the edge 10 min.
+// One call for the page instead of six to the app; cached at the edge 10 min.
 // → { ok, editions: { text: { price_rub, amount_rub, pro_months }, … } }
-import { bookOrder, EDITIONS, json } from '../../delivery/app.js';
+// The four books must all answer; the Pro-only editions (pro_3m, pro_12m) are
+// listed only once the app sells them, so pages show them only then.
+import { bookOrder, BOOK_EDITIONS, EDITIONS, json } from '../../delivery/app.js';
 
 const TTL = 600;
 
@@ -21,7 +23,7 @@ export async function onRequestGet({ request, env, waitUntil }) {
       editions[EDITIONS[i]] = { price_rub, amount_rub, pro_months };
     }
   });
-  const complete = Object.keys(editions).length === EDITIONS.length;
+  const complete = BOOK_EDITIONS.every((id) => editions[id]);
   const resp = new Response(JSON.stringify({ ok: complete, editions }), {
     status: complete ? 200 : 502,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': complete ? `public, max-age=${TTL}` : 'no-store' }

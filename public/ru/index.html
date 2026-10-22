@@ -2328,7 +2328,7 @@ ul.edition-what li+li{margin-top:.4rem}
     <p class="editions-promo reveal" style="transition-delay:.15s"><b>Стартовые цены — только здесь, у автора.</b> На книжных площадках будут другие условия, без подписки «Каркас дня» Про.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Как купить — в блоке <a href="#order">«Как оформить заказ»</a> ниже. Есть вопрос — напиши мне в Telegram <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Условия: <a href="/ru/oferta">оферта</a>, <a href="/ru/delivery">доставка и возврат</a>.</p>
-    <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Про отдельно: 3&nbsp;месяца&nbsp;—&nbsp;870₽, год&nbsp;—&nbsp;2770₽. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>
+    <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Про отдельно: <span data-buy="pro_3m">3&nbsp;месяца&nbsp;—&nbsp;870₽</span>, <span data-buy="pro_12m">год&nbsp;—&nbsp;2770₽</span>. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>
   </div>
 </section>
 
@@ -2689,6 +2689,12 @@ document.querySelectorAll('details').forEach(function(d){
     document.querySelectorAll('.edition-gift[data-pro]').forEach(function(p){
       var x=e[p.getAttribute('data-pro')];
       if(x&&x.pro_months)p.firstChild.nodeValue=p.firstChild.nodeValue.replace(/^\d+[\s\u00a0]+месяц[а-я]*/,w(x.pro_months));
+    });
+    /* «Каркас дня» Про on its own: a link to the checkout once the app sells it */
+    document.querySelectorAll('[data-buy]').forEach(function(s){
+      var id=s.getAttribute('data-buy'),x=e[id];if(!x)return;
+      var a=document.createElement('a');a.href='/ru/buy?edition='+id;
+      a.textContent=s.textContent.replace(/\d[\d\s\u00a0]*₽/,String(x.amount_rub)+'₽');s.replaceWith(a);
     });
   }).catch(function(){});
 })();

@@ -10,7 +10,7 @@
 <meta name="description" content="Оформление заказа книги «Ультиматум»: издание, e-mail, оплата картой или через СБП.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://ultimatumbook.com/ru/buy">
-<link rel="stylesheet" href="/ru/shop.css?v=3">
+<link rel="stylesheet" href="/ru/shop.css?v=4">
 </head>
 <body>
 <nav class="nav" aria-label="Навигация">
@@ -30,11 +30,16 @@
       <div class="eds" id="eds"></div>
     </fieldset>
 
+    <fieldset id="pro-group" hidden>
+      <legend>Только «Каркас дня» Про</legend>
+      <div class="eds" id="eds-pro"></div>
+    </fieldset>
+
     <fieldset>
       <label class="field-label" for="email">E-mail для файлов и чека</label>
       <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required placeholder="you@example.com" aria-describedby="email-err email-hint">
       <p class="err" id="email-err" role="alert"></p>
-      <p class="hint" id="email-hint">Проверь адрес — на него придут ссылки на скачивание.</p>
+      <p class="hint" id="email-hint">Проверь адрес — на него придут файлы или код.</p>
     </fieldset>
 
     <fieldset>
@@ -80,7 +85,7 @@
   </div>
 </footer>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
-<script src="/ru/buy.js?v=2"></script>
+<script src="/ru/buy.js?v=4"></script>
 <script src="/ru/contact.js?v=1" defer></script>
 </body>
 </html>

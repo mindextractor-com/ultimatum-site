@@ -7,7 +7,10 @@
 //   GET  ?order_id=                      → order status (contains the ПРО code — never pass it on)
 const DEFAULT_URL = 'https://jnnenorkyegdeyxgyocl.supabase.co/functions/v1/book-order';
 
-export const EDITIONS = ['text', 'audio', 'text_audio', 'text_audio_pro'];
+export const BOOK_EDITIONS = ['text', 'audio', 'text_audio', 'text_audio_pro'];
+// «Каркас дня» Про on its own — no files, only the code (app task T87).
+export const PRO_EDITIONS = ['pro_3m', 'pro_12m'];
+export const EDITIONS = [...BOOK_EDITIONS, ...PRO_EDITIONS];
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

@@ -105,3 +105,4 @@ h1 + .status{margin-top:1.75rem}
 .ed-what,.ed-b{display:block}
 .ed-b{color:var(--l-text);margin-top:.15rem}
 .ed-b:empty{display:none}
+.price-note{margin:-.25rem 0 .875rem}

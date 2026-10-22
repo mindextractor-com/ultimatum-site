@@ -1316,6 +1316,14 @@ button{font-family:inherit;cursor:pointer}
   text-align:center;
   white-space:nowrap;
 }
+.editions-start{
+  margin:calc(-1 * clamp(2.5rem,5vw,4rem) + 1rem) 0 clamp(1.5rem,3vw,2.25rem);
+  font-family:var(--font-mono);
+  font-size:var(--sz-label);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--acc);
+}
 .editions-promo{
   margin-top:1.75rem;
   padding-left:.875rem;
@@ -2282,6 +2290,7 @@ ul.edition-what li+li{margin-top:.4rem}
   <div class="s-inner wrap">
     <span class="label reveal">Издания</span>
     <h2 class="editions-h2 reveal" id="editions-h2">Выбери своё издание.</h2>
+    <p class="editions-start reveal">Стартовая цена — первые 30&nbsp;дней после выхода</p>
     <ul class="editions-grid reveal" style="transition-delay:.1s">
       <li class="edition">
         <span class="edition-n">01</span>
@@ -2316,7 +2325,7 @@ ul.edition-what li+li{margin-top:.4rem}
         <a class="btn-primary edition-btn" href="/ru/buy?edition=text_audio_pro" aria-label="Купить «Электронная книга + аудиокнига + год Про» — оформить заказ">Купить →</a>
       </li>
     </ul>
-    <p class="editions-promo reveal" style="transition-delay:.15s"><b>Цены первых двух недель после выхода — и только здесь, у автора.</b> На книжных площадках будут другие условия, без подписки «Каркас дня» Про.</p>
+    <p class="editions-promo reveal" style="transition-delay:.15s"><b>Стартовые цены — только здесь, у автора.</b> На книжных площадках будут другие условия, без подписки «Каркас дня» Про.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Как купить — в блоке <a href="#order">«Как оформить заказ»</a> ниже. Есть вопрос — напиши мне в Telegram <a href="https://t.me/marketing_dark" target="_blank" rel="noopener">t.me/marketing_dark</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Вопросы о покупке: <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Условия: <a href="/ru/oferta">оферта</a>, <a href="/ru/delivery">доставка и возврат</a>.</p>
     <p class="editions-buy reveal" style="transition-delay:.15s">Приложение «Каркас дня» Про отдельно: 3&nbsp;месяца&nbsp;—&nbsp;<s>1470₽</s>&nbsp;870₽, год&nbsp;—&nbsp;<s>3970₽</s>&nbsp;2770₽. <a href="https://daily-frame.com/ru/" target="_blank" rel="noopener">Сайт приложения</a></p>

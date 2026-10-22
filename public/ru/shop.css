@@ -102,3 +102,6 @@ legend,.field-label{display:block;font-family:var(--font-mono);font-size:var(--s
 @media (max-width:520px){.ed{grid-template-columns:auto 1fr;}.ed-p{grid-column:2;text-align:left}.ed-d{grid-column:2}.promo-row{flex-direction:column}}
 .footer-legal p{color:inherit;margin:0}
 h1 + .status{margin-top:1.75rem}
+.ed-what,.ed-b{display:block}
+.ed-b{color:var(--l-text);margin-top:.15rem}
+.ed-b:empty{display:none}

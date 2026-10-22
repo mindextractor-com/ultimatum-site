@@ -23,7 +23,7 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (d.ok && d.status === 'paid') {
-          show('Оплата прошла', '<p><strong>Спасибо!</strong> Письмо с файлами и кодом «Каркас дня» ПРО уже в пути на <strong>' + esc(d.email) + '</strong>.</p><p>Обычно оно приходит за пару минут, иногда — до 15.</p>', true);
+          show('Оплата прошла', '<p><strong>Спасибо!</strong> Письмо с файлами и кодом «Каркас дня» Про уже в пути на <strong>' + esc(d.email) + '</strong>.</p><p>Обычно оно приходит за пару минут, иногда — до 15.</p>', true);
         } else if (d.ok && d.status === 'pending') {
           if (tries < MAX) {
             show('Ждём подтверждения банка', '<p><span class="spinner" aria-hidden="true"></span>Банк ещё подтверждает оплату. Как только подтвердит, письмо с файлами придёт на <strong>' + esc(d.email) + '</strong>.</p>');

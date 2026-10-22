@@ -2,11 +2,14 @@
 // then /api/checkout creates the order and we POST its form to Robokassa.
 (function () {
   var ED = {
-    text: { t: 'Электронная книга', d: 'EPUB и PDF, 346 страниц', p: 770, was: 970, m: 2 },
-    audio: { t: 'Аудиокнига', d: 'MP3 по главам и M4B, 8 ч 31 мин; PDF с иллюстрациями', p: 870, was: 1270, m: 2 },
-    text_audio: { t: 'Электронная книга + аудиокнига', d: 'EPUB, PDF, MP3 и M4B; PDF с иллюстрациями', p: 970, was: 1470, m: 3 },
-    text_audio_pro: { t: 'Электронная книга + аудиокнига + год Pro', d: 'Всё из изданий выше и 12 месяцев «Каркас дня» ПРО', p: 2970, was: 3970, m: 12 }
+    text: { t: 'Электронная книга', d: 'EPUB и PDF, 346 страниц', p: 770, was: 970 },
+    audio: { t: 'Аудиокнига', d: 'MP3 по главам и M4B, 8 ч 31 мин; PDF с иллюстрациями', p: 870, was: 1270 },
+    text_audio: { t: 'Электронная книга + аудиокнига', d: 'EPUB, PDF, MP3 и M4B; PDF с иллюстрациями', p: 970, was: 1470 },
+    text_audio_pro: { t: 'Электронная книга + аудиокнига + год Про', d: 'Всё из изданий выше', p: 2970, was: 3970 }
   };
+  // «Каркас дня» Про months come from the app (/api/editions, then the price
+  // preview of the chosen edition) — never hardcoded here.
+  var PRO = '«Каркас\u00a0дня» Про';
   var $ = function (id) { return document.getElementById(id); };
   var rub = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + '₽'; };
   var months = function (n) {
@@ -14,7 +17,8 @@
     return n + ' ' + (a === 1 && b !== 11 ? 'месяц' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'месяца' : 'месяцев');
   };
 
-  var state = { edition: 'text', promo: '', preview: null, seq: 0 };
+  var state = { edition: 'text', promo: '', preview: null, seq: 0, info: {} };
+  var bonus = function (id, m) { return (id === 'text_audio_pro' ? '' : '+ ') + months(m) + ' ' + PRO; };
   var q = new URLSearchParams(location.search);
   if (ED[q.get('edition')]) state.edition = q.get('edition');
 
@@ -25,9 +29,10 @@
     var l = document.createElement('label');
     l.className = 'ed';
     l.innerHTML = '<input type="radio" name="edition" value="' + id + '"' + (id === state.edition ? ' checked' : '') + '>' +
-      '<span class="dot" aria-hidden="true"></span><span class="ed-t"></span><span class="ed-p"><s></s><span></span></span><span class="ed-d"></span>';
+      '<span class="dot" aria-hidden="true"></span><span class="ed-t"></span><span class="ed-p"><s></s><span></span></span>' +
+      '<span class="ed-d"><span class="ed-what"></span><span class="ed-b" data-bonus="' + id + '"></span></span>';
     l.querySelector('.ed-t').textContent = e.t;
-    l.querySelector('.ed-d').textContent = e.d;
+    l.querySelector('.ed-what').textContent = e.d;
     l.querySelector('.ed-p s').textContent = rub(e.was);
     l.querySelector('.ed-p span').textContent = rub(e.p);
     box.appendChild(l);
@@ -44,13 +49,14 @@
     var e = ED[state.edition], p = state.preview;
     var amount = p ? p.amount_rub : e.p;
     var full = p ? p.price_rub : e.p;
-    var m = p ? p.pro_months : e.m;
+    var info = state.info[state.edition];
+    var m = p ? p.pro_months : info && info.pro_months;
     $('total').innerHTML = '';
     if (full > amount) { var s = document.createElement('s'); s.textContent = rub(full); $('total').appendChild(s); }
     $('total').appendChild(document.createTextNode(rub(amount)));
-    $('gift').textContent = state.edition === 'text_audio_pro'
-      ? 'Включены ' + months(m) + ' приложения «Каркас дня» ПРО'
-      : '+ ' + months(m) + ' приложения «Каркас дня» ПРО в подарок';
+    $('gift').textContent = !m ? '' : state.edition === 'text_audio_pro'
+      ? 'Включены ' + months(m) + ' приложения ' + PRO
+      : '+ ' + months(m) + ' приложения ' + PRO + ' в подарок';
     $('pay').textContent = 'Перейти к оплате · ' + rub(amount);
   }
 
@@ -160,6 +166,18 @@
 
   // back from Robokassa via the browser's back button: re-enable the form
   window.addEventListener('pageshow', function (ev) { if (ev.persisted) { $('pay').disabled = false; render(); } });
+
+  // bonus months (and current prices) of every edition for the cards
+  fetch('/api/editions').then(function (r) { return r.json(); }).then(function (d) {
+    state.info = d.editions || {};
+    Object.keys(state.info).forEach(function (id) {
+      var x = state.info[id], card = box.querySelector('[data-bonus="' + id + '"]');
+      if (!card || !x.pro_months) return;
+      card.textContent = bonus(id, x.pro_months);
+      if (x.amount_rub) card.closest('.ed').querySelector('.ed-p span').textContent = rub(x.amount_rub);
+    });
+    render();
+  }).catch(function () { /* cards stay without the bonus line */ });
 
   render();
   refreshPreview();

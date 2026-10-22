@@ -18,3 +18,6 @@ public/images/*.png
 
 # seller details (ФИО, ИНН, phone) — data lives in the pages, not in git
 seller-details.txt
+
+# temporary work folder (zips, test runs, upload helper)
+.work/

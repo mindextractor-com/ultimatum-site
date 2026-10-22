@@ -1,0 +1,7 @@
+name = "ultimatum-uploader-tmp"
+main = "worker.js"
+compatibility_date = "2026-06-22"
+[[r2_buckets]]
+binding = "B"
+bucket_name = "ultimatum-files"
+remote = true

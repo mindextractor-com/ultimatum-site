@@ -1,13 +1,27 @@
 # Cloudflare Pages config — the source of truth for this project's settings.
 # Only public/ is deployed; notes, db/, screenshots and other internal files
 # stay in the repo but are never served. functions/ must stay at the root.
-# Secrets (BREVO_API_KEY, SUPABASE_*_KEY) live in the dashboard, not here.
+# Secrets (BREVO_API_KEY, SUPABASE_*_KEY, BOOK_DELIVERY_SECRET) live in the
+# dashboard, not here. Book delivery: see delivery/README.md.
 name = "ultimatum-site"
 pages_build_output_dir = "./public"
 compatibility_date = "2026-06-22"
 
 [vars]
 SUPABASE_URL = "https://ukhpkultogkaxivakprb.supabase.co"
+DELIVERY_SENDER_EMAIL = "book@ultimatumbook.com"
+BREVO_BUYERS_LIST_ID = "9"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "ultimatum-files"
 
 [env.production.vars]
 SUPABASE_URL = "https://ukhpkultogkaxivakprb.supabase.co"
+DELIVERY_SENDER_EMAIL = "book@ultimatumbook.com"
+BREVO_BUYERS_LIST_ID = "9"
+DOWNLOAD_BASE = "https://ultimatumbook.com"
+
+[[env.production.r2_buckets]]
+binding = "FILES"
+bucket_name = "ultimatum-files"

@@ -1,0 +1,59 @@
+{
+  "_comment": "Book files in the private R2 bucket ultimatum-files (binding FILES). To replace a file, upload the new one to the same key (see delivery/README.md) — links, emails and sizes pick it up, nothing else changes. Sizes are read from R2 at send time.",
+  "files": {
+    "epub": {
+      "key": "ru/ultimatum-ru.epub",
+      "download_name": "Ультиматум.epub",
+      "title": "Электронная книга — EPUB",
+      "hint": "Apple Books, Google Play Книги, ReadEra, электронные читалки"
+    },
+    "pdf": {
+      "key": "ru/ultimatum-ru.pdf",
+      "download_name": "Ультиматум.pdf",
+      "title": "Электронная книга — PDF",
+      "hint": "компьютер, планшет, печать"
+    },
+    "m4b": {
+      "key": "ru/audio/ultimatum-audiobook.m4b",
+      "download_name": "Ультиматум — аудиокнига.m4b",
+      "title": "Аудиокнига — M4B, один файл с главами",
+      "hint": "Apple Books и приложения для аудиокниг"
+    },
+    "mp3": {
+      "key": "ru/audio/ultimatum-audiobook.mp3",
+      "download_name": "Ультиматум — аудиокнига.mp3",
+      "title": "Аудиокнига — MP3 одним файлом",
+      "hint": "любой плеер"
+    },
+    "mp3_chapters": {
+      "key": "ru/audio/ultimatum-audiobook-chapters.zip",
+      "download_name": "Ультиматум — аудиокнига по главам.zip",
+      "title": "Аудиокнига — MP3 по главам, ZIP-архив",
+      "hint": "любой плеер, по главе на файл"
+    },
+    "illustrations": {
+      "key": "ru/audio/ultimatum-audiobook-illustrations.pdf",
+      "download_name": "Ультиматум — иллюстрации к аудиокниге.pdf",
+      "title": "Иллюстрации к аудиокниге — PDF",
+      "hint": "картинки из книги, 17 страниц"
+    }
+  },
+  "editions": {
+    "text": {
+      "title": "Электронная книга",
+      "files": ["epub", "pdf"]
+    },
+    "audio": {
+      "title": "Аудиокнига",
+      "files": ["m4b", "mp3", "mp3_chapters", "illustrations"]
+    },
+    "text_audio": {
+      "title": "Электронная книга + аудиокнига",
+      "files": ["epub", "pdf", "m4b", "mp3", "mp3_chapters", "illustrations"]
+    },
+    "text_audio_pro": {
+      "title": "Электронная книга + аудиокнига + год Pro",
+      "files": ["epub", "pdf", "m4b", "mp3", "mp3_chapters", "illustrations"]
+    }
+  }
+}

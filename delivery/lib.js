@@ -76,33 +76,48 @@ export const formatDate = (iso) => new Date(iso).toLocaleDateString('ru-RU', {
   day: 'numeric', month: 'long', timeZone: 'Europe/Moscow'
 });
 
-// links: [{ url, title, hint, size }]
-export function buildEmail({ edition, links, code, proMonths, expiresAt, orderId, reissue }) {
+// links: [{ url, title, hint, size }]. invId — the short order number the buyer
+// sees (also on the receipt); the uuid order id stays internal.
+export function buildEmail({ edition, links, code, proMonths, expiresAt, invId, reissue }) {
   const until = formatDate(expiresAt);
+  const months = monthsLabel(proMonths);
   const subject = reissue
     ? 'Ультиматум — новые ссылки на твои файлы'
-    : 'Ультиматум — твои файлы и код «Каркас дня» ПРО';
+    : 'Ультиматум — твои файлы и код «Каркас дня» Про';
   const intro = reissue
     ? 'Держи свежие ссылки на файлы «Ультиматума». Старые больше не работают.'
     : 'Спасибо за покупку «Ультиматума» напрямую у меня. Ниже — ссылки на файлы и код приложения.';
+  // One wording for every edition, in both the HTML and the text version.
+  const validity = `Ссылки работают 7 дней — до ${until} включительно. Скачай файлы и сохрани у себя.`;
+  const steps = [
+    'Открой daily-frame.app и войди или зарегистрируйся.',
+    'Зайди в Настройки → Профиль, карточка «Доступ».',
+    'Вставь код в поле и нажми «Активировать». Если идёт пробный период — сначала «Ввести код», если Про уже активен — сначала кнопку продления.'
+  ];
+  const proNote = `«Каркас дня» Про включится на ${months} с момента активации. Код одноразовый — активируй его в своём аккаунте.`;
+  const expiredH = 'Если ссылки истекли или что-то не скачивается';
+  const expiredText = 'Новые ссылки можно запросить на странице ultimatumbook.com/ru/links — они придут на этот адрес. Или просто ответь на это письмо.';
+  const orderLine = invId ? `Номер заказа: ${invId}.` : '';
 
   const P = 'margin:0 0 16px;font-size:16px;line-height:1.55;color:#1a1a1a';
   const H = 'margin:28px 0 12px;font-size:18px;line-height:1.3;color:#1a1a1a';
+  const A = 'color:#c4161c';
   const linkRows = links.map((l) => `
     <tr><td style="padding:12px 0;border-top:1px solid #e6e2dc">
       <a href="${esc(l.url)}" style="font-size:16px;font-weight:600;color:#c4161c;text-decoration:underline">${esc(l.title)}</a>
       <div style="font-size:14px;line-height:1.45;color:#6b6560;margin-top:4px">${esc(formatSize(l.size))} · ${esc(l.hint)}</div>
     </td></tr>`).join('');
+  const linkify = (s) => esc(s)
+    .replace('daily-frame.app', `<a href="https://daily-frame.app" style="${A}">daily-frame.app</a>`)
+    .replace('ultimatumbook.com/ru/links', `<a href="https://ultimatumbook.com/ru/links" style="${A}">ultimatumbook.com/ru/links</a>`);
 
   const proHtml = code ? `
-    <h2 style="${H}">Код «Каркас дня» ПРО — ${esc(monthsLabel(proMonths))}</h2>
+    <h2 style="${H}">Код «Каркас дня» Про — ${esc(months)}</h2>
     <p style="${P}"><span style="display:inline-block;padding:10px 16px;border:2px dashed #1a1a1a;font:700 20px/1.2 'Courier New',monospace;letter-spacing:1px">${esc(code)}</span></p>
     <ol style="margin:0 0 16px;padding-left:22px;font-size:16px;line-height:1.55;color:#1a1a1a">
-      <li>Открой <a href="https://daily-frame.app" style="color:#c4161c">daily-frame.app</a> и войди или зарегистрируйся.</li>
-      <li>Зайди в Настройки → Профиль → «Доступ».</li>
-      <li>Нажми «Ввести код» и вставь код из этого письма.</li>
+      ${steps.map((s) => `<li>${linkify(s)}</li>`).join('\n      ')}
     </ol>
-    <p style="${P}">ПРО включится на ${esc(monthsLabel(proMonths))} с момента активации. Код одноразовый — активируй его в своём аккаунте.</p>` : '';
+    <p style="${P}">${esc(proNote)}</p>` : '';
 
   const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
 <body style="margin:0;padding:0;background:#f4f1ec">
@@ -113,10 +128,10 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, orderId
       <p style="${P}">${esc(intro)}</p>
       <h2 style="${H}">Файлы — ${esc(edition.title)}</h2>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${linkRows}</table>
-      <p style="margin:16px 0 0;font-size:14px;line-height:1.5;color:#6b6560">Ссылки работают 7 дней — до ${esc(until)}. Скачай файлы и сохрани у себя.</p>
+      <p style="margin:16px 0 0;font-size:14px;line-height:1.5;color:#6b6560">${esc(validity)}</p>
       ${proHtml}
-      <h2 style="${H}">Если ссылки истекли или что-то не скачивается</h2>
-      <p style="${P}">Новые ссылки можно запросить на странице <a href="https://ultimatumbook.com/ru/links" style="color:#c4161c">ultimatumbook.com/ru/links</a> — они придут на этот адрес. Или просто ответь на это письмо. Номер заказа: ${esc(orderId)}.</p>
+      <h2 style="${H}">${esc(expiredH)}</h2>
+      <p style="${P}">${linkify(expiredText)}${orderLine ? ' ' + esc(orderLine) : ''}</p>
       <p style="${P}">Приятного чтения!<br>Константин</p>
     </td></tr></table>
   </td></tr></table>
@@ -126,16 +141,14 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, orderId
     'Привет!', '', intro, '',
     `Файлы — ${edition.title}:`, '',
     ...links.map((l) => `${l.title} (${formatSize(l.size)}):\n${l.url}\n`),
-    `Ссылки работают 7 дней — до ${until}. Скачай файлы и сохрани у себя.`, '',
+    validity, '',
     ...(code ? [
-      `Код «Каркас дня» ПРО — ${monthsLabel(proMonths)}: ${code}`,
-      '1. Открой https://daily-frame.app и войди или зарегистрируйся.',
-      '2. Зайди в Настройки → Профиль → «Доступ».',
-      '3. Нажми «Ввести код» и вставь код из этого письма.',
-      `ПРО включится на ${monthsLabel(proMonths)} с момента активации.`, ''
+      `Код «Каркас дня» Про — ${months}: ${code}`,
+      ...steps.map((s, i) => `${i + 1}. ${s}`),
+      proNote, ''
     ] : []),
-    'Если ссылки истекли или что-то не скачивается — новые ссылки можно получить на странице https://ultimatumbook.com/ru/links (они придут на этот адрес) или просто ответь на это письмо.',
-    `Номер заказа: ${orderId}.`, '',
+    `${expiredH}:`, expiredText,
+    ...(orderLine ? [orderLine] : []), '',
     'Приятного чтения!', 'Константин'
   ].join('\n');
 

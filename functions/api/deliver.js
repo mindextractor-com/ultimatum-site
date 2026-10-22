@@ -1,6 +1,6 @@
 // Cloudflare Pages Function — POST /api/deliver
 // Called by the checkout after payment. Issues 7-day download links for the
-// edition's files, emails them with the «Каркас дня» ПРО code via Brevo, then
+// edition's files, emails them with the «Каркас дня» Про code via Brevo, then
 // adds the buyer to the Brevo list «Покупатели книги» (BUYER, PRO_UNTIL) and,
 // only if they ticked «Хочу получать рассылку автора» at checkout (stored by
 // /api/checkout under the order_id), to «Все контакты» with MARKETING_OK.
@@ -20,6 +20,7 @@
 //
 // Env: BOOK_DELIVERY_SECRET, BREVO_API_KEY (secrets); DELIVERY_SENDER_EMAIL,
 // BREVO_BUYERS_LIST_ID, BREVO_MARKETING_LIST_ID, DOWNLOAD_BASE (vars); FILES (R2).
+import { bookOrder } from '../../delivery/app.js';
 import {
   LINK_TTL_DAYS, editionId, getEdition, getFile, getOrder, putOrder, deleteOrder,
   issueTokens, revokeTokens, buildEmail, sendEmail, upsertBuyer, addMonths, getConsent
@@ -84,6 +85,7 @@ export async function onRequestPost({ request, env }) {
 
   return deliver(request, env, {
     order_id: orderId, edition, email, code, pro_months: code ? proMonths : 0,
+    inv_id: /^\d{1,12}$/.test(String(body.inv_id ?? '')) ? Number(body.inv_id) : null,
     created_at: new Date().toISOString()
   }, existing);
 }
@@ -91,7 +93,8 @@ export async function onRequestPost({ request, env }) {
 async function deliver(request, env, order, previous) {
   const edition = getEdition(order.edition);
   const now = new Date();
-  const expiresAt = new Date(now.getTime() + LINK_TTL_DAYS * 86400000).toISOString();
+  const expiresAt = endOfMoscowDay(now.getTime() + LINK_TTL_DAYS * 86400000);
+  if (!order.inv_id) order.inv_id = await findInvId(env, order.order_id);
 
   const tokens = await issueTokens(env, order.order_id, edition, expiresAt);
   const pending = { ...order, status: 'pending', started_at: now.toISOString(), expires_at: expiresAt, tokens };
@@ -108,7 +111,7 @@ async function deliver(request, env, order, previous) {
   }
 
   const mail = buildEmail({ edition, links, code: order.code, proMonths: order.pro_months,
-    expiresAt, orderId: order.order_id, reissue: order.reissue });
+    expiresAt, invId: order.inv_id, reissue: order.reissue });
   let sent;
   try {
     sent = await sendEmail(env, { to: order.email, ...mail, orderId: order.order_id });
@@ -146,6 +149,21 @@ async function fail(env, pending, previous, status, error) {
   if (previous && previous.status === 'sent') await putOrder(env, { ...previous, tokens: [], status: 'revoked' });
   else await deleteOrder(env, pending.order_id);
   return json({ error }, status);
+}
+
+// Links work through the whole 7th day, Moscow time — «до 29 октября включительно».
+function endOfMoscowDay(ms) {
+  const day = new Date(ms + 3 * 3600000).toISOString().slice(0, 10);
+  return `${day}T20:59:59.999Z`; // 23:59:59.999 MSK (UTC+3, no DST)
+}
+
+// The buyer sees the short order number (inv_id, as on the receipt), never the
+// uuid. The app's delivery body has no inv_id, so ask the app; none → no line.
+async function findInvId(env, orderId) {
+  try {
+    const r = await bookOrder(env, { query: { order_id: orderId } });
+    return r.body.ok && r.body.inv_id ? r.body.inv_id : null;
+  } catch (_) { return null; }
 }
 
 function safeEqual(a, b) {

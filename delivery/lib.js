@@ -30,6 +30,11 @@ export const putOrder = (env, order) => writeJson(env, ORDER_PREFIX + order.orde
 export const deleteOrder = (env, orderId) => env.FILES.delete(ORDER_PREFIX + orderId);
 export const getToken = (env, token) => readJson(env, TOKEN_PREFIX + token);
 
+// Checkout consents, keyed by the app's order_id (written by /api/checkout).
+const CONSENT_PREFIX = '_delivery/consent/';
+export const getConsent = (env, orderId) => readJson(env, CONSENT_PREFIX + orderId);
+export const putConsent = (env, orderId, consent) => writeJson(env, CONSENT_PREFIX + orderId, consent);
+
 const newToken = () => {
   const b = crypto.getRandomValues(new Uint8Array(24));
   return btoa(String.fromCharCode(...b)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -111,7 +116,7 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, orderId
       <p style="margin:16px 0 0;font-size:14px;line-height:1.5;color:#6b6560">Ссылки работают 7 дней — до ${esc(until)}. Скачай файлы и сохрани у себя.</p>
       ${proHtml}
       <h2 style="${H}">Если ссылки истекли или что-то не скачивается</h2>
-      <p style="${P}">Просто ответь на это письмо или напиши на <a href="mailto:md@marketingdark.com" style="color:#c4161c">md@marketingdark.com</a> с адреса, на который пришло письмо, — пришлю новые ссылки. Номер заказа: ${esc(orderId)}.</p>
+      <p style="${P}">Новые ссылки можно запросить на странице <a href="https://ultimatumbook.com/ru/links" style="color:#c4161c">ultimatumbook.com/ru/links</a> — они придут на этот адрес. Или просто ответь на это письмо. Номер заказа: ${esc(orderId)}.</p>
       <p style="${P}">Приятного чтения!<br>Константин</p>
     </td></tr></table>
   </td></tr></table>
@@ -129,7 +134,7 @@ export function buildEmail({ edition, links, code, proMonths, expiresAt, orderId
       '3. Нажми «Ввести код» и вставь код из этого письма.',
       `ПРО включится на ${monthsLabel(proMonths)} с момента активации.`, ''
     ] : []),
-    'Если ссылки истекли или что-то не скачивается — ответь на это письмо или напиши на md@marketingdark.com с адреса, на который пришло письмо, — пришлю новые ссылки.',
+    'Если ссылки истекли или что-то не скачивается — новые ссылки можно получить на странице https://ultimatumbook.com/ru/links (они придут на этот адрес) или просто ответь на это письмо.',
     `Номер заказа: ${orderId}.`, '',
     'Приятного чтения!', 'Константин'
   ].join('\n');
@@ -163,15 +168,22 @@ export async function sendEmail(env, { to, subject, html, text, orderId }) {
 }
 
 // Buyers go to the transactional list «Покупатели книги» (no newsletters);
-// the marketing list only when the buyer opted in (newsletter: true).
-export async function upsertBuyer(env, { email, edition, proUntil, newsletter }) {
+// to the marketing list «Все контакты» only when they opted in at checkout
+// (marketingAt = when). Without consent MARKETING_OK is left untouched, so an
+// earlier opt-in is never overwritten.
+export async function upsertBuyer(env, { email, edition, proUntil, marketingAt }) {
   const listIds = [Number(env.BREVO_BUYERS_LIST_ID)];
-  if (newsletter && env.BREVO_MARKETING_LIST_ID) listIds.push(Number(env.BREVO_MARKETING_LIST_ID));
+  const attributes = { BUYER: edition, ...(proUntil ? { PRO_UNTIL: proUntil } : {}) };
+  if (marketingAt && env.BREVO_MARKETING_LIST_ID) {
+    listIds.push(Number(env.BREVO_MARKETING_LIST_ID));
+    attributes.MARKETING_OK = true;
+    attributes.MARKETING_OK_AT = marketingAt.slice(0, 10);
+  }
   const resp = await brevo(env, '/contacts', {
     email,
     updateEnabled: true,
     listIds,
-    attributes: { BUYER: edition, ...(proUntil ? { PRO_UNTIL: proUntil } : {}) }
+    attributes
   });
   return resp.ok;
 }

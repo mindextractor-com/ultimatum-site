@@ -1,12 +1,16 @@
 // Cloudflare Pages Function — POST /api/deliver
 // Called by the checkout after payment. Issues 7-day download links for the
 // edition's files, emails them with the «Каркас дня» ПРО code via Brevo, then
-// adds the buyer to the Brevo list «Покупатели книги» (BUYER, PRO_UNTIL).
+// adds the buyer to the Brevo list «Покупатели книги» (BUYER, PRO_UNTIL) and,
+// only if they ticked «Хочу получать рассылку автора» at checkout (stored by
+// /api/checkout under the order_id), to «Все контакты» with MARKETING_OK.
 //
 // Header X-Delivery-Secret must equal the secret BOOK_DELIVERY_SECRET.
 // Body:
-//   { order_id, edition, email, code, pro_months, newsletter? }   deliver
+//   { order_id, edition, email, code, pro_months }   deliver
 //   { order_id, action: "reissue" }   revoke the old links, email fresh ones
+//     ("resend" is the same; with the five fields it also works for an order
+//      the site has no record of — then it is a first delivery)
 //   { order_id, action: "revoke" }    revoke the links, send nothing
 // edition: text | audio | text_audio | text_audio_pro ("text+audio" works too).
 //
@@ -18,7 +22,7 @@
 // BREVO_BUYERS_LIST_ID, BREVO_MARKETING_LIST_ID, DOWNLOAD_BASE (vars); FILES (R2).
 import {
   LINK_TTL_DAYS, editionId, getEdition, getFile, getOrder, putOrder, deleteOrder,
-  issueTokens, revokeTokens, buildEmail, sendEmail, upsertBuyer, addMonths
+  issueTokens, revokeTokens, buildEmail, sendEmail, upsertBuyer, addMonths, getConsent
 } from '../../delivery/lib.js';
 
 const PENDING_LOCK_MS = 2 * 60 * 1000;
@@ -38,19 +42,20 @@ export async function onRequestPost({ request, env }) {
   if (!/^[A-Za-z0-9._:-]{1,100}$/.test(orderId)) return json({ error: 'invalid order_id' }, 400);
 
   const existing = await getOrder(env, orderId);
+  const action = body.action === 'resend' ? 'reissue' : body.action;
+  const delivered = existing && ['sent', 'revoked'].includes(existing.status);
 
-  if (body.action === 'revoke' || body.action === 'reissue') {
-    if (!existing || !['sent', 'revoked'].includes(existing.status)) {
-      return json({ error: 'order not delivered' }, 404);
-    }
+  if (action === 'revoke' || (action === 'reissue' && (delivered || body.edition == null))) {
+    if (!delivered) return json({ error: 'order not delivered' }, 404);
     await revokeTokens(env, existing.tokens);
-    if (body.action === 'revoke') {
+    if (action === 'revoke') {
       await putOrder(env, { ...existing, tokens: [], status: 'revoked', revoked_at: new Date().toISOString() });
       return json({ ok: true, order_id: orderId, status: 'revoked' }, 200);
     }
     return deliver(request, env, { ...existing, reissue: true }, existing);
   }
-  if (body.action) return json({ error: 'unknown action' }, 400);
+  // reissue with full fields for an order the site has no record of → a first delivery
+  if (action && action !== 'reissue') return json({ error: 'unknown action' }, 400);
 
   const edition = editionId(body.edition);
   const email = String(body.email ?? '').trim();
@@ -79,7 +84,7 @@ export async function onRequestPost({ request, env }) {
 
   return deliver(request, env, {
     order_id: orderId, edition, email, code, pro_months: code ? proMonths : 0,
-    newsletter: body.newsletter === true, created_at: new Date().toISOString()
+    created_at: new Date().toISOString()
   }, existing);
 }
 
@@ -121,8 +126,10 @@ async function deliver(request, env, order, previous) {
   let contact = false;
   if (env.BREVO_BUYERS_LIST_ID) {
     try {
+      const consent = await getConsent(env, order.order_id);
       contact = await upsertBuyer(env, {
-        email: order.email, edition: order.edition, newsletter: order.newsletter,
+        email: order.email, edition: order.edition,
+        marketingAt: consent && consent.marketing ? consent.marketing_at : null,
         proUntil: order.pro_months ? addMonths(order.created_at, order.pro_months) : null
       });
     } catch (_) { /* recorded below */ }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/jpeg" href="/images/cover-ru.jpg?v=2">
+<link rel="apple-touch-icon" href="/images/cover-ru.jpg?v=2">
+<title>Получить ссылки заново — Ультиматум</title>
+<meta name="description" content="Новые ссылки на файлы купленной книги «Ультиматум» — на e-mail, указанный при оплате.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://ultimatumbook.com/ru/links">
+<link rel="stylesheet" href="/ru/shop.css?v=1">
+</head>
+<body>
+<nav class="nav" aria-label="Навигация">
+  <a href="/ru/" class="nav-brand">ULTIMATUM</a>
+  <span class="nav-meta">Ссылки</span>
+</nav>
+
+<main class="narrow">
+  <p class="eyebrow">Покупателям</p>
+  <h1>Получить ссылки заново</h1>
+  <p class="lead">Ссылки на файлы действуют 7 дней. Если они истекли или письмо потерялось — укажи e-mail, с которым оформлен заказ, — новые ссылки с кодом «Каркас дня» ПРО придут туда же.</p>
+  <form id="links" novalidate>
+    <fieldset>
+      <label class="field-label" for="email">E-mail, указанный при оплате</label>
+      <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required placeholder="you@example.com" aria-describedby="email-err">
+      <p class="err" id="email-err" role="alert"></p>
+    </fieldset>
+    <button class="btn-primary wide" id="send" type="submit">Отправить ссылки</button>
+  </form>
+  <div class="status ok" id="done" hidden aria-live="polite">
+    <p><strong>Запрос принят.</strong> Если на этот адрес есть оплаченный заказ, письмо с новыми ссылками придёт в течение нескольких минут. Старые ссылки перестанут работать.</p>
+    <p>Проверь «Спам» и «Промоакции». Повторить запрос можно через 15 минут.</p>
+  </div>
+  <h2>Не приходит</h2>
+  <p>Напиши с адреса, указанного при оплате: <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a class="lnk" href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>, Telegram <a class="lnk" href="https://t.me/marketing_dark" target="_blank" rel="noopener">@marketing_dark</a>.</p>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-legal">
+      <p>Самозанятый (плательщик налога на профессиональный доход) Иванов Константин Анатольевич, ИНН&nbsp;540302212530</p>
+      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <nav aria-label="Документы"><a href="/ru/oferta">Оферта</a> · <a href="/ru/delivery">Доставка и возврат</a> · <a href="/ru/privacy">Политика обработки персональных данных</a> · <a href="/ru/consent">Согласие на обработку данных</a></nav>
+    </div>
+    <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">маркетинг.dark</a></span>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script src="/ru/links.js?v=1"></script>
+</body>
+</html>

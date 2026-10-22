@@ -21,3 +21,4 @@ seller-details.txt
 
 # temporary work folder (zips, test runs, upload helper)
 .work/
+.playwright-mcp/

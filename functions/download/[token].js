@@ -75,8 +75,8 @@ const expired = () => new Response(`<!doctype html>
   <p class="k">УЛЬТИМАТУМ</p>
   <h1>Ссылка больше не работает</h1>
   <p>Ссылки на файлы книги действуют 7 дней с момента отправки письма. Эта истекла или была заменена новой.</p>
-  <p>Чтобы получить свежие ссылки, ответь на письмо с файлами или напиши на <a href="mailto:md@marketingdark.com">md@marketingdark.com</a> с адреса, указанного при оплате, — пришлю новые.</p>
-  <p><a href="/ru">На главную</a></p>
+  <p>Свежие ссылки можно получить на странице <a href="/ru/links">«Получить ссылки заново»</a> — они придут на e-mail, указанный при оплате. Или ответь на письмо с файлами, или напиши на <a href="mailto:md@marketingdark.com">md@marketingdark.com</a>.</p>
+  <p><a href="/ru/">На главную</a></p>
 </main></body></html>`, {
   status: 410,
   headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex' }

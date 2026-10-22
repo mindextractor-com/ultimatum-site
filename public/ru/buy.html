@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/jpeg" href="/images/cover-ru.jpg?v=2">
+<link rel="apple-touch-icon" href="/images/cover-ru.jpg?v=2">
+<title>Оформление заказа — Ультиматум</title>
+<meta name="description" content="Оформление заказа книги «Ультиматум»: издание, e-mail, оплата картой или через СБП.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://ultimatumbook.com/ru/buy">
+<link rel="stylesheet" href="/ru/shop.css?v=1">
+</head>
+<body>
+<nav class="nav" aria-label="Навигация">
+  <a href="/ru/" class="nav-brand">ULTIMATUM</a>
+  <span class="nav-meta">Заказ</span>
+</nav>
+
+<main class="narrow">
+  <p class="eyebrow">Заказ</p>
+  <h1>Оформление заказа</h1>
+  <p class="lead">Файлы книги и код «Каркас дня» ПРО придут на e-mail в течение 15 минут после оплаты.</p>
+
+  <form id="buy" novalidate>
+    <fieldset>
+      <legend>Издание</legend>
+      <div class="eds" id="eds"></div>
+    </fieldset>
+
+    <fieldset>
+      <label class="field-label" for="email">E-mail для файлов и чека</label>
+      <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required placeholder="you@example.com" aria-describedby="email-err email-hint">
+      <p class="err" id="email-err" role="alert"></p>
+      <p class="hint" id="email-hint">Проверь адрес — на него придут ссылки на скачивание.</p>
+    </fieldset>
+
+    <fieldset>
+      <button type="button" class="link-btn" id="promo-open" aria-expanded="false" aria-controls="promo-box">Есть промокод?</button>
+      <div id="promo-box" hidden>
+        <label class="field-label" for="promo" style="margin-top:1rem">Промокод</label>
+        <div class="promo-row">
+          <input class="input" id="promo" name="promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="64" aria-describedby="promo-msg">
+          <button type="button" class="btn-ghost" id="promo-apply">Применить</button>
+        </div>
+        <p class="err" id="promo-err" role="alert"></p>
+        <p class="hint" id="promo-msg" aria-live="polite"></p>
+      </div>
+    </fieldset>
+
+    <div class="total" aria-live="polite">
+      <span class="total-l">К оплате</span>
+      <span class="total-v" id="total"></span>
+    </div>
+    <p class="gift" id="gift"></p>
+
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="c-offer" required> <span>Я принимаю условия <a href="/ru/oferta" target="_blank">публичной оферты</a></span></label>
+      <label class="check"><input type="checkbox" id="c-pd" required> <span>Даю <a href="/ru/consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+      <label class="check"><input type="checkbox" id="c-mkt"> <span>Хочу получать рассылку автора <span class="opt">— необязательно</span></span></label>
+      <p class="err" id="consent-err" role="alert"></p>
+    </div>
+
+    <button class="btn-primary wide" id="pay" type="submit">Перейти к оплате</button>
+    <p class="err" id="form-err" role="alert"></p>
+    <p class="pay-note">Оплата картой или через СБП на странице Robokassa. Электронный чек придёт на этот же e-mail. Условия — в <a class="lnk" href="/ru/oferta">оферте</a> и на странице <a class="lnk" href="/ru/delivery">«Доставка и возврат»</a>.</p>
+  </form>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-legal">
+      <p>Самозанятый (плательщик налога на профессиональный доход) Иванов Константин Анатольевич, ИНН&nbsp;540302212530</p>
+      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <nav aria-label="Документы"><a href="/ru/oferta">Оферта</a> · <a href="/ru/delivery">Доставка и возврат</a> · <a href="/ru/privacy">Политика обработки персональных данных</a> · <a href="/ru/consent">Согласие на обработку данных</a></nav>
+    </div>
+    <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">маркетинг.dark</a></span>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script src="/ru/buy.js?v=1"></script>
+</body>
+</html>

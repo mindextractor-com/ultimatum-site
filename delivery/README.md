@@ -31,9 +31,13 @@ The chapter ZIP is built with Python `zipfile` (stored, UTF-8 names) from
       -d '{"order_id":"R-1001","edition":"text_audio","email":"buyer@example.com","code":"ABCD-1234","pro_months":3}'
 
 - `edition`: `text`, `audio`, `text_audio`, `text_audio_pro`.
-- `newsletter: true` also adds the buyer to the marketing list (checkout checkbox, later).
+- Marketing opt-in is not in the body: /api/checkout stores the checkout consents under
+  `_delivery/consent/<order_id>`; if «Хочу получать рассылку автора» was ticked, the buyer
+  also goes to «Все контакты» with MARKETING_OK / MARKETING_OK_AT.
 - Same `order_id` again → 200 `already_sent`, nothing is sent.
-- Fresh links for a buyer: `{"order_id":"R-1001","action":"reissue"}` — old links stop working.
+- Fresh links for a buyer: `{"order_id":"R-1001","action":"reissue"}` (or `"resend"`; the five
+  fields may be sent too) — old links stop working. The app does this for book-order
+  `{"action":"resend","email"}`, which the page /ru/links calls via /api/resend.
 - Kill the links: `{"order_id":"R-1001","action":"revoke"}`.
 
 Order and token records sit in the same bucket under `_delivery/`.

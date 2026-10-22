@@ -106,7 +106,7 @@
     rate_limited: 'Слишком много попыток подряд. Подожди минуту и попробуй снова.',
     unknown_edition: 'Выбери издание.'
   };
-  var GENERIC = 'Не получилось создать заказ. Попробуй ещё раз через минуту или напиши на md@marketingdark.com.';
+  var GENERIC = 'Не получилось создать заказ. Попробуй ещё раз через минуту или напиши в Telegram @marketing_dark.';
 
   $('buy').addEventListener('submit', function (ev) {
     ev.preventDefault();

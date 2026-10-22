@@ -84,8 +84,8 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   <ul>
     <li>Иванов Константин Анатольевич — самозанятый (плательщик налога на профессиональный доход)</li>
     <li>ИНН 540302212530</li>
-    <li>E-mail: <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a></li>
-    <li>Телефон: <a class="lnk" href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></li>
+    <li>E-mail: <a class="lnk" data-c="mail">e-mail</a></li>
+    <li>Телефон: <a class="lnk" data-c="tel">телефон</a></li>
     <li>Сайт: <a class="lnk" href="https://ultimatumbook.com/ru/">ultimatumbook.com</a></li>
   </ul>
 
@@ -127,8 +127,8 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   <h2>8. Возврат</h2>
   <p>8.1. Покупатель получает полный возврат, если файлы не были доставлены или не открываются, а проблема не решена в течение 7 дней с момента обращения.</p>
   <p>8.2. В остальных случаях после успешного скачивания файлов деньги не возвращаются.</p>
-  <p>8.3. Покупатель вправе отменить заказ до получения файлов, написав об этом на <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a> до того, как пришло письмо со ссылками. В этом случае деньги возвращаются полностью.</p>
-  <p>8.4. Заявка на возврат направляется на <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>. В заявке указываются e-mail, с которым оформлен заказ, дата оплаты и причина возврата.</p>
+  <p>8.3. Покупатель вправе отменить заказ до получения файлов, написав об этом на <a class="lnk" data-c="mail">e-mail</a> до того, как пришло письмо со ссылками. В этом случае деньги возвращаются полностью.</p>
+  <p>8.4. Заявка на возврат направляется на <a class="lnk" data-c="mail">e-mail</a>. В заявке указываются e-mail, с которым оформлен заказ, дата оплаты и причина возврата.</p>
   <p>8.5. Продавец рассматривает заявку в течение 3 рабочих дней и отвечает на e-mail Покупателя.</p>
   <p>8.6. После одобрения заявки деньги возвращаются на ту же карту или счёт, с которых была произведена оплата, в течение 10 календарных дней — в полном размере, без удержания комиссий платёжной системы и банка.</p>
 
@@ -156,19 +156,19 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
 
   <h2>14. Применимое право и порядок разрешения споров</h2>
   <p>14.1. К договору применяется право Российской Федерации.</p>
-  <p>14.2. До обращения в суд обязателен претензионный порядок: претензия направляется Продавцу на <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>, Продавец отвечает на неё в течение 10 рабочих дней.</p>
+  <p>14.2. До обращения в суд обязателен претензионный порядок: претензия направляется Продавцу на <a class="lnk" data-c="mail">e-mail</a>, Продавец отвечает на неё в течение 10 рабочих дней.</p>
   <p>14.3. Если спор не урегулирован в претензионном порядке, он рассматривается в суде в соответствии с законодательством Российской Федерации.</p>
   <p>14.4. Договор заключается и всё общение по нему ведётся на русском языке. Текст оферты на английском языке — только перевод для удобства.</p>
 
   <h2>15. Контакты</h2>
-  <p>По всем вопросам о заказе: <a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a class="lnk" href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>.</p>
+  <p>По всем вопросам о заказе: <a class="lnk" data-c="mail">e-mail</a>, <a class="lnk" data-c="tel">телефон</a>.</p>
 </main>
 
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-legal">
       <p>Самозанятый (плательщик налога на профессиональный доход) Иванов Константин Анатольевич, ИНН&nbsp;540302212530</p>
-      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <p><a data-c="mail">e-mail</a> · <a data-c="tel">телефон</a></p>
       <nav aria-label="Документы"><a href="/ru/oferta">Оферта</a> · <a href="/ru/delivery">Доставка и возврат</a> · <a href="/ru/privacy">Политика обработки персональных данных</a></nav>
     </div>
     <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">маркетинг.dark</a> · <a href="https://mindextractor.com" target="_blank" rel="noopener">MindExtractor</a> · Ультиматум</span>
@@ -179,5 +179,6 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   </div>
 </footer>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script src="/ru/contact.js?v=1" defer></script>
 </body>
 </html>

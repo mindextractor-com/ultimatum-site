@@ -96,7 +96,7 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   <p>Ссылки действуют 7 дней с момента отправки письма. Скачайте файлы и сохраните их у себя.</p>
 
   <h2>Если письмо не пришло</h2>
-  <p>Если через 15 минут после оплаты письма нет ни во «Входящих», ни в «Спаме» и «Промоакциях», или ссылки истекли, запросите новые на странице <a class="lnk" href="/ru/links">«Получить ссылки заново»</a> — они придут на e-mail, указанный при оплате. Или напишите на <a class="lnk" href="mailto:md@marketingdark.com?subject=Повторные%20ссылки">md@marketingdark.com</a> с того адреса, который был указан при оплате, — пришлём новые ссылки.</p>
+  <p>Если через 15 минут после оплаты письма нет ни во «Входящих», ни в «Спаме» и «Промоакциях», или ссылки истекли, запросите новые на странице <a class="lnk" href="/ru/links">«Получить ссылки заново»</a> — они придут на e-mail, указанный при оплате. Или напишите на <a class="lnk" data-c="mail" data-s="Повторные ссылки">e-mail</a> с того адреса, который был указан при оплате, — пришлём новые ссылки.</p>
 
   <h2>Что входит в каждое издание</h2>
   <ul>
@@ -121,21 +121,21 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   </ul>
   <h2>Как отменить заказ или вернуть деньги</h2>
   <ol>
-    <li><strong>Отмена до получения файлов.</strong> Если письмо со ссылками ещё не пришло, напишите на <a class="lnk" href="mailto:md@marketingdark.com?subject=Отмена%20заказа">md@marketingdark.com</a>, что отменяете заказ. Ссылки на файлы отправлены не будут.</li>
-    <li><strong>Заявка на возврат.</strong> Напишите на <a class="lnk" href="mailto:md@marketingdark.com?subject=Возврат">md@marketingdark.com</a> и укажите: e-mail, с которым оформляли заказ, дату оплаты и причину возврата.</li>
+    <li><strong>Отмена до получения файлов.</strong> Если письмо со ссылками ещё не пришло, напишите на <a class="lnk" data-c="mail" data-s="Отмена заказа">e-mail</a>, что отменяете заказ. Ссылки на файлы отправлены не будут.</li>
+    <li><strong>Заявка на возврат.</strong> Напишите на <a class="lnk" data-c="mail" data-s="Возврат">e-mail</a> и укажите: e-mail, с которым оформляли заказ, дату оплаты и причину возврата.</li>
     <li><strong>Рассмотрение.</strong> Заявку рассматриваем в течение 3 рабочих дней и отвечаем на тот же e-mail.</li>
     <li><strong>Возврат денег.</strong> Деньги возвращаются на ту же карту или счёт, с которых была оплата, в течение 10 календарных дней после одобрения заявки — полностью, без удержания комиссий платёжной системы и банка.</li>
   </ol>
 
   <h2>Контакты</h2>
-  <p><a class="lnk" href="mailto:md@marketingdark.com">md@marketingdark.com</a>, <a class="lnk" href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a>. Полные условия — в <a class="lnk" href="/ru/oferta">публичной оферте</a>.</p>
+  <p><a class="lnk" data-c="mail">e-mail</a>, <a class="lnk" data-c="tel">телефон</a>. Полные условия — в <a class="lnk" href="/ru/oferta">публичной оферте</a>.</p>
 </main>
 
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-legal">
       <p>Самозанятый (плательщик налога на профессиональный доход) Иванов Константин Анатольевич, ИНН&nbsp;540302212530</p>
-      <p><a href="mailto:md@marketingdark.com">md@marketingdark.com</a> · <a href="tel:+79154169516">+7&nbsp;915&nbsp;416-95-16</a></p>
+      <p><a data-c="mail">e-mail</a> · <a data-c="tel">телефон</a></p>
       <nav aria-label="Документы"><a href="/ru/oferta">Оферта</a> · <a href="/ru/delivery">Доставка и возврат</a> · <a href="/ru/privacy">Политика обработки персональных данных</a> · <a href="/ru/consent">Согласие на обработку данных</a></nav>
     </div>
     <span class="footer-copy">© <span id="yr"></span> · <a href="https://marketingdark.ru" target="_blank" rel="noopener">маркетинг.dark</a> · <a href="https://mindextractor.com" target="_blank" rel="noopener">MindExtractor</a> · Ультиматум</span>
@@ -146,5 +146,6 @@ a.lnk{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
   </div>
 </footer>
 <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script src="/ru/contact.js?v=1" defer></script>
 </body>
 </html>

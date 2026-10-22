@@ -11,7 +11,9 @@
 //   { order_id, action: "reissue" }   revoke the old links, email fresh ones
 //     ("resend" is the same; with the five fields it also works for an order
 //      the site has no record of — then it is a first delivery)
-//   { order_id, action: "revoke" }    revoke the links, send nothing
+//   { order_id, action: "revoke" }    revoke the links, send nothing; always 2xx
+//     (links_revoked: 0 for pro_3m / pro_12m, which have no files, or an unknown order)
+// pro_3m / pro_12m: the email has no files — the code, the months, the steps.
 // edition: text | audio | text_audio | text_audio_pro ("text+audio" works too).
 //
 // Idempotent per order_id: a repeated deliver returns the first result (200)
@@ -46,13 +48,19 @@ export async function onRequestPost({ request, env }) {
   const action = body.action === 'resend' ? 'reissue' : body.action;
   const delivered = existing && ['sent', 'revoked'].includes(existing.status);
 
-  if (action === 'revoke' || (action === 'reissue' && (delivered || body.edition == null))) {
+  // revoke is idempotent and always 2xx: a Pro-only order (pro_3m / pro_12m)
+  // has no links, and an order the site never delivered has nothing to revoke.
+  if (action === 'revoke') {
+    const n = existing && existing.tokens ? existing.tokens.length : 0;
+    if (existing && existing.status !== 'pending') {
+      await revokeTokens(env, existing.tokens);
+      await putOrder(env, { ...existing, tokens: [], status: 'revoked', revoked_at: new Date().toISOString() });
+    }
+    return json({ ok: true, order_id: orderId, status: 'revoked', links_revoked: n }, 200);
+  }
+  if (action === 'reissue' && (delivered || body.edition == null)) {
     if (!delivered) return json({ error: 'order not delivered' }, 404);
     await revokeTokens(env, existing.tokens);
-    if (action === 'revoke') {
-      await putOrder(env, { ...existing, tokens: [], status: 'revoked', revoked_at: new Date().toISOString() });
-      return json({ ok: true, order_id: orderId, status: 'revoked' }, 200);
-    }
     return deliver(request, env, { ...existing, reissue: true }, existing);
   }
   // reissue with full fields for an order the site has no record of → a first delivery

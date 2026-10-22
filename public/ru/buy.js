@@ -27,6 +27,18 @@
   var wanted = ED[q.get('edition')] ? q.get('edition') : null;
   if (wanted && !ED[wanted].pro) state.edition = wanted;
 
+  // ?email= (e.g. from the app's «Купить Про»): prefill if it is a valid
+  // address, otherwise ignore it. Then drop it from the URL at once, so it
+  // stays out of the history and of the Referer sent to Robokassa. Never logged.
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (q.has('email')) {
+    var pre = (q.get('email') || '').trim();
+    if (EMAIL_RE.test(pre) && pre.length <= 254) $('email').value = pre;
+    q.delete('email');
+    var rest = q.toString();
+    history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+  }
+
   // edition cards: books in #eds, «Только «Каркас дня» Про» in #eds-pro
   var box = $('eds');
   Object.keys(ED).forEach(function (id) {
@@ -121,7 +133,7 @@
     var email = $('email').value.trim();
     var ok = true;
     $('form-err').textContent = '';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!EMAIL_RE.test(email) || email.length > 254) {
       $('email-err').textContent = email ? ERR.invalid_email : 'Укажи e-mail — на него придут файлы.';
       $('email').setAttribute('aria-invalid', 'true');
       ok = false;

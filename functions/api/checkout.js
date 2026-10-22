@@ -11,7 +11,7 @@ import { bookOrder, EDITIONS, EMAIL_RE, json } from '../../delivery/app.js';
 import { putConsent } from '../../delivery/lib.js';
 
 // Versions of the documents the buyer agreed to (their «Обновлено» dates).
-const OFFER_VERSION = '2026-10-21';
+const OFFER_VERSION = '2026-10-23';
 const CONSENT_VERSION = '2026-10-23';
 
 export async function onRequestGet({ request, env }) {

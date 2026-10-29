@@ -1335,6 +1335,28 @@ button{font-family:inherit;cursor:pointer}
 ul.edition-what{list-style:none}
 ul.edition-what li+li{margin-top:.4rem}
 /* How to order / Payment: numbered steps in the "included" list style */
+.included-h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:var(--sz-h2);
+  line-height:1.04;
+  letter-spacing:-.015em;
+  color:var(--l-text);
+  margin-bottom:clamp(1.5rem,3vw,2.5rem);
+}
+.included-list{list-style:none}
+.included-list li{
+  display:grid;
+  grid-template-columns:1.5rem minmax(0,var(--measure));
+  gap:0 .75rem;
+  padding-block:1rem;
+  border-bottom:1px solid var(--l-border);
+  font-size:var(--sz-body);line-height:1.65;color:var(--l-muted);
+  align-items:start;
+}
+.included-list li:first-child{border-top:1px solid var(--l-border)}
+.included-list strong{color:var(--l-text);font-weight:600}
+.included-list .feature-dot{margin-top:.6rem}
 .order-n{font-family:var(--font-mono);font-size:var(--sz-sm);line-height:1.65;color:var(--acc)}
 .order-list a{color:var(--l-text);text-decoration-color:var(--acc);text-underline-offset:.2em}
 .order-list a:hover{color:var(--acc)}

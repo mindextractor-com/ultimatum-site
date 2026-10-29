@@ -73,7 +73,7 @@
             "name": "Audiobook",
             "price": 12.7,
             "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/PreOrder",
             "url": "https://ultimatumbook.com/#editions",
             "description": "2 months of Daily Frame app Pro included",
             "priceSpecification": {
@@ -97,7 +97,7 @@
             "name": "E-book + Audiobook",
             "price": 15.7,
             "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/PreOrder",
             "url": "https://ultimatumbook.com/#editions",
             "description": "3 months of Daily Frame app Pro included",
             "priceSpecification": {
@@ -121,7 +121,7 @@
             "name": "E-book + Audiobook + 1 year Pro",
             "price": 45.7,
             "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock",
+            "availability": "https://schema.org/PreOrder",
             "url": "https://ultimatumbook.com/#editions",
             "description": "12 months of Daily Frame app Pro included",
             "priceSpecification": {
@@ -1306,6 +1306,7 @@ button{font-family:inherit;cursor:pointer}
   text-align:center;
   white-space:nowrap;
 }
+.edition-soon,.edition-soon:hover{background:transparent;color:var(--d-muted);box-shadow:inset 0 0 0 1px var(--d-border);opacity:1;transform:none;cursor:default}
 .editions-promo{
   margin-top:1.75rem;
   padding-left:.875rem;
@@ -2072,7 +2073,7 @@ ul.edition-what li+li{margin-top:.4rem}
         <ul class="edition-what"><li>MP3 files by chapter and a single M4B file with chapters</li><li>Phone, computer, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $18.7">$18.7</s>$12.7</p>
         <p class="edition-gift">2 months of Daily Frame app Pro included</p>
-        <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20Audiobook%20edition%20%28%2412.7%29" target="_blank" rel="noopener" aria-label="Buy the Audiobook edition — message on WhatsApp">Buy →</a>
+        <span class="btn-primary edition-btn edition-soon" aria-label="Audiobook edition — coming soon">Coming soon</span>
       </li>
       <li class="edition">
         <span class="edition-n">03</span>
@@ -2080,7 +2081,7 @@ ul.edition-what li+li{margin-top:.4rem}
         <ul class="edition-what"><li>EPUB and PDF files, 337 pages</li><li>MP3 and M4B audio files</li><li>Phone, tablet, computer, e-reader, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $23.7">$23.7</s>$15.7</p>
         <p class="edition-gift">3 months of Daily Frame app Pro included</p>
-        <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20edition%20%28%2415.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook edition — message on WhatsApp">Buy →</a>
+        <span class="btn-primary edition-btn edition-soon" aria-label="E-book + Audiobook edition — coming soon">Coming soon</span>
       </li>
       <li class="edition">
         <span class="edition-n">04</span>
@@ -2088,7 +2089,7 @@ ul.edition-what li+li{margin-top:.4rem}
         <ul class="edition-what"><li>EPUB and PDF files, 337 pages</li><li>MP3 and M4B audio files</li><li>Phone, tablet, computer, e-reader, any player</li></ul>
         <p class="edition-price"><s class="edition-was" aria-label="was $59.7">$59.7</s>$45.7</p>
         <p class="edition-gift">12 months of Daily Frame app Pro included</p>
-        <a class="btn-primary edition-btn" href="https://wa.me/6287777259296?text=Hi%2C%20I%27d%20like%20to%20buy%20Ultimatum%20%E2%80%94%20E-book%20%2B%20Audiobook%20%2B%201%20year%20Pro%20edition%20%28%2445.7%29" target="_blank" rel="noopener" aria-label="Buy the E-book + Audiobook + 1 year Pro edition — message on WhatsApp">Buy →</a>
+        <span class="btn-primary edition-btn edition-soon" aria-label="E-book + Audiobook + 1 year Pro edition — coming soon">Coming soon</span>
       </li>
     </ul>
     <p class="editions-promo reveal" style="transition-delay:.15s"><b>Launch prices for the first two weeks — and only here, direct from the author.</b> Other stores will have different terms, with no Daily Frame Pro subscription.</p>

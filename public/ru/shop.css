@@ -108,3 +108,7 @@ h1 + .status{margin-top:1.75rem}
 .price-note{margin:-.25rem 0 .875rem}
 #pro-group{scroll-margin-top:72px}
 .ed-p s:empty{display:none}
+
+.foreign{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem 1.25rem;margin:1.5rem 0 2rem;padding:1rem 1.25rem;border:1px solid rgba(20,21,28,.18);border-radius:2px}
+.foreign p{margin:0;flex:1 1 18rem;font-size:.9375rem}
+.foreign .btn-ghost{white-space:nowrap}
